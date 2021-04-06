@@ -1,0 +1,21 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif !important;
+}
+
+body {
+    background-color: #f6f6f6 !important;
+    letter-spacing: .1px;
+    line-height: normal;
+    font-size: 14px !important;
+}
+
+button,
+button:active,
+button:hover,
+button:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
