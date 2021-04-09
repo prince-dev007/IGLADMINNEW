@@ -11,7 +11,7 @@
     margin-left: 260px;
 }
 
-@media screen and (min-width: 1024px) {
+@media screen and (min-width: 1025px) {
     #navbarBtn {
         display: none !important;
         visibility: hidden;
@@ -20,8 +20,6 @@
         display: none;
     }
 }
-
-@media screen and (min-width: 1025px) {}
 
 
 /* login */
@@ -379,4 +377,43 @@
 .modal.show {
     -webkit-backdrop-filter: blur(2px) !important;
     backdrop-filter: blur(2px);
+}
+
+
+/* data table */
+
+
+/* placehlder loading */
+
+.loadingWrapper {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    background-color: rgb(211, 211, 211);
+    overflow: hidden;
+    border-radius: 5px;
+}
+
+.loadingWrapper .activity {
+    position: absolute;
+    left: -45%;
+    height: 100%;
+    width: 45%;
+    background-image: linear-gradient(to left, rgba(251, 251, 251, .05), rgba(251, 251, 251, .3), rgba(251, 251, 251, .6), rgba(251, 251, 251, .3), rgba(251, 251, 251, .05));
+    background-image: -moz-linear-gradient(to left, rgba(251, 251, 251, .05), rgba(251, 251, 251, .3), rgba(251, 251, 251, .6), rgba(251, 251, 251, .3), rgba(251, 251, 251, .05));
+    background-image: -webkit-linear-gradient(to left, rgba(251, 251, 251, .05), rgba(251, 251, 251, .3), rgba(251, 251, 251, .6), rgba(251, 251, 251, .3), rgba(251, 251, 251, .05));
+    animation: loading 1s infinite;
+}
+
+@keyframes loading {
+    0% {
+        left: -45%;
+    }
+    100% {
+        left: 100%;
+    }
+}
+
+td {
+    height: 40px;
 }

@@ -1,0 +1,137 @@
+:root {
+    --navHight: 60px;
+    --sidebarWidth: 240px;
+    --miniSideWidth: 70px
+}
+
+
+/* navbar */
+
+.top-header {
+    height: var(--navHight);
+    left: var(--sidebarWidth);
+}
+
+.top-header .navbar {
+    height: inherit;
+}
+
+.top-header .navbar>div {
+    height: inherit;
+}
+
+.top-header .navbar .right-topbar {
+    height: inherit;
+}
+
+.top-header .navbar-nav {
+    height: inherit;
+}
+
+.right-topbar .navbar-nav .nav-link {
+    height: var(--navHight);
+}
+
+.right-topbar .user-box {
+    height: var(--navHight);
+}
+
+
+/* user info */
+
+.user-box .user-name {
+    font-size: 14px;
+}
+
+.user-box .designation {
+    font-size: 12px !important;
+    color: darkgray;
+}
+
+.user-box svg {
+    height: 22px;
+    width: 22px;
+}
+
+.user-box .userAvatar {
+    display: flex;
+}
+
+.right-topbar #pageSpinner {
+    z-index: 2;
+    width: 35px;
+    height: 35px;
+    border-width: 2px;
+    position: absolute;
+    top: -6px;
+    left: -6px;
+    border-width: 1.5px !important;
+}
+
+#activePageHead {
+    font-size: 18px;
+}
+
+
+/* sidebar */
+
+.sidebar-header {
+    height: var(--navHight);
+    width: var(--sidebarWidth);
+}
+
+.sidebar-wrapper {
+    width: var(--sidebarWidth) !important;
+}
+
+
+/* toggle sidebar */
+
+.toggled .top-header {
+    left: var(--miniSideWidth) !important;
+}
+
+.toggled .page-content-wrapper {
+    margin-left: var(--miniSideWidth) !important;
+}
+
+
+/* media queries */
+
+@media screen and (min-width: 1025px) {
+    .toggled .sidebar-wrapper {
+        width: var(--miniSideWidth) !important;
+    }
+    .toggled .sidebar-header {
+        width: var(--miniSideWidth) !important;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .top-header {
+        left: 0px !important;
+    }
+    .page-content-wrapper {
+        margin-left: 0px !important;
+    }
+}
+
+
+/* page */
+
+.wrapper {
+    overflow-y: hidden;
+}
+
+.page-wrapper {
+    margin-top: -10px;
+    overflow-y: auto;
+    height: calc(100vh - var(--navHight));
+    margin-top: var(--navHight);
+}
+
+.page-content-wrapper {
+    margin-left: var(--sidebarWidth);
+    margin-top: 0;
+    height: 100%;
+}

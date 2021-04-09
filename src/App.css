@@ -5,11 +5,16 @@
     font-family: 'Montserrat', sans-serif !important;
 }
 
+#root {
+    height: 100%;
+}
+
 body {
     background-color: #f6f6f6 !important;
     letter-spacing: .1px;
     line-height: normal;
     font-size: 14px !important;
+    height: 100%;
 }
 
 button,

@@ -1,13 +1,10 @@
 import React, { useState } from "react";
 import {Link} from 'react-router-dom';
 import {handleSidebar} from '../../common/navbar';
-// import '../../assets/css/metisMenu.min.css';
+import { motion } from "framer-motion";
 
 // images
-// import img_brand from '../../assets/images/custom/brand.png';
 import img_brandLogo from '../../assets/images/custom/brandLogo.png';
-// import img_brandText from '../../assets/images/custom/brandText.png';
-
 // icons
 import {IoMenuOutline} from 'react-icons/io5';
 import {MdDashboard} from 'react-icons/md';
@@ -25,21 +22,28 @@ const Sidebar = ({currentPath}) => {
         if(window.innerWidth <= 1024) 
             navToggle();
     }
+    const variants = {
+        in : {
+            opactiy : 1,
+            x:0
+        },
+        out : {
+            opactiy : 0,
+            x : '-100%'
+        }
+    }
     return (
-        <div class="sidebar-wrapper" data-simplebar="init" style={{overflowY:'auto'}}>
+        <motion.div initial='out' animate='in' exit='out' variants={variants} class="sidebar-wrapper" data-simplebar="init" style={{overflowY:'auto', overflowX:'hidden', top:0, height :'100%'}}>
             <div class="simplebar-wrapper" style={{margin : "0px"}} >
                 <div class="simplebar-mask">
                     <div class="simplebar-offset" style={{right:0,bottom:0}}>
                         <div class="simplebar-content-wrapper" style={{height:"100%",overflow:"hidden"}}>
                             <div class="simplebar-content mm-active" style={{padding:"0"}}>
-                                <div class="sidebar-header">
+                                <div class="sidebar-header" style={{position:'relative'}} >
                                     <button onClick={navToggle} class=" toggle-btn d-flex align-items-center justify-content-center"> {navToggled ? <img src={img_brandLogo} class="logo-icon-2 img-fluid " style={{height:'45px',width:'45px'}} alt="" /> : <IoMenuOutline /> } 
                                     </button>
                                     <div class="imgBrand mr-2">
                                         <img src={img_brandLogo} class="logo-icon-2 img-fluid" alt="" />
-                                    </div>
-                                    <div>
-                                        {/* <h4 class="logo-text "></h4> */}
                                     </div>
                                 </div>
                                 <ul class="metismenu mm-show" id="menu">
@@ -70,7 +74,7 @@ const Sidebar = ({currentPath}) => {
                     </div>
                 </div>
             </div>
-        </div>
+        </motion.div>
     );
 } 
 export default Sidebar;
