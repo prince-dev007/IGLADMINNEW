@@ -10,7 +10,6 @@ import Animation from '../../common/Animation';
 import { callAPI } from '../../common/common';
 
 const Stations = () => {
-    const [activeItem, setActiveItem] = useState({});
     // modal
     const modal = (action = null, data = null) => {
         console.log(data, stationName);
@@ -59,7 +58,7 @@ const Stations = () => {
     const submitForm = async e => {
         e.preventDefault();
         window.$('#stationModal #modalSpinner').show();
-        const response = await callAPI({
+        await callAPI({
             URL : 'stations/' + stationId,
             method : stationId === 'new' ? 'POST' : 'PUT',
             body : {
