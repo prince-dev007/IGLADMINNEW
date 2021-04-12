@@ -1,16 +1,17 @@
-import { useEffect, useState } from "react";
-import DataTable from '../partials/DataTable';
+import { useEffect } from "react";
+// import DataTable from '../partials/DataTable';
 // animation
 import {motion} from 'framer-motion'
 import Animation from '../../common/Animation';
 
 const Reports = () => {
     window.$('#activePageHead').text('Reports');
-    const [dataArr, setDataArr]  = useState([]);
-    const renderTable = () => {
+    // const [dataArr, setDataArr]  = useState([]);
+    // const renderTable = () => {
 
-    }
+    // }
     useEffect(() => {
+        document.title = 'IGL ADMIN | Reports';
         window.$('#pageSpinner').hide();
     },[])
     return (
