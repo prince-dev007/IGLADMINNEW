@@ -68,6 +68,13 @@ const Sidebar = ({currentPath}) => {
                                             <div class="menu-title">Reports</div>
                                         </Link>
                                     </li>
+                                    <li class={currentPath === '/stations' && activeClassName}  onClick={navToggleSm}>
+                                        <Link to={'/stations'} >
+                                            <div class="parent-icon icon-color-3"> <FcStatistics />
+                                            </div>
+                                            <div class="menu-title">Stations</div>
+                                        </Link>
+                                    </li>
                                 </ul>
                             </div>
                         </div>

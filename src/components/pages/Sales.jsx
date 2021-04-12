@@ -17,7 +17,7 @@ const Sales = () => {
     const [activeItem, setActiveItem] = useState({});
     // modal
     const modal = (action = null, data = null) => {
-        window.$('#dataModal').modal('show');
+        window.$('#saleModal').modal('show');
         setActiveItem(data);
 
     }
@@ -305,7 +305,7 @@ const Sales = () => {
                         </div>
                     </div>
                     {/* modal */}
-                    <div class="modal fade" id="dataModal" tabindex="-1">
+                    <div class="modal fade" id="saleModal" tabindex="-1">
                         <div class="modal-dialog modal-dialog-centered modal-lg">
                             <div class="modal-content">
                                 <div class="modal-header">

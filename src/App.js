@@ -17,6 +17,7 @@ import { handleSidebar } from "./common/navbar";
 import Sales from "./components/pages/Sales";
 import Reports from "./components/pages/Reports";
 import Login2 from "./components/pages/Login2";
+import Stations from "./components/pages/Stations";
 
 function App() {
   const location = useLocation();
@@ -35,6 +36,7 @@ function App() {
           <ProtectedRoute path="/dashboard" exact component={Dashboard} />
           <ProtectedRoute path="/sales" exact component={Sales} />
           <ProtectedRoute path="/reports" exact component={Reports} />
+          <ProtectedRoute path="/stations" exact component={Stations} />
           <Redirect to={{ pathname: '/' }} />
         </Switch>
       </AnimatePresence>

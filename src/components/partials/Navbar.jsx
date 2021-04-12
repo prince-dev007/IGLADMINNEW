@@ -29,8 +29,6 @@ const Navbar = () => {
 					</button>
 					<div className='d-flex'>
 						<h4 style={{marginBottom:0,fontWeight:300}} id="activePageHead"> </h4>
-						<div className="spinnerC">
-						</div>
 					</div>
 				</div>
 				<div class="right-topbar ml-auto">
