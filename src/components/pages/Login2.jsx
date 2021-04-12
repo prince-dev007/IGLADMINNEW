@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useHistory,Redirect } from 'react-router';
+import { useHistory } from 'react-router';
 // animation
 import { motion } from "framer-motion";
 // styles
