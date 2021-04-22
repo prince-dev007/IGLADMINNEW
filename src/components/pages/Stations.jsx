@@ -218,7 +218,7 @@ const Stations = () => {
         setLimit(response.pageSize);
         setTotal(response.total);
         setDataArr(response.status === 200 ? response.data : []);
-        window.$('#pageSpinner').hide();
+        window.$('#pageSpinner').hide();    
     }
 
     const [stationId ,setStationId] = useState('new');
@@ -246,7 +246,7 @@ const Stations = () => {
         return () => {
             window.$('#pageSpinner').show();
         }
-    }, [currentPage,limit]);
+    }, [currentPage]);
 
     return (
         <div  className="page-wrapper">
