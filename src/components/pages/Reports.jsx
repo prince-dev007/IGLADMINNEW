@@ -23,7 +23,7 @@ const Reports = () => {
                             <div className="card-title ">
                             </div>
                             <div class="table-responsive">
-                                <table className='table ' >
+                                <table className='table' >
                                     <thead>
                                         <tr>
                                             <th>S .No.</th>
@@ -319,7 +319,6 @@ const Reports = () => {
                                                 </div>
                                             </td>
                                         </tr>
-
                                     </tbody>
                                 </table>
                             </div>

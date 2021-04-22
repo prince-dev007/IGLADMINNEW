@@ -1,16 +1,17 @@
-
-const DataTable = ({ tableRowHead, renderTable }) => {    
+const DataTable = ({ tableRowHead, renderTable }) => {  
     return (
         <>
         <div class="table-responsive">
-            <table class="table table-hover table-bordered">
+            <table class="table table-hover">
                 <thead class="thead-light">
                     <tr>
                         {((tableRowHead = tableRowHead.split(",")), tableRowHead.map((item) =>
                             <th>{item}</th>))}
                     </tr>
                 </thead>
-                <tbody>{renderTable()}</tbody>
+                <tbody>
+                    {renderTable()}
+                </tbody>
             </table>
         </div>
         </>
