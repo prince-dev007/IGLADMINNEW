@@ -1,3 +1,15 @@
 export const getIsLoggedIn = () => localStorage.getItem('isAuth') === 'true' ? true : false;
-export const logIn = () => localStorage.setItem('isAuth', true);
-export const logOut = () => localStorage.setItem('isAuth', false);
+export const logIn = user => {
+    localStorage.setItem('isAuth', true);
+    localStorage.setItem('user', JSON.stringify(user));
+};
+export const logOut = () => {
+    localStorage.setItem('isAuth', false);
+    localStorage.removeItem('user');
+}
+export const getUser = (key = '') => {
+    if (!getIsLoggedIn())
+        return '';
+    const user = JSON.parse(localStorage.getItem('user'));
+    return key ? user[key] : user;
+}

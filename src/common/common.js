@@ -1,11 +1,20 @@
+import { getIsLoggedIn, getUser } from "./Auth";
 export const backendbaseURL = 'https://iglapi.herokuapp.com/Admin/';
-// export const backendbaseURL = 'http://localhost:3000/Admin/';
+// export const backendbaseURL = 'http://localhost:3001/Admin/';
 
+let abortController = null;
 export const callAPI = async({ URL = '', method = 'GET', body = '', bodyType = 'raw' }) => {
     try {
+        // window.$('#pageSpinner').show();
+        if (method === 'GET' && URL.includes('all')) {
+            abortController && abortController.abort();
+        }
+
         const options = {
             method: method
         }
+
+        // adding body
         if (body) {
             options.body = bodyType === 'raw' ? JSON.stringify(body) : body;
             if (bodyType === 'raw')
@@ -13,10 +22,30 @@ export const callAPI = async({ URL = '', method = 'GET', body = '', bodyType = '
                     'Content-Type': 'application/json'
                 }
         }
+
+        // adding auth token
+        if (!URL.includes('auth') && getIsLoggedIn()) {
+            if (!options.headers)
+                options.headers = {};
+            options.headers.authToken = getUser('authToken');
+            URL = getUser('_id') + '/' + URL;
+        }
         URL = backendbaseURL + URL;
-        console.log('FETCH_OPTIONS : ', URL, options);
+
+        // console.log('FETCH_OPTIONS : ', URL, options);
+
+        // abort controller
+        abortController = new AbortController();
+        options.signal = abortController.signal;
+
+        // fetching
         const response = await fetch(URL, options);
+
+        // getting response
         console.log('FETCH_RESPONSE  : ', response);
+        // window.$('#pageSpinner').hide();
+
+
         if (response.status !== 200) {
             return {
                 status: 500
@@ -45,6 +74,13 @@ const parseJSON = text => {
 }
 
 function errorHandler(err) {
+    const errString = err.toString();
+    if (errString === "AbortError: The user aborted a request.") {
+        console.log('REQUEST_ABORTED');
+        return {
+            status: 0
+        };
+    }
     if (!err.status)
         console.log('error : ', err);
     return {

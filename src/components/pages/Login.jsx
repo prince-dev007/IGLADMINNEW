@@ -1,5 +1,5 @@
 import { Redirect, useHistory } from 'react-router-dom';
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import { getIsLoggedIn, logIn } from '../../common/Auth';
 
 // images
@@ -7,6 +7,9 @@ import loginFrontImg from '../../assets/images/login-front-img.jpg'
 import img_brand from '../../assets/images/custom/brand.png'
 const Login = () => {
     const history = useHistory();
+
+	const [email,setEmail] = useState('');
+	const [password,setPassword] = useState('');
 	useEffect(() => {
         document.title = 'IGL ADMIN | Login';
     }, [])
@@ -26,11 +29,11 @@ const Login = () => {
 									</div>
 									<div class="form-group mt-4">
 										<label>Email Address</label>
-										<input type="text" class="form-control" placeholder="Enter your email address"/>
+										<input type="text" class="form-control" onChange={e => setEmail(e.target.value)} placeholder="Enter your email address"/>
 									</div>
 									<div class="form-group">
 										<label>Password</label>
-										<input type="password" class="form-control" placeholder="Enter your password"/>
+										<input type="password" class="form-control" onChange={e => setPassword(e.target.value)} placeholder="Enter your password"/>
 									</div>
 									<div class="btn-group mt-3 w-100">
 										<button type="button" class="btn btn-block submitBtn" onClick={e => { logIn(); history.push('/dashboard') }}>Log In</button>

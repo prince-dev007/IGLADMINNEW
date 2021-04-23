@@ -42,161 +42,227 @@ const Stations = () => {
                     )) 
                     : 
                     <>
-                        <tr>
-                            <td>
-                                <div class="loadingWrapper">
-                                    <div class="activity"></div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="loadingWrapper">
-                                    <div class="activity"></div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="loadingWrapper">
-                                    <div class="activity"></div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="loadingWrapper">
-                                    <div class="activity"></div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="loadingWrapper">
-                                    <div class="activity"></div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="loadingWrapper">
-                                    <div class="activity"></div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="loadingWrapper">
-                                    <div class="activity"></div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="loadingWrapper">
-                                    <div class="activity"></div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="loadingWrapper">
-                                    <div class="activity"></div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="loadingWrapper">
-                                    <div class="activity"></div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="loadingWrapper">
-                                    <div class="activity"></div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="loadingWrapper">
-                                    <div class="activity"></div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="loadingWrapper">
-                                    <div class="activity"></div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="loadingWrapper">
-                                    <div class="activity"></div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="loadingWrapper">
-                                    <div class="activity"></div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="loadingWrapper">
-                                    <div class="activity"></div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="loadingWrapper">
-                                    <div class="activity"></div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="loadingWrapper">
-                                    <div class="activity"></div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="loadingWrapper">
-                                    <div class="activity"></div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="loadingWrapper">
-                                    <div class="activity"></div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="loadingWrapper">
-                                    <div class="activity"></div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="loadingWrapper">
-                                    <div class="activity"></div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="loadingWrapper">
-                                    <div class="activity"></div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="loadingWrapper">
-                                    <div class="activity"></div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="loadingWrapper">
-                                    <div class="activity"></div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="loadingWrapper">
-                                    <div class="activity"></div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="loadingWrapper">
-                                    <div class="activity"></div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="loadingWrapper">
-                                    <div class="activity"></div>
-                                </div>
-                            </td>
-                        </tr>
-                    </>
+                    <tr>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                    </tr> 
+                     </>
                 }
             </>
         );
@@ -205,15 +271,18 @@ const Stations = () => {
     const [dataArr, setDataArr] = useState([]);
     const [currentPage,setCurrentPage] = useState(1);
     const setCurrentPageNum = page => setCurrentPage(page);
-    const [lastPage, setLastPage] = useState(50);
+    const [lastPage, setLastPage] = useState(0);
     const [limit,setLimit] = useState(50);
     const [total,setTotal] = useState(50000);
-    const getAllStation = async () => {       
+    const getAllStation = async () => {    
         window.$('#pageSpinner').show();
+        setDataArr([]);   
         const response = await callAPI({
             URL : 'stations/all?page=' + currentPage + '&limit=' + limit,
         });
-        setCurrentPage(response.pageNum);
+        if(response.status !== 200 && response.status !== 404)
+            return ;
+        // setCurrentPage(response.pageNum);
         setLastPage(response.lastPage);
         setLimit(response.pageSize);
         setTotal(response.total);
@@ -246,7 +315,7 @@ const Stations = () => {
         return () => {
             window.$('#pageSpinner').show();
         }
-    }, [currentPage]);
+    }, [currentPage,limit]);
 
     return (
         <div  className="page-wrapper">
@@ -265,8 +334,12 @@ const Stations = () => {
                                                 <input type="text" class="form-control" placeholder="Search here" />
                                             </div>
                                             <div class="form-group mb-0 w-50  ">
-                                                <select class="form-control">
-                                                    <option>Default select</option>
+                                                <select onChange={e => setLimit(e.target.value)} class="form-control">
+                                                    <option value='50' >Select Result Limit</option>
+                                                    <option value="50" selected='selected' >50</option>
+                                                    <option value="100">100</option>
+                                                    <option value="500">500</option>
+                                                    <option value="1000">1000</option>
                                                 </select>
                                             </div>
                                         </div>

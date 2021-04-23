@@ -3,269 +3,600 @@ import DataTable from '../partials/DataTable';
 import { motion } from "framer-motion";
 
 // images
-import img_vnp from '../../assets/images/custom/vnp.jpg';
-import img_vnp1 from '../../assets/images/custom/vnp1.png';
-import img_vnp2 from '../../assets/images/custom/vnp2.png';
+// import img_vnp from '../../assets/images/custom/vnp.jpg';
+// import img_vnp1 from '../../assets/images/custom/vnp1.png';
+// import img_vnp2 from '../../assets/images/custom/vnp2.png';
 
 // icons
 import { IoSearchOutline, IoRefreshOutline } from 'react-icons/io5';
 import Pagination from '../partials/Pagination';
 import Animation from '../../common/Animation';
+import { callAPI } from '../../common/common';
 
 const Sales = () => {
+    document.title = 'IGL ADMIN | Sales';
+    window.$('#activePageHead').text('Sales');
+    window.$('#pageSpinner').hide();
 
     const [activeItem, setActiveItem] = useState({});
     // modal
     const modal = (action = null, data = null) => {
         window.$('#saleModal').modal('show');
         setActiveItem(data);
-
     }
     const renderTable = () => {
-        let count = 0;
         return (
             <>
                 {
                     dataArr.length > 0 ? dataArr.map(item => (
                         <tr onClick={() => modal('edit', item)}>
-                            <td>{++count}</td>
-                            <td>{item.CNGStation}</td>
-                            <td>{item.manager}</td>
-                            <td>{item.DSM}</td>
+                            <td>{item.Station}</td>
                             <td>{item.dispensor}</td>
-                            <td>{item.site}</td>
+                            <td>{item.side}</td>
                             <td>{item.name}</td>
                             <td>{item.contactNumber}</td>
                             <td>{item.billNumber}</td>
                             <td>{item.vehicleNumber}</td>
-                            <td><img src={item.vehicleImage} alt={item.vehicleNumber} /></td>
                             <td>{item.CNGRate}</td>
                             <td>{item.quantity}</td>
                             <td>{item.amount}</td>
                         </tr>
-                    )) : <tr><td colSpan='8' className="text-center ">RECORD NOT FOUND</td> </tr>
+                    )) 
+                    :
+                    <>
+                    <tr>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="loadingWrapper">
+                                <div class="activity"></div>
+                            </div>
+                        </td>
+                    </tr>
+                    </>
                 }
             </>
         );
     }
 
     const [dataArr, setDataArr] = useState([]);
+    const [currentPage,setCurrentPage] = useState(1);
+    const setCurrentPageNum = page => setCurrentPage(page);
+    const [lastPage, setLastPage] = useState(0);
+    const [limit,setLimit] = useState(50);
+    const [total,setTotal] = useState(50000);
+    const getAllSale = async () => {    
+        setDataArr([]);
+        window.$('#pageSpinner').show();
+        const response = await callAPI({
+            URL : 'sales/all?page=' + currentPage + '&limit=' + limit,
+        });
+        if(response.status !== 200 && response.status !== 404)
+            return ;
+        // setCurrentPage(response.pageNum);
+        setLastPage(response.lastPage);
+        setLimit(response.pageSize);
+        setTotal(response.total);
+        setDataArr(response.status === 200 ? response.data : []);
+        window.$('#pageSpinner').hide();    
+    }
     useEffect(e => {
-        document.title = 'IGL ADMIN | Sales';
-        window.$('#activePageHead').text('Sales');
-        window.$('#pageSpinner').hide();
-        setDataArr([{
-            CNGStation: 'IGL Udyan Marg New Delhi',
-            manager: "Ishwar Singh",
-            DSM: 'Dipesh Kumar',
-            dispensor: '1',
-            site: 'A',
-            name: 'Prince Singh',
-            contactNumber: '8299727265',
-            billNumber: 'IGLUDM0001',
-            vehicleNumber: 'MH12 DE 1433',
-            vehicleImage: img_vnp,
-            fuelType: 'CNG',
-            CNGRate: '34.50',
-            quantity: 50,
-            amount: 218.89
-        },
-        {
-            CNGStation: 'IGL Udyan Marg New Delhi',
-            manager: "Ishwar Singh",
-            DSM: 'Dipesh Kumar',
-            dispensor: '1',
-            site: 'A',
-            name: 'Rohan Singh',
-            contactNumber: '8989765643',
-            billNumber: 'IGLUDM0003',
-            vehicleNumber: 'DL1 RS 1081',
-            vehicleImage: img_vnp2,
-            fuelType: 'CNG',
-            CNGRate: '34.50',
-            quantity: 50,
-            amount: 218.89
-        },
-        {
-            CNGStation: 'IGL Udyan Marg New Delhi',
-            manager: "Ishwar Singh",
-            DSM: 'Dipesh Kumar',
-            dispensor: '1',
-            site: 'A',
-            name: 'Prince Singh',
-            contactNumber: '8299727265',
-            billNumber: 'IGLUDM0005',
-            vehicleNumber: 'DL1 RS 1081',
-            vehicleImage: img_vnp,
-            fuelType: 'CNG',
-            CNGRate: '34.50',
-            quantity: 50,
-            amount: 218.89
-        },
-        {
-            CNGStation: 'IGL Udyan Marg New Delhi',
-            manager: "Ishwar Singh",
-            DSM: 'Dipesh Kumar',
-            dispensor: '1',
-            site: 'A',
-            name: 'Asif Ahmad',
-            contactNumber: '8400987456',
-            billNumber: 'IGLUDM0002',
-            vehicleNumber: 'DL1 RS 1081',
-            vehicleImage: img_vnp1,
-            fuelType: 'CNG',
-            CNGRate: '34.50',
-            quantity: 50,
-            amount: 218.89
-        },
-        {
-            CNGStation: 'IGL Udyan Marg New Delhi',
-            manager: "Ishwar Singh",
-            DSM: 'Dipesh Kumar',
-            dispensor: '1',
-            site: 'A',
-            name: 'Rohan Singh',
-            contactNumber: '8989765643',
-            billNumber: 'IGLUDM0003',
-            vehicleNumber: 'DL1 RS 1081',
-            vehicleImage: img_vnp2,
-            fuelType: 'CNG',
-            CNGRate: '34.50',
-            quantity: 50,
-            amount: 218.89
-        },
-        {
-            CNGStation: 'IGL Udyan Marg New Delhi',
-            manager: "Ishwar Singh",
-            DSM: 'Dipesh Kumar',
-            dispensor: '1',
-            site: 'A',
-            name: 'Prince Singh',
-            contactNumber: '8299727265',
-            billNumber: 'IGLUDM0001',
-            vehicleNumber: 'DL1 RS 1081',
-            vehicleImage: img_vnp1,
-            fuelType: 'CNG',
-            CNGRate: '34.50',
-            quantity: 50,
-            amount: 218.89
-        },
-        {
-            CNGStation: 'IGL Udyan Marg New Delhi',
-            manager: "Ishwar Singh",
-            DSM: 'Dipesh Kumar',
-            dispensor: '1',
-            site: 'A',
-            name: 'Rohan Singh',
-            contactNumber: '8989765643',
-            billNumber: 'IGLUDM0003',
-            vehicleNumber: 'DL1 RS 1081',
-            vehicleImage: img_vnp1,
-            fuelType: 'CNG',
-            CNGRate: '34.50',
-            quantity: 50,
-            amount: 218.89
-        },
-        {
-            CNGStation: 'IGL Udyan Marg New Delhi',
-            manager: "Ishwar Singh",
-            DSM: 'Dipesh Kumar',
-            dispensor: '1',
-            site: 'A',
-            name: 'Shivam Singh',
-            contactNumber: '7878543223',
-            billNumber: 'IGLUDM0004',
-            vehicleNumber: 'MH12 TH 7878',
-            vehicleImage: img_vnp,
-            fuelType: 'CNG',
-            CNGRate: '34.50',
-            quantity: 50,
-            amount: 218.89
-        },
-        {
-            CNGStation: 'IGL Udyan Marg New Delhi',
-            manager: "Ishwar Singh",
-            DSM: 'Dipesh Kumar',
-            dispensor: '1',
-            site: 'A',
-            name: 'Prince Singh',
-            contactNumber: '8299727265',
-            billNumber: 'IGLUDM0001',
-            vehicleNumber: 'MH12 DE 14323',
-            vehicleImage: img_vnp,
-            fuelType: 'CNG',
-            CNGRate: '34.50',
-            quantity: 50,
-            amount: 218.89
-        },
-        {
-            CNGStation: 'IGL Udyan Marg New Delhi',
-            manager: "Ishwar Singh",
-            DSM: 'Dipesh Kumar',
-            dispensor: '1',
-            site: 'A',
-            name: 'Prince Singh',
-            contactNumber: '8299727265',
-            billNumber: 'IGLUDM0005',
-            vehicleNumber: 'DL1 RS 1081',
-            vehicleImage: img_vnp1,
-            fuelType: 'CNG',
-            CNGRate: '34.50',
-            quantity: 50,
-            amount: 218.89
-        },
-        {
-            CNGStation: 'IGL Udyan Marg New Delhi',
-            manager: "Ishwar Singh",
-            DSM: 'Dipesh Kumar',
-            dispensor: '1',
-            site: 'A',
-            name: 'Rohan Singh',
-            contactNumber: '8989765643',
-            billNumber: 'IGLUDM0003',
-            vehicleNumber: 'DL1 RS 1081',
-            vehicleImage: img_vnp1,
-            fuelType: 'CNG',
-            CNGRate: '34.50',
-            quantity: 50,
-            amount: 218.89
-        },
-        {
-            CNGStation: 'IGL Udyan Marg New Delhi',
-            manager: "Ishwar Singh",
-            DSM: 'Dipesh Kumar',
-            dispensor: '1',
-            site: 'A',
-            name: 'Asif Khan',
-            contactNumber: '7676453423',
-            billNumber: 'IGLUDM0006',
-            vehicleNumber: 'DL1 RS 1081',
-            vehicleImage: img_vnp2,
-            fuelType: 'CNG',
-            CNGRate: '34.50',
-            quantity: 50,
-            amount: 218.89
-        },
-        {
-            CNGStation: 'IGL Udyan Marg New Delhi',
-            manager: "Ishwar Singh",
-            DSM: 'Dipesh Kumar',
-            dispensor: '1',
-            site: 'A',
-            name: 'Rohan Singh',
-            contactNumber: '8989765643',
-            billNumber: 'IGLUDM0003',
-            vehicleNumber: 'DL1 RS 1081',
-            vehicleImage: img_vnp1,
-            fuelType: 'CNG',
-            CNGRate: '34.50',
-            quantity: 50,
-            amount: 218.89
-        }]);
+        getAllSale();
         return () => {
             window.$('#pageSpinner').show();
         }
-    }, []);
+    }, [currentPage,limit]);
 
     return (
         <div  className="page-wrapper">
@@ -284,22 +615,26 @@ const Sales = () => {
                                                 <input type="text" class="form-control" placeholder="Search here" />
                                             </div>
                                             <div class="form-group mb-0 w-50  ">
-                                                <select class="form-control">
-                                                    <option>Default select</option>
+                                                <select  onChange={e => setLimit(e.target.value)} class="form-control">
+                                                    <option value='50' >Select Result Limit</option>
+                                                    <option value="50" selected='selected' >50</option>
+                                                    <option value="100">100</option>
+                                                    <option value="500">500</option>
+                                                    <option value="1000">1000</option>
                                                 </select>
                                             </div>
                                         </div>
                                         <div>
-                                            <button type="button" class="btn btnIconC border" >
+                                            <button type="button" onClick={getAllSale} class="btn btnIconC border" >
                                                 <IoRefreshOutline />
                                             </button>
-                                            <Pagination className='mb-0 ' />
+                                            <Pagination className='mb-0 ' total={total} currentPage={currentPage} setCurrentPage={setCurrentPageNum} lastPage={lastPage} pageSize={limit} />
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <DataTable
-                                tableRowHead={'S. No,CNG Station,Manager,DSM,Dispensor, Site,Name,Contact Number,Bill Number,Vehicle Number,Vehicle Image, CNG Rate,Quantity (Kg),Amount (INR)'}
+                                tableRowHead={'Station,Dispensor,Side,Name,Contact Number,Bill Number,Vehicle Number, CNG Rate,Quantity (Kg),Amount (INR)'}
                                 renderTable={renderTable}
                             />
                         </div>
