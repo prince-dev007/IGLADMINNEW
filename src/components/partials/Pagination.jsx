@@ -5,17 +5,17 @@ const Pagination = ({className = null, total = 0, currentPage = 0,pageSize = 0, 
     const fromPage = currentPage !== 0 ?  ((currentPage - 1) * pageSize) + 1 : 0;
     const toPage = ((currentPage - 1) * pageSize) + pageSize;
     return (
-        <ul class={className ? "pagination " + className : "pagination"}>
-            <li class="page-item">
-                <button disabled={currentPage <= 1} onClick={() => setCurrentPage(currentPage - 1)} class="page-link btnIconC">
+        <ul className={className ? "pagination " + className : "pagination"}>
+            <li className="page-item">
+                <button disabled={currentPage <= 1} onClick={() => setCurrentPage(currPage =>  currPage - 1)} className="page-link btnIconC">
                     <VscChevronLeft />
                 </button>
             </li>
-            <li class="page-item">
-                <span class="page-link d-flex align-items-center" style={{height:'38px',minWidth:'120px',justifyContent:'center' }}>{fromPage} - {toPage} of {total}</span>
+            <li className="page-item">
+                <span className="page-link d-flex align-items-center" style={{height:'38px',minWidth:'120px',justifyContent:'center' }}>{fromPage} - {toPage} of {total}</span>
             </li>
-            <li class="page-item next">
-                <button disabled={lastPage <= currentPage} onClick={() => setCurrentPage(currentPage + 1)} class="page-link btnIconC">
+            <li className="page-item next">
+                <button disabled={lastPage <= currentPage} onClick={() => setCurrentPage(currPage =>  currPage + 1)} className="page-link btnIconC">
                     <VscChevronRight />
                 </button>
             </li>

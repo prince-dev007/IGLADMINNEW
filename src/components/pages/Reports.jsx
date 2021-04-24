@@ -22,7 +22,7 @@ const Reports = () => {
                         <div className="card-body">
                             <div className="card-title ">
                             </div>
-                            <div class="table-responsive">
+                            <div className="table-responsive">
                                 <table className='table' >
                                     <thead>
                                         <tr>
@@ -33,289 +33,289 @@ const Reports = () => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
+                                        <tr key={Math.random()} >
                                             <td>
-                                                <div class="loadingWrapper " >
-                                                    <div class="activity"></div>
+                                                <div className="loadingWrapper " >
+                                                    <div className="activity"></div>
                                                 </div>
                                             </td>
                                             <td>
-                                                <div class="loadingWrapper">
-                                                    <div class="activity"></div>
+                                                <div className="loadingWrapper">
+                                                    <div className="activity"></div>
                                                 </div>
                                             </td>
                                             <td>
-                                                <div class="loadingWrapper">
-                                                    <div class="activity"></div>
+                                                <div className="loadingWrapper">
+                                                    <div className="activity"></div>
                                                 </div>
                                             </td>
                                             <td>
-                                                <div class="loadingWrapper">
-                                                    <div class="activity"></div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="loadingWrapper">
-                                                    <div class="activity"></div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="loadingWrapper">
-                                                    <div class="activity"></div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="loadingWrapper">
-                                                    <div class="activity"></div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="loadingWrapper">
-                                                    <div class="activity"></div>
+                                                <div className="loadingWrapper">
+                                                    <div className="activity"></div>
                                                 </div>
                                             </td>
                                         </tr>
-                                        <tr>
+                                        <tr key={Math.random()} >
                                             <td>
-                                                <div class="loadingWrapper">
-                                                    <div class="activity"></div>
+                                                <div className="loadingWrapper">
+                                                    <div className="activity"></div>
                                                 </div>
                                             </td>
                                             <td>
-                                                <div class="loadingWrapper">
-                                                    <div class="activity"></div>
+                                                <div className="loadingWrapper">
+                                                    <div className="activity"></div>
                                                 </div>
                                             </td>
                                             <td>
-                                                <div class="loadingWrapper">
-                                                    <div class="activity"></div>
+                                                <div className="loadingWrapper">
+                                                    <div className="activity"></div>
                                                 </div>
                                             </td>
                                             <td>
-                                                <div class="loadingWrapper">
-                                                    <div class="activity"></div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="loadingWrapper">
-                                                    <div class="activity"></div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="loadingWrapper">
-                                                    <div class="activity"></div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="loadingWrapper">
-                                                    <div class="activity"></div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="loadingWrapper">
-                                                    <div class="activity"></div>
+                                                <div className="loadingWrapper">
+                                                    <div className="activity"></div>
                                                 </div>
                                             </td>
                                         </tr>
-                                        <tr>
+                                        <tr key={Math.random()} >
                                             <td>
-                                                <div class="loadingWrapper">
-                                                    <div class="activity"></div>
+                                                <div className="loadingWrapper">
+                                                    <div className="activity"></div>
                                                 </div>
                                             </td>
                                             <td>
-                                                <div class="loadingWrapper">
-                                                    <div class="activity"></div>
+                                                <div className="loadingWrapper">
+                                                    <div className="activity"></div>
                                                 </div>
                                             </td>
                                             <td>
-                                                <div class="loadingWrapper">
-                                                    <div class="activity"></div>
+                                                <div className="loadingWrapper">
+                                                    <div className="activity"></div>
                                                 </div>
                                             </td>
                                             <td>
-                                                <div class="loadingWrapper">
-                                                    <div class="activity"></div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="loadingWrapper">
-                                                    <div class="activity"></div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="loadingWrapper">
-                                                    <div class="activity"></div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="loadingWrapper">
-                                                    <div class="activity"></div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="loadingWrapper">
-                                                    <div class="activity"></div>
+                                                <div className="loadingWrapper">
+                                                    <div className="activity"></div>
                                                 </div>
                                             </td>
                                         </tr>
-                                        <tr>
+                                        <tr key={Math.random()} >
                                             <td>
-                                                <div class="loadingWrapper">
-                                                    <div class="activity"></div>
+                                                <div className="loadingWrapper">
+                                                    <div className="activity"></div>
                                                 </div>
                                             </td>
                                             <td>
-                                                <div class="loadingWrapper">
-                                                    <div class="activity"></div>
+                                                <div className="loadingWrapper">
+                                                    <div className="activity"></div>
                                                 </div>
                                             </td>
                                             <td>
-                                                <div class="loadingWrapper">
-                                                    <div class="activity"></div>
+                                                <div className="loadingWrapper">
+                                                    <div className="activity"></div>
                                                 </div>
                                             </td>
                                             <td>
-                                                <div class="loadingWrapper">
-                                                    <div class="activity"></div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="loadingWrapper">
-                                                    <div class="activity"></div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="loadingWrapper">
-                                                    <div class="activity"></div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="loadingWrapper">
-                                                    <div class="activity"></div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="loadingWrapper">
-                                                    <div class="activity"></div>
+                                                <div className="loadingWrapper">
+                                                    <div className="activity"></div>
                                                 </div>
                                             </td>
                                         </tr>
-                                        <tr>
+                                        <tr key={Math.random()} >
                                             <td>
-                                                <div class="loadingWrapper">
-                                                    <div class="activity"></div>
+                                                <div className="loadingWrapper">
+                                                    <div className="activity"></div>
                                                 </div>
                                             </td>
                                             <td>
-                                                <div class="loadingWrapper">
-                                                    <div class="activity"></div>
+                                                <div className="loadingWrapper">
+                                                    <div className="activity"></div>
                                                 </div>
                                             </td>
                                             <td>
-                                                <div class="loadingWrapper">
-                                                    <div class="activity"></div>
+                                                <div className="loadingWrapper">
+                                                    <div className="activity"></div>
                                                 </div>
                                             </td>
                                             <td>
-                                                <div class="loadingWrapper">
-                                                    <div class="activity"></div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="loadingWrapper">
-                                                    <div class="activity"></div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="loadingWrapper">
-                                                    <div class="activity"></div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="loadingWrapper">
-                                                    <div class="activity"></div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="loadingWrapper">
-                                                    <div class="activity"></div>
+                                                <div className="loadingWrapper">
+                                                    <div className="activity"></div>
                                                 </div>
                                             </td>
                                         </tr>
-                                        <tr>
+                                        <tr key={Math.random()} >
                                             <td>
-                                                <div class="loadingWrapper">
-                                                    <div class="activity"></div>
+                                                <div className="loadingWrapper">
+                                                    <div className="activity"></div>
                                                 </div>
                                             </td>
                                             <td>
-                                                <div class="loadingWrapper">
-                                                    <div class="activity"></div>
+                                                <div className="loadingWrapper">
+                                                    <div className="activity"></div>
                                                 </div>
                                             </td>
                                             <td>
-                                                <div class="loadingWrapper">
-                                                    <div class="activity"></div>
+                                                <div className="loadingWrapper">
+                                                    <div className="activity"></div>
                                                 </div>
                                             </td>
                                             <td>
-                                                <div class="loadingWrapper">
-                                                    <div class="activity"></div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="loadingWrapper">
-                                                    <div class="activity"></div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="loadingWrapper">
-                                                    <div class="activity"></div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="loadingWrapper">
-                                                    <div class="activity"></div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="loadingWrapper">
-                                                    <div class="activity"></div>
+                                                <div className="loadingWrapper">
+                                                    <div className="activity"></div>
                                                 </div>
                                             </td>
                                         </tr>
-                                        <tr>
+                                        <tr key={Math.random()} >
                                             <td>
-                                                <div class="loadingWrapper">
-                                                    <div class="activity"></div>
+                                                <div className="loadingWrapper">
+                                                    <div className="activity"></div>
                                                 </div>
                                             </td>
                                             <td>
-                                                <div class="loadingWrapper">
-                                                    <div class="activity"></div>
+                                                <div className="loadingWrapper">
+                                                    <div className="activity"></div>
                                                 </div>
                                             </td>
                                             <td>
-                                                <div class="loadingWrapper">
-                                                    <div class="activity"></div>
+                                                <div className="loadingWrapper">
+                                                    <div className="activity"></div>
                                                 </div>
                                             </td>
                                             <td>
-                                                <div class="loadingWrapper">
-                                                    <div class="activity"></div>
+                                                <div className="loadingWrapper">
+                                                    <div className="activity"></div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr key={Math.random()} >
+                                            <td>
+                                                <div className="loadingWrapper">
+                                                    <div className="activity"></div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div className="loadingWrapper">
+                                                    <div className="activity"></div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div className="loadingWrapper">
+                                                    <div className="activity"></div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div className="loadingWrapper">
+                                                    <div className="activity"></div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr key={Math.random()} >
+                                            <td>
+                                                <div className="loadingWrapper">
+                                                    <div className="activity"></div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div className="loadingWrapper">
+                                                    <div className="activity"></div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div className="loadingWrapper">
+                                                    <div className="activity"></div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div className="loadingWrapper">
+                                                    <div className="activity"></div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr key={Math.random()} >
+                                            <td>
+                                                <div className="loadingWrapper">
+                                                    <div className="activity"></div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div className="loadingWrapper">
+                                                    <div className="activity"></div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div className="loadingWrapper">
+                                                    <div className="activity"></div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div className="loadingWrapper">
+                                                    <div className="activity"></div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr key={Math.random()} >
+                                            <td>
+                                                <div className="loadingWrapper">
+                                                    <div className="activity"></div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div className="loadingWrapper">
+                                                    <div className="activity"></div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div className="loadingWrapper">
+                                                    <div className="activity"></div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div className="loadingWrapper">
+                                                    <div className="activity"></div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr key={Math.random()} >
+                                            <td>
+                                                <div className="loadingWrapper">
+                                                    <div className="activity"></div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div className="loadingWrapper">
+                                                    <div className="activity"></div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div className="loadingWrapper">
+                                                    <div className="activity"></div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div className="loadingWrapper">
+                                                    <div className="activity"></div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr key={Math.random()} >
+                                            <td>
+                                                <div className="loadingWrapper">
+                                                    <div className="activity"></div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div className="loadingWrapper">
+                                                    <div className="activity"></div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div className="loadingWrapper">
+                                                    <div className="activity"></div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div className="loadingWrapper">
+                                                    <div className="activity"></div>
                                                 </div>
                                             </td>
                                         </tr>

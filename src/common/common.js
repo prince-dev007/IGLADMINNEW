@@ -28,11 +28,11 @@ export const callAPI = async({ URL = '', method = 'GET', body = '', bodyType = '
             if (!options.headers)
                 options.headers = {};
             options.headers.authToken = getUser('authToken');
-            URL = getUser('_id') + '/' + URL;
+            options.headers.userId = getUser('_id');
         }
         URL = backendbaseURL + URL;
 
-        // console.log('FETCH_OPTIONS : ', URL, options);
+        console.log('FETCH_OPTIONS : ', URL, options);
 
         // abort controller
         abortController = new AbortController();

@@ -16,32 +16,32 @@ const Login = () => {
     if(getIsLoggedIn()) 
        return <Redirect to={{pathname :'/dashboard'}} />;
     return (
-        <div class="section-authentication-login">
-			<div class="row">
-				<div class="col-12 col-lg-10 mx-auto">
-					<div class="card radius-15">
-						<div class="row no-gutters">
-							<div class="col-lg-6">
-								<div class="card-body p-md-5">
-									<div class="text-center">
+        <div className="section-authentication-login">
+			<div className="row">
+				<div className="col-12 col-lg-10 mx-auto">
+					<div className="card radius-15">
+						<div className="row no-gutters">
+							<div className="col-lg-6">
+								<div className="card-body p-md-5">
+									<div className="text-center">
 										<img src={img_brand} className='img-fluid' alt=""/>
-										<h3 class="mt-4 font-weight-bold">ADMIN</h3>
+										<h3 className="mt-4 font-weight-bold">ADMIN</h3>
 									</div>
-									<div class="form-group mt-4">
+									<div className="form-group mt-4">
 										<label>Email Address</label>
-										<input type="text" class="form-control" onChange={e => setEmail(e.target.value)} placeholder="Enter your email address"/>
+										<input type="text" className="form-control" onChange={e => setEmail(e.target.value)} placeholder="Enter your email address"/>
 									</div>
-									<div class="form-group">
+									<div className="form-group">
 										<label>Password</label>
-										<input type="password" class="form-control" onChange={e => setPassword(e.target.value)} placeholder="Enter your password"/>
+										<input type="password" className="form-control" onChange={e => setPassword(e.target.value)} placeholder="Enter your password"/>
 									</div>
-									<div class="btn-group mt-3 w-100">
-										<button type="button" class="btn btn-block submitBtn" onClick={e => { logIn(); history.push('/dashboard') }}>Log In</button>
+									<div className="btn-group mt-3 w-100">
+										<button type="button" className="btn btn-block submitBtn" onClick={e => { logIn(); history.push('/dashboard') }}>Log In</button>
 									</div>
 								</div>
 							</div>
-							<div class="col-lg-6">
-								<img src={loginFrontImg} class="card-img login-img h-100" alt="..."/>
+							<div className="col-lg-6">
+								<img src={loginFrontImg} className="card-img login-img h-100" alt="..."/>
 							</div>
 						</div>
 					</div>

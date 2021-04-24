@@ -1,12 +1,12 @@
 const DataTable = ({ tableRowHead, renderTable }) => {  
+    tableRowHead = tableRowHead.split(",")
     return (
         <>
-        <div class="table-responsive">
-            <table class="table table-hover">
-                <thead class="thead-light">
-                    <tr>
-                        {((tableRowHead = tableRowHead.split(",")), tableRowHead.map((item) =>
-                            <th>{item}</th>))}
+        <div className="table-responsive">
+            <table className="table table-hover">
+                <thead className="thead-light">
+                    <tr >
+                        {tableRowHead.map((item) => <th key={Math.random()} >{item}</th>)}
                     </tr>
                 </thead>
                 <tbody>

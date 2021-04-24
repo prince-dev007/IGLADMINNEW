@@ -40,7 +40,7 @@ function App() {
           <Redirect to={{ pathname: '/' }} />
         </Switch>
       </AnimatePresence>
-      <div class="overlay toggle-btn-mobile" onClick={handleSidebar} ></div>
+      <div className="overlay toggle-btn-mobile" onClick={handleSidebar} ></div>
     </div>
   );
 }

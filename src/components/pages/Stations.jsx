@@ -33,7 +33,7 @@ const Stations = () => {
             <>
                 {
                     dataArr.length > 0 ? dataArr.map(item => (
-                        <tr onClick={() => modal('edit', item)}>
+                        <tr  key={Math.random()} onClick={() => modal('edit', item)}>
                             <td>{item.stationName}</td>
                             <td>{item.DSO}</td>
                             <td>{item.address}</td>
@@ -42,223 +42,223 @@ const Stations = () => {
                     )) 
                     : 
                     <>
-                    <tr>
+                    <tr key={Math.random()} >
                         <td>
-                            <div class="loadingWrapper">
-                                <div class="activity"></div>
+                            <div className="loadingWrapper">
+                                <div className="activity"></div>
                             </div>
                         </td>
                         <td>
-                            <div class="loadingWrapper">
-                                <div class="activity"></div>
+                            <div className="loadingWrapper">
+                                <div className="activity"></div>
                             </div>
                         </td>
                         <td>
-                            <div class="loadingWrapper">
-                                <div class="activity"></div>
+                            <div className="loadingWrapper">
+                                <div className="activity"></div>
                             </div>
                         </td>
                         <td>
-                            <div class="loadingWrapper">
-                                <div class="activity"></div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="loadingWrapper">
-                                <div class="activity"></div>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="loadingWrapper">
-                                <div class="activity"></div>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="loadingWrapper">
-                                <div class="activity"></div>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="loadingWrapper">
-                                <div class="activity"></div>
+                            <div className="loadingWrapper">
+                                <div className="activity"></div>
                             </div>
                         </td>
                     </tr>
-                    <tr>
+                    <tr key={Math.random()} >
                         <td>
-                            <div class="loadingWrapper">
-                                <div class="activity"></div>
+                            <div className="loadingWrapper">
+                                <div className="activity"></div>
                             </div>
                         </td>
                         <td>
-                            <div class="loadingWrapper">
-                                <div class="activity"></div>
+                            <div className="loadingWrapper">
+                                <div className="activity"></div>
                             </div>
                         </td>
                         <td>
-                            <div class="loadingWrapper">
-                                <div class="activity"></div>
+                            <div className="loadingWrapper">
+                                <div className="activity"></div>
                             </div>
                         </td>
                         <td>
-                            <div class="loadingWrapper">
-                                <div class="activity"></div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="loadingWrapper">
-                                <div class="activity"></div>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="loadingWrapper">
-                                <div class="activity"></div>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="loadingWrapper">
-                                <div class="activity"></div>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="loadingWrapper">
-                                <div class="activity"></div>
+                            <div className="loadingWrapper">
+                                <div className="activity"></div>
                             </div>
                         </td>
                     </tr>
-                    <tr>
+                    <tr key={Math.random()} >
                         <td>
-                            <div class="loadingWrapper">
-                                <div class="activity"></div>
+                            <div className="loadingWrapper">
+                                <div className="activity"></div>
                             </div>
                         </td>
                         <td>
-                            <div class="loadingWrapper">
-                                <div class="activity"></div>
+                            <div className="loadingWrapper">
+                                <div className="activity"></div>
                             </div>
                         </td>
                         <td>
-                            <div class="loadingWrapper">
-                                <div class="activity"></div>
+                            <div className="loadingWrapper">
+                                <div className="activity"></div>
                             </div>
                         </td>
                         <td>
-                            <div class="loadingWrapper">
-                                <div class="activity"></div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="loadingWrapper">
-                                <div class="activity"></div>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="loadingWrapper">
-                                <div class="activity"></div>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="loadingWrapper">
-                                <div class="activity"></div>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="loadingWrapper">
-                                <div class="activity"></div>
+                            <div className="loadingWrapper">
+                                <div className="activity"></div>
                             </div>
                         </td>
                     </tr>
-                    <tr>
+                    <tr key={Math.random()} >
                         <td>
-                            <div class="loadingWrapper">
-                                <div class="activity"></div>
+                            <div className="loadingWrapper">
+                                <div className="activity"></div>
                             </div>
                         </td>
                         <td>
-                            <div class="loadingWrapper">
-                                <div class="activity"></div>
+                            <div className="loadingWrapper">
+                                <div className="activity"></div>
                             </div>
                         </td>
                         <td>
-                            <div class="loadingWrapper">
-                                <div class="activity"></div>
+                            <div className="loadingWrapper">
+                                <div className="activity"></div>
                             </div>
                         </td>
                         <td>
-                            <div class="loadingWrapper">
-                                <div class="activity"></div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="loadingWrapper">
-                                <div class="activity"></div>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="loadingWrapper">
-                                <div class="activity"></div>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="loadingWrapper">
-                                <div class="activity"></div>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="loadingWrapper">
-                                <div class="activity"></div>
+                            <div className="loadingWrapper">
+                                <div className="activity"></div>
                             </div>
                         </td>
                     </tr>
-                    <tr>
+                    <tr key={Math.random()} >
                         <td>
-                            <div class="loadingWrapper">
-                                <div class="activity"></div>
+                            <div className="loadingWrapper">
+                                <div className="activity"></div>
                             </div>
                         </td>
                         <td>
-                            <div class="loadingWrapper">
-                                <div class="activity"></div>
+                            <div className="loadingWrapper">
+                                <div className="activity"></div>
                             </div>
                         </td>
                         <td>
-                            <div class="loadingWrapper">
-                                <div class="activity"></div>
+                            <div className="loadingWrapper">
+                                <div className="activity"></div>
                             </div>
                         </td>
                         <td>
-                            <div class="loadingWrapper">
-                                <div class="activity"></div>
+                            <div className="loadingWrapper">
+                                <div className="activity"></div>
                             </div>
                         </td>
                     </tr>
-                    <tr>
+                    <tr key={Math.random()} >
                         <td>
-                            <div class="loadingWrapper">
-                                <div class="activity"></div>
+                            <div className="loadingWrapper">
+                                <div className="activity"></div>
                             </div>
                         </td>
                         <td>
-                            <div class="loadingWrapper">
-                                <div class="activity"></div>
+                            <div className="loadingWrapper">
+                                <div className="activity"></div>
                             </div>
                         </td>
                         <td>
-                            <div class="loadingWrapper">
-                                <div class="activity"></div>
+                            <div className="loadingWrapper">
+                                <div className="activity"></div>
                             </div>
                         </td>
                         <td>
-                            <div class="loadingWrapper">
-                                <div class="activity"></div>
+                            <div className="loadingWrapper">
+                                <div className="activity"></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr key={Math.random()} >
+                        <td>
+                            <div className="loadingWrapper">
+                                <div className="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div className="loadingWrapper">
+                                <div className="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div className="loadingWrapper">
+                                <div className="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div className="loadingWrapper">
+                                <div className="activity"></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr key={Math.random()} >
+                        <td>
+                            <div className="loadingWrapper">
+                                <div className="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div className="loadingWrapper">
+                                <div className="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div className="loadingWrapper">
+                                <div className="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div className="loadingWrapper">
+                                <div className="activity"></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr key={Math.random()} >
+                        <td>
+                            <div className="loadingWrapper">
+                                <div className="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div className="loadingWrapper">
+                                <div className="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div className="loadingWrapper">
+                                <div className="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div className="loadingWrapper">
+                                <div className="activity"></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr key={Math.random()} >
+                        <td>
+                            <div className="loadingWrapper">
+                                <div className="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div className="loadingWrapper">
+                                <div className="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div className="loadingWrapper">
+                                <div className="activity"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div className="loadingWrapper">
+                                <div className="activity"></div>
                             </div>
                         </td>
                     </tr> 
@@ -270,7 +270,6 @@ const Stations = () => {
 
     const [dataArr, setDataArr] = useState([]);
     const [currentPage,setCurrentPage] = useState(1);
-    const setCurrentPageNum = page => setCurrentPage(page);
     const [lastPage, setLastPage] = useState(0);
     const [limit,setLimit] = useState(50);
     const [total,setTotal] = useState(50000);
@@ -309,13 +308,12 @@ const Stations = () => {
         window.$('#stationModal #closeBtn').click();
         getAllStation();
     }
-
     useEffect(e => {
         getAllStation();
         return () => {
             window.$('#pageSpinner').show();
         }
-    }, [currentPage,limit]);
+    }, [currentPage]);
 
     return (
         <div  className="page-wrapper">
@@ -327,16 +325,16 @@ const Stations = () => {
                                 <div className="row">
                                     <div className="col-12 pageHead">
                                         <div>
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text"><IoSearchOutline /></span>
+                                            <div className="input-group">
+                                                <div className="input-group-prepend">
+                                                    <span className="input-group-text"><IoSearchOutline /></span>
                                                 </div>
-                                                <input type="text" class="form-control" placeholder="Search here" />
+                                                <input type="text" className="form-control" placeholder="Search here" />
                                             </div>
-                                            <div class="form-group mb-0 w-50  ">
-                                                <select onChange={e => setLimit(e.target.value)} class="form-control">
+                                            <div className="form-group mb-0 w-50  ">
+                                                <select onChange={e => setLimit(e.target.value)} defaultValue={'50'}  className="form-control">
                                                     <option value='50' >Select Result Limit</option>
-                                                    <option value="50" selected='selected' >50</option>
+                                                    <option value="50"  >50</option>
                                                     <option value="100">100</option>
                                                     <option value="500">500</option>
                                                     <option value="1000">1000</option>
@@ -344,13 +342,13 @@ const Stations = () => {
                                             </div>
                                         </div>
                                         <div>
-                                            <button type="button" onClick={() => modal('new')} class="btn btnIconC border mr-2" >
+                                            <button type="button" onClick={() => modal('new')} className="btn btnIconC border mr-2" >
                                                 <IoMdAdd /> New Station
                                             </button>
-                                            <button type="button" onClick={getAllStation} class="btn btnIconC border" >
+                                            <button type="button" onClick={getAllStation} className="btn btnIconC border" >
                                                 <IoRefreshOutline />
                                             </button>
-                                            <Pagination className='mb-0 ' total={total} currentPage={currentPage} setCurrentPage={setCurrentPageNum} lastPage={lastPage} pageSize={limit} />
+                                            <Pagination className='mb-0 ' total={total} currentPage={currentPage} setCurrentPage={setCurrentPage} lastPage={lastPage} pageSize={limit} />
                                         </div>
                                     </div>
                                 </div>
@@ -362,12 +360,12 @@ const Stations = () => {
                         </div>
                     </div>
                     {/* modal */}
-                    <div class="modal fade" id="stationModal" tabindex="-1">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title">Station Details</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
+                    <div className="modal fade" id="stationModal">
+                        <div className="modal-dialog modal-dialog-centered">
+                            <div className="modal-content">
+                                <div className="modal-header">
+                                    <h5 className="modal-title">Station Details</h5>
+                                    <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
                                     </button>
                                 </div>
                                 <form onSubmit={submitForm}>
@@ -389,14 +387,14 @@ const Stations = () => {
                                             <input type="text" value={pincode} onChange={e => setPincode(e.target.value) } className='form-control' id="inputPincode"/>
                                         </div>                   
                                     </div>
-                                    <div class="modal-footer">
+                                    <div className="modal-footer">
                                         <div id="modalSpinner" style={{transform:'scale(0.7)'}} >
-                                            <div class="spinner-border text-success" role="status">	
-                                                <span class="sr-only">Loading...</span>
+                                            <div className="spinner-border text-success" role="status">	
+                                                <span className="sr-only">Loading...</span>
                                             </div>
                                         </div>
                                         <button type='submit' className='btn btn-primary' >Submit</button>
-                                        <button type="button" id="closeBtn" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="button" id="closeBtn" className="btn btn-secondary" data-dismiss="modal">Close</button>
                                     </div>
                                 </form>
                             </div>

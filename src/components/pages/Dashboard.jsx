@@ -20,11 +20,11 @@ const Dashboard = () => {
     <div className="page-wrapper">
       <div className="page-content-wrapper">
         <motion.div initial={Animation.variants.out} animate={Animation.variants.in} exit={Animation.variants.exit} transition={Animation.PageTransition} className="page-content">
-          <div class="row ">
-            <div class="col-sm-12 col-md-4">
-              <div class="card " style={{ borderRadius: "15px" }}>
+          <div className="row ">
+            <div className="col-sm-12 col-md-4">
+              <div className="card " style={{ borderRadius: "15px" }}>
                 <Link style={{ textDecoration: "none" }} to="/sales">
-                  <div class="card-body">
+                  <div className="card-body">
                     <div>
                       <CardGraph1 title={'Sales'} count={'23,452'} />
                     </div>
@@ -32,10 +32,10 @@ const Dashboard = () => {
                 </Link>
               </div>
             </div>
-            <div class="col-sm-12 col-md-4">
-              <div class="card " style={{ borderRadius: "15px" }}>
+            <div className="col-sm-12 col-md-4">
+              <div className="card " style={{ borderRadius: "15px" }}>
                 <Link style={{ textDecoration: "none" }} to="/sales">
-                  <div class="card-body">
+                  <div className="card-body">
                     <div>
                       <CardGraph1 title={'ltrs'} count={'1,344'} />
                     </div>
@@ -43,10 +43,10 @@ const Dashboard = () => {
                 </Link>
               </div>
             </div>
-            <div class="col-sm-12 col-md-4">
-              <div class="card " style={{ borderRadius: "15px" }}>
+            <div className="col-sm-12 col-md-4">
+              <div className="card " style={{ borderRadius: "15px" }}>
                 <Link style={{ textDecoration: "none" }} to="/sales">
-                  <div class="card-body">
+                  <div className="card-body">
                     <div>
                       <CardGraph2 title={'Bills'} count={'454'} />
                     </div>

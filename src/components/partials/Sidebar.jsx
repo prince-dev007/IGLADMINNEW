@@ -33,46 +33,46 @@ const Sidebar = ({currentPath}) => {
         }
     }
     return (
-        <motion.div initial='out' animate='in' exit='out' variants={variants} class="sidebar-wrapper" data-simplebar="init" style={{overflowY:'auto', overflowX:'hidden', top:0, height :'100%'}}>
-            <div class="simplebar-wrapper" style={{margin : "0px"}} >
-                <div class="simplebar-mask">
-                    <div class="simplebar-offset" style={{right:0,bottom:0}}>
-                        <div class="simplebar-content-wrapper" style={{height:"100%",overflow:"hidden"}}>
-                            <div class="simplebar-content mm-active" style={{padding:"0"}}>
-                                <div class="sidebar-header" style={{position:'relative'}} >
-                                    <button onClick={navToggle} class=" toggle-btn d-flex align-items-center justify-content-center"> {navToggled ? <img src={img_brandLogo} class="logo-icon-2 img-fluid " style={{height:'45px',width:'45px'}} alt="" /> : <IoMenuOutline /> } 
+        <motion.div initial='out' animate='in' exit='out' variants={variants} className="sidebar-wrapper" data-simplebar="init" style={{overflowY:'auto', overflowX:'hidden', top:0, height :'100%'}}>
+            <div className="simplebar-wrapper" style={{margin : "0px"}} >
+                <div className="simplebar-mask">
+                    <div className="simplebar-offset" style={{right:0,bottom:0}}>
+                        <div className="simplebar-content-wrapper" style={{height:"100%",overflow:"hidden"}}>
+                            <div className="simplebar-content mm-active" style={{padding:"0"}}>
+                                <div className="sidebar-header" style={{position:'relative'}} >
+                                    <button onClick={navToggle} className=" toggle-btn d-flex align-items-center justify-content-center"> {navToggled ? <img src={img_brandLogo} className="logo-icon-2 img-fluid " style={{height:'45px',width:'45px'}} alt="" /> : <IoMenuOutline /> } 
                                     </button>
-                                    <div class="imgBrand mr-2">
-                                        <img src={img_brandLogo} class="logo-icon-2 img-fluid" alt="" />
+                                    <div className="imgBrand mr-2">
+                                        <img src={img_brandLogo} className="logo-icon-2 img-fluid" alt="" />
                                     </div>
                                 </div>
-                                <ul class="metismenu mm-show" id="menu">
-                                    <li class={currentPath === '/dashboard' && activeClassName} onClick={navToggleSm}>
+                                <ul className="metismenu mm-show" id="menu">
+                                    <li className={currentPath === '/dashboard' ? activeClassName : ''} onClick={navToggleSm}>
                                         <Link to={'/dashboard'}  >
-                                            <div class="parent-icon icon-color-2"><MdDashboard />
+                                            <div className="parent-icon icon-color-2"><MdDashboard />
                                             </div>
-                                            <div class="menu-title">Dashboard</div>
+                                            <div className="menu-title">Dashboard</div>
                                         </Link>
                                     </li>
-                                    <li class={currentPath === '/sales' && activeClassName}  onClick={navToggleSm}>
+                                    <li className={currentPath === '/sales' ? activeClassName : ''}  onClick={navToggleSm}>
                                         <Link to={'/sales'} >
-                                            <div class="parent-icon icon-color-3"> <GoGraph />
+                                            <div className="parent-icon icon-color-3"> <GoGraph />
                                             </div>
-                                            <div class="menu-title">Sales</div>
+                                            <div className="menu-title">Sales</div>
                                         </Link>
                                     </li>
-                                    <li class={currentPath === '/reports' && activeClassName}  onClick={navToggleSm}>
+                                    <li className={currentPath === '/reports' ? activeClassName : ''}  onClick={navToggleSm}>
                                         <Link to={'/reports'} >
-                                            <div class="parent-icon icon-color-3"> <FcStatistics />
+                                            <div className="parent-icon icon-color-3"> <FcStatistics />
                                             </div>
-                                            <div class="menu-title">Reports</div>
+                                            <div className="menu-title">Reports</div>
                                         </Link>
                                     </li>
-                                    <li class={currentPath === '/stations' && activeClassName}  onClick={navToggleSm}>
+                                    <li className={currentPath === '/stations' ? activeClassName : ''}  onClick={navToggleSm}>
                                         <Link to={'/stations'} >
-                                            <div class="parent-icon icon-color-3"> <FcStatistics />
+                                            <div className="parent-icon icon-color-3"> <FcStatistics />
                                             </div>
-                                            <div class="menu-title">Stations</div>
+                                            <div className="menu-title">Stations</div>
                                         </Link>
                                     </li>
                                 </ul>
