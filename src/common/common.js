@@ -47,6 +47,7 @@ export const callAPI = async({ URL = '', method = 'GET', body = '', bodyType = '
 
 
         if (response.status !== 200) {
+            console.log(await response.text())
             return {
                 status: 500
             }

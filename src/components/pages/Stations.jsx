@@ -16,18 +16,6 @@ const Stations = () => {
     window.$('#pageSpinner').hide();
     window.$('#stationModal #modalSpinner').hide();
 
-
-    // modal
-    const modal = (action = null, data = null) => {
-        if(action === 'new' || action === 'edit' ) {
-            window.$('#stationModal').modal('show');
-            setStationName(action === 'new' ? data.stationName : '');
-            setDSO(action === 'new' ?  data.DSO : '');
-            setAddress(action === 'new' ? data.address : '');
-            setPincode(action === 'new' ?  data.pincode : '');
-            setStationId(action === 'new' ?  data._id : action);
-        }      
-    }
     const renderTable = () => {
         return (
             <>
@@ -270,23 +258,17 @@ const Stations = () => {
 
     const [dataArr, setDataArr] = useState([]);
     const [currentPage,setCurrentPage] = useState(1);
-    const [lastPage, setLastPage] = useState(0);
     const [limit,setLimit] = useState(50);
     const [total,setTotal] = useState(50000);
-    const getAllStation = async () => {    
-        window.$('#pageSpinner').show();
+    const getAllStation = async () => {            
         setDataArr([]);   
         const response = await callAPI({
             URL : 'stations/all?page=' + currentPage + '&limit=' + limit,
         });
         if(response.status !== 200 && response.status !== 404)
             return ;
-        // setCurrentPage(response.pageNum);
-        setLastPage(response.lastPage);
-        setLimit(response.pageSize);
         setTotal(response.total);
         setDataArr(response.status === 200 ? response.data : []);
-        window.$('#pageSpinner').hide();    
     }
 
     const [stationId ,setStationId] = useState('new');
@@ -308,12 +290,34 @@ const Stations = () => {
         window.$('#stationModal #closeBtn').click();
         getAllStation();
     }
+    // modal
+    const modal = (action = null, data = null) => {
+        if(action === 'new' || action === 'edit' ) {
+            window.$('#stationModal').modal('show');
+            setStationName(action === 'edit' ? data.stationName : '');
+            setDSO(action === 'edit' ?  data.DSO : '');
+            setAddress(action === 'edit' ? data.address : '');
+            setPincode(action === 'edit' ?  data.pincode : '');
+            setStationId(action === 'edit' ?  data._id : action);
+        }      
+    }
+
     useEffect(e => {
+        const getAllStation = async () => {            
+            setDataArr([]);   
+            const response = await callAPI({
+                URL : 'stations/all?page=' + currentPage + '&limit=' + limit,
+            });
+            if(response.status !== 200 && response.status !== 404)
+                return ;
+            setTotal(response.total);
+            setDataArr(response.status === 200 ? response.data : []);
+        }
         getAllStation();
         return () => {
             window.$('#pageSpinner').show();
         }
-    }, [currentPage]);
+    }, [currentPage,limit]);
 
     return (
         <div  className="page-wrapper">
@@ -343,12 +347,12 @@ const Stations = () => {
                                         </div>
                                         <div>
                                             <button type="button" onClick={() => modal('new')} className="btn btnIconC border mr-2" >
-                                                <IoMdAdd /> New Station
+                                                <IoMdAdd /> New 
                                             </button>
                                             <button type="button" onClick={getAllStation} className="btn btnIconC border" >
                                                 <IoRefreshOutline />
                                             </button>
-                                            <Pagination className='mb-0 ' total={total} currentPage={currentPage} setCurrentPage={setCurrentPage} lastPage={lastPage} pageSize={limit} />
+                                            <Pagination className='mb-0 ' total={total} currentPage={currentPage} setCurrentPage={setCurrentPage} pageSize={limit} />
                                         </div>
                                     </div>
                                 </div>

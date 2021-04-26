@@ -2,11 +2,6 @@
     --successColor: rgb(87, 185, 82);
 }
 
-
-/* * {
-    transition: all 1ms ease-in-out;
-} */
-
 .toggled .page-content-wrapper {
     margin-left: 260px;
 }
@@ -56,7 +51,7 @@
 /* sidebar brand logo */
 
 .sidebar-header .logo-text {
-    font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+    font-family: "Open Sans", Arial, Helvetica, sans-serif;
     font-weight: 900;
     font-size: 32px;
     color: var(--successColor);
@@ -179,6 +174,22 @@
     border-radius: 5px;
 }
 
+.scrollTable {
+    height: 440px;
+    overflow-y: auto;
+    position: relative;
+}
+
+.scrollTable table {
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+.scrollTable thead th {
+    position: sticky;
+    top: -1px;
+}
+
 
 /* page */
 
@@ -267,7 +278,7 @@
     background: #fff;
     width: 16px;
     height: 16px;
-    content: '';
+    content: "";
 }
 
 @keyframes spin {
@@ -397,9 +408,9 @@
     left: -45%;
     height: 100%;
     width: 45%;
-    background-image: linear-gradient(to left, rgba(251, 251, 251, .05), rgba(251, 251, 251, .3), rgba(251, 251, 251, .6), rgba(251, 251, 251, .3), rgba(251, 251, 251, .05));
-    background-image: -moz-linear-gradient(to left, rgba(251, 251, 251, .05), rgba(251, 251, 251, .3), rgba(251, 251, 251, .6), rgba(251, 251, 251, .3), rgba(251, 251, 251, .05));
-    background-image: -webkit-linear-gradient(to left, rgba(251, 251, 251, .05), rgba(251, 251, 251, .3), rgba(251, 251, 251, .6), rgba(251, 251, 251, .3), rgba(251, 251, 251, .05));
+    background-image: linear-gradient( to left, rgba(251, 251, 251, 0.05), rgba(251, 251, 251, 0.3), rgba(251, 251, 251, 0.6), rgba(251, 251, 251, 0.3), rgba(251, 251, 251, 0.05));
+    background-image: -moz-linear-gradient( to left, rgba(251, 251, 251, 0.05), rgba(251, 251, 251, 0.3), rgba(251, 251, 251, 0.6), rgba(251, 251, 251, 0.3), rgba(251, 251, 251, 0.05));
+    background-image: -webkit-linear-gradient( to left, rgba(251, 251, 251, 0.05), rgba(251, 251, 251, 0.3), rgba(251, 251, 251, 0.6), rgba(251, 251, 251, 0.3), rgba(251, 251, 251, 0.05));
     animation: loading 1s infinite;
 }
 

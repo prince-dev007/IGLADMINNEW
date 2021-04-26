@@ -2,7 +2,7 @@ const DataTable = ({ tableRowHead, renderTable }) => {
     tableRowHead = tableRowHead.split(",")
     return (
         <>
-        <div className="table-responsive">
+        <div className="table-responsive scrollTable">
             <table className="table table-hover">
                 <thead className="thead-light">
                     <tr >

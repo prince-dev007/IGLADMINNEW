@@ -590,7 +590,22 @@ const Sales = () => {
         setDataArr(response.status === 200 ? response.data : []);
         window.$('#pageSpinner').hide();    
     }
-    useEffect(e => {
+    useEffect( e => {
+        const getAllSale = async () => {    
+            setDataArr([]);
+            window.$('#pageSpinner').show();
+            const response = await callAPI({
+                URL : 'sales/all?page=' + currentPage + '&limit=' + limit,
+            });
+            if(response.status !== 200 && response.status !== 404)
+                return ;
+            // setCurrentPage(response.pageNum);
+            setLastPage(response.lastPage);
+            setLimit(response.pageSize);
+            setTotal(response.total);
+            setDataArr(response.status === 200 ? response.data : []);
+            window.$('#pageSpinner').hide();    
+        }
         getAllSale();
         return () => {
             window.$('#pageSpinner').show();
