@@ -174,7 +174,8 @@
     border-radius: 5px;
 }
 
-.scrollTable {
+
+/* .scrollTable {
     height: 440px;
     overflow-y: auto;
     position: relative;
@@ -188,7 +189,7 @@
 .scrollTable thead th {
     position: sticky;
     top: -1px;
-}
+} */
 
 
 /* page */

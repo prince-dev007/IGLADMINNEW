@@ -1,4 +1,8 @@
-export const getIsLoggedIn = () => localStorage.getItem('isAuth') === 'true' ? true : false;
+export const getIsLoggedIn = () => {
+    if (localStorage.getItem('isAuth') === 'true' && localStorage.getItem('user'))
+        return true;
+    return false;
+}
 export const logIn = user => {
     localStorage.setItem('isAuth', true);
     localStorage.setItem('user', JSON.stringify(user));

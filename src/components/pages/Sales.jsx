@@ -570,47 +570,30 @@ const Sales = () => {
         );
     }
 
+    const triggerGetAll = () => setRandom(Math.random());
+    const [random, setRandom] = useState(0);
     const [dataArr, setDataArr] = useState([]);
     const [currentPage,setCurrentPage] = useState(1);
     const [lastPage, setLastPage] = useState(0);
     const [limit,setLimit] = useState(50);
     const [total,setTotal] = useState(50000);
-    const getAllSale = async () => {    
-        setDataArr([]);
-        window.$('#pageSpinner').show();
-        const response = await callAPI({
-            URL : 'sales/all?page=' + currentPage + '&limit=' + limit,
-        });
-        if(response.status !== 200 && response.status !== 404)
-            return ;
-        // setCurrentPage(response.pageNum);
-        setLastPage(response.lastPage);
-        setLimit(response.pageSize);
-        setTotal(response.total);
-        setDataArr(response.status === 200 ? response.data : []);
-        window.$('#pageSpinner').hide();    
-    }
     useEffect( e => {
         const getAllSale = async () => {    
             setDataArr([]);
-            window.$('#pageSpinner').show();
             const response = await callAPI({
                 URL : 'sales/all?page=' + currentPage + '&limit=' + limit,
             });
             if(response.status !== 200 && response.status !== 404)
                 return ;
-            // setCurrentPage(response.pageNum);
             setLastPage(response.lastPage);
-            setLimit(response.pageSize);
             setTotal(response.total);
             setDataArr(response.status === 200 ? response.data : []);
-            window.$('#pageSpinner').hide();    
         }
         getAllSale();
         return () => {
             window.$('#pageSpinner').show();
         }
-    }, [currentPage,limit]);
+    }, [currentPage,limit, random]);
 
     return (
         <div  className="page-wrapper">
@@ -639,7 +622,7 @@ const Sales = () => {
                                             </div>
                                         </div>
                                         <div>
-                                            <button type="button" onClick={getAllSale} className="btn btnIconC border" >
+                                            <button type="button" onClick={triggerGetAll} className="btn btnIconC border" >
                                                 <IoRefreshOutline />
                                             </button>
                                             <Pagination className='mb-0 ' total={total} currentPage={currentPage} setCurrentPage={setCurrentPage} lastPage={lastPage} pageSize={limit} />

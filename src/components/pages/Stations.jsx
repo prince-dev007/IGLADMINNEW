@@ -256,26 +256,7 @@ const Stations = () => {
         );
     }
 
-    const [dataArr, setDataArr] = useState([]);
-    const [currentPage,setCurrentPage] = useState(1);
-    const [limit,setLimit] = useState(50);
-    const [total,setTotal] = useState(50000);
-    const getAllStation = async () => {            
-        setDataArr([]);   
-        const response = await callAPI({
-            URL : 'stations/all?page=' + currentPage + '&limit=' + limit,
-        });
-        if(response.status !== 200 && response.status !== 404)
-            return ;
-        setTotal(response.total);
-        setDataArr(response.status === 200 ? response.data : []);
-    }
-
-    const [stationId ,setStationId] = useState('new');
-    const [stationName, setStationName] = useState('');
-    const [DSO, setDSO] = useState('');
-    const [address, setAddress] = useState('');
-    const [pincode, setPincode] = useState('');
+    // submit form PUT/POST
     const submitForm = async e => {
         e.preventDefault();
         window.$('#stationModal #modalSpinner').show();
@@ -288,9 +269,15 @@ const Stations = () => {
         });
         window.$('#stationModal #modalSpinner').hide();
         window.$('#stationModal #closeBtn').click();
-        getAllStation();
+        triggerGetAll();
     }
+
     // modal
+    const [stationId ,setStationId] = useState('new');
+    const [stationName, setStationName] = useState('');
+    const [DSO, setDSO] = useState('');
+    const [address, setAddress] = useState('');
+    const [pincode, setPincode] = useState('');
     const modal = (action = null, data = null) => {
         if(action === 'new' || action === 'edit' ) {
             window.$('#stationModal').modal('show');
@@ -302,6 +289,13 @@ const Stations = () => {
         }      
     }
 
+    // get all
+    const triggerGetAll = () => setRandom(Math.random());
+    const [random, setRandom] = useState(0);
+    const [dataArr, setDataArr] = useState([]);
+    const [currentPage,setCurrentPage] = useState(1);
+    const [limit,setLimit] = useState(50);
+    const [total,setTotal] = useState(50000);
     useEffect(e => {
         const getAllStation = async () => {            
             setDataArr([]);   
@@ -317,7 +311,7 @@ const Stations = () => {
         return () => {
             window.$('#pageSpinner').show();
         }
-    }, [currentPage,limit]);
+    }, [currentPage,limit,random]);
 
     return (
         <div  className="page-wrapper">
@@ -349,7 +343,7 @@ const Stations = () => {
                                             <button type="button" onClick={() => modal('new')} className="btn btnIconC border mr-2" >
                                                 <IoMdAdd /> New 
                                             </button>
-                                            <button type="button" onClick={getAllStation} className="btn btnIconC border" >
+                                            <button type="button" onClick={triggerGetAll} className="btn btnIconC border" >
                                                 <IoRefreshOutline />
                                             </button>
                                             <Pagination className='mb-0 ' total={total} currentPage={currentPage} setCurrentPage={setCurrentPage} pageSize={limit} />
