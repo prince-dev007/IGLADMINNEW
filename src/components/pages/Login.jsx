@@ -1,53 +1,98 @@
-import { Redirect, useHistory } from 'react-router-dom';
-import {useEffect, useState} from 'react';
-import { getIsLoggedIn, logIn } from '../../common/Auth';
-
+import { useState, useEffect } from 'react';
+import { useHistory } from 'react-router';
+// animation
+import { motion } from "framer-motion";
+// styles
+import '../../assets/css/Login.css';
 // images
-import loginFrontImg from '../../assets/images/login-front-img.jpg'
-import img_brand from '../../assets/images/custom/brand.png'
-const Login = () => {
-    const history = useHistory();
+import img_brandLogo from '../../assets/images/custom/brandLogo.png';
+// auth
+import { logIn, getIsLoggedIn } from '../../common/Auth';
+import { callAPI } from '../../common/common';
 
-	const [email,setEmail] = useState('');
-	const [password,setPassword] = useState('');
-	useEffect(() => {
+const Login2 = () => {
+    const history = useHistory();
+    const [email,setEmail] = useState('');
+    const [pswd,setPswd] = useState('');
+    const [loginBtnTxt,setloginBtnTxt]= useState('Log in');
+    const [alertText,setAlertTxt] = useState('');
+    
+    const [spinnerClass, setSpinner] = useState('');
+    useEffect(() => {
+        if (getIsLoggedIn()) {
+            history.push('/dashboard');
+        }
         document.title = 'IGL ADMIN | Login';
-    }, [])
-    if(getIsLoggedIn()) 
-       return <Redirect to={{pathname :'/dashboard'}} />;
+    }, [history]);
+    const handleLogin = async e => {
+        setAlertTxt('');
+        e.preventDefault();
+        if(!email || !pswd)
+            return setAlertTxt('Required Email and Password');
+        setSpinner('loadingBtn');
+        const response = await callAPI({
+            URL : 'auth/login',
+            method : 'POST',
+            body : {
+                email : email,
+                password : pswd
+            }
+        });
+        setSpinner('');
+        if(response.status !== 200) {
+           return setAlertTxt(response.message);
+        }
+        setAlertTxt('');
+        setloginBtnTxt('Redirecting...');
+        logIn(response.data);
+        history.push('/dashboard');
+    }
+
+    const variants = {
+        in: {
+            opacity: 1,
+            y: 0
+        },
+        out: {
+            opacity: 0,
+            y: "-100%"
+        }
+
+    }
     return (
-        <div className="section-authentication-login">
-			<div className="row">
-				<div className="col-12 col-lg-10 mx-auto">
-					<div className="card radius-15">
-						<div className="row no-gutters">
-							<div className="col-lg-6">
-								<div className="card-body p-md-5">
-									<div className="text-center">
-										<img src={img_brand} className='img-fluid' alt=""/>
-										<h3 className="mt-4 font-weight-bold">ADMIN</h3>
-									</div>
-									<div className="form-group mt-4">
-										<label>Email Address</label>
-										<input type="text" className="form-control" onChange={e => setEmail(e.target.value)} placeholder="Enter your email address"/>
-									</div>
-									<div className="form-group">
-										<label>Password</label>
-										<input type="password" className="form-control" onChange={e => setPassword(e.target.value)} placeholder="Enter your password"/>
-									</div>
-									<div className="btn-group mt-3 w-100">
-										<button type="button" className="btn btn-block submitBtn" onClick={e => { logIn(); history.push('/dashboard') }}>Log In</button>
-									</div>
-								</div>
-							</div>
-							<div className="col-lg-6">
-								<img src={loginFrontImg} className="card-img login-img h-100" alt="..."/>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="loginBox">
+            <div className='backdrop'></div>
+            <div className="login">
+                <form onSubmit={handleLogin} >
+                    <motion.div initial={variants.out} animate={variants.in} exit={variants.out} variants={variants} className="card cardLogin">
+                        <div className="card-title text-center">
+                            <div className="imgWrapper text-center">
+                                <img src={img_brandLogo} className='img-fluid' alt="" />
+                            </div>
+                        </div>
+                        <div className="card-body">
+                            <div className="head">
+                                <h6>Log in into your account</h6>
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor='inputEmail'>Email</label>
+                                <input type="email" onChange={e => setEmail(e.target.value)} className='form-control' title='Enter email address' placeholder='Email Address' id="inputEmail" />
+                            </div>
+                            <div className="form-group" style={{marginBottom:'10px'}}>
+                                <label htmlFor='inputPswd'>Password</label>
+                                <input type="password" onChange={e => setPswd(e.target.value)} className='form-control' title='Enter password' placeholder='Password' id="inputPswd" />
+                            </div>
+                            <div style={{ opacity : alertText ? 1 : 0  ,backgroundColor: '#f44336',marginBottom:'10px',transition : 'all 0.2s',borderRadius:'3px',padding:'2px 10px',color:'#fff' }} >
+                                <label style={{marginBottom:'0'}} >{alertText}</label>
+                            </div>
+                            <button className={'btn ' + (spinnerClass ? spinnerClass : '')} onClick={handleLogin} id="loginBtn">
+                                <span className={spinnerClass ? 'btnText hideBtnText' : 'btnText'}>{loginBtnTxt}</span>
+                            </button>
+                        </div>
+                    </motion.div>
+                </form>
+            </div>
+        </motion.div>
     );
 }
-export default Login;
+export default Login2;

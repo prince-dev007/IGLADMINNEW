@@ -135,3 +135,17 @@
     margin-top: 0;
     height: 100%;
 }
+
+
+/* table height */
+
+.scrollTable {
+    height: calc(100vh - (var(--navHight) + 15px + 20px + 66px + 20px));
+    min-height: 440px !important;
+}
+
+@media screen and (max-width :1160px) {
+    .scrollTable {
+        height: calc(100vh - (var(--navHight) + 15px + 20px + 170px + 20px));
+    }
+}

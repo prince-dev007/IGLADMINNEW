@@ -599,7 +599,7 @@ const Sales = () => {
         <div  className="page-wrapper">
             <div className="page-content-wrapper">
                 <motion.div initial={Animation.variants.out} animate={Animation.variants.in} exit={Animation.variants.exit} transition={Animation.PageTransition} className="page-content">
-                    <div className="card ">
+                    <div className="card dataCard">
                         <div className="card-body">
                             <div className="card-title ">
                                 <div className="row">

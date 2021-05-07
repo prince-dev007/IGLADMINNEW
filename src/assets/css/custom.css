@@ -174,9 +174,7 @@
     border-radius: 5px;
 }
 
-
-/* .scrollTable {
-    height: 440px;
+.scrollTable {
     overflow-y: auto;
     position: relative;
 }
@@ -189,7 +187,15 @@
 .scrollTable thead th {
     position: sticky;
     top: -1px;
-} */
+}
+
+.dataCard {
+    margin-bottom: 0;
+}
+
+.dataCard .table {
+    margin-bottom: 5px;
+}
 
 
 /* page */

@@ -16,7 +16,7 @@ import Dashboard from "./components/pages/Dashboard";
 import { handleSidebar } from "./common/navbar";
 import Sales from "./components/pages/Sales";
 import Reports from "./components/pages/Reports";
-import Login2 from "./components/pages/Login2";
+import Login from "./components/pages/Login";
 import Stations from "./components/pages/Stations";
 
 function App() {
@@ -32,7 +32,7 @@ function App() {
       )}
       <AnimatePresence exitBeforeEnter>
         <Switch location={location} key={location.pathname} >
-          <Route path="/" exact component={Login2} />
+          <Route path="/" exact component={Login} />
           <ProtectedRoute path="/dashboard" exact component={Dashboard} />
           <ProtectedRoute path="/sales" exact component={Sales} />
           <ProtectedRoute path="/reports" exact component={Reports} />
