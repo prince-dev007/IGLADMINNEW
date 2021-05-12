@@ -390,9 +390,14 @@
     border-radius: 8px;
 }
 
-.modal.show {
+
+/* .modal-backdrop.show {
     -webkit-backdrop-filter: blur(2px) !important;
     backdrop-filter: blur(2px);
+} */
+
+.modal-backdrop.show {
+    opacity: 0.7;
 }
 
 
@@ -432,4 +437,40 @@
 
 td {
     height: 40px;
+}
+
+
+/* form */
+
+.formBox {
+    margin-bottom: 1rem;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.formBox legend {
+    font-size: 13px;
+    width: auto;
+    margin: 0 5px;
+    letter-spacing: 0.2px;
+    padding: 0 2px;
+}
+
+.formField {
+    width: 100%;
+    padding: 2px 5px 7px 8px;
+    font-size: 1rem;
+    letter-spacing: 0.2px;
+    border: none;
+}
+
+input {
+    outline: none;
+    box-shadow: none;
+}
+
+.form-control:focus {
+    outline: none;
+    box-shadow: none;
 }

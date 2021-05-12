@@ -582,6 +582,7 @@ const Sales = () => {
             setDataArr([]);
             const response = await callAPI({
                 URL : 'sales/all?page=' + currentPage + '&limit=' + limit,
+                abort : true
             });
             if(response.status !== 200 && response.status !== 404)
                 return ;

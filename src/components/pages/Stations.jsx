@@ -3,8 +3,9 @@ import DataTable from '../partials/DataTable';
 import { motion } from "framer-motion";
 
 // icons
-import { IoSearchOutline, IoRefreshOutline } from 'react-icons/io5';
-import {IoMdAdd} from 'react-icons/io';
+import { IoRefreshOutline } from 'react-icons/io5';
+import {RiGasStationLine} from 'react-icons/ri';
+import { IoMdAdd } from 'react-icons/io';
 import Pagination from '../partials/Pagination';
 import Animation from '../../common/Animation';
 import { callAPI } from '../../common/common';
@@ -21,236 +22,17 @@ const Stations = () => {
             <>
                 {
                     dataArr.length > 0 ? dataArr.map(item => (
-                        <tr  key={Math.random()} onClick={() => modal('edit', item)}>
+                        <tr key={Math.random()} onClick={() => modal('edit', item)}>
                             <td>{item.stationName}</td>
                             <td>{item.DSO}</td>
                             <td>{item.address}</td>
                             <td>{item.pincode}</td>
                         </tr>
-                    )) 
-                    : 
-                    <>
-                    <tr key={Math.random()} >
-                        <td>
-                            <div className="loadingWrapper">
-                                <div className="activity"></div>
-                            </div>
-                        </td>
-                        <td>
-                            <div className="loadingWrapper">
-                                <div className="activity"></div>
-                            </div>
-                        </td>
-                        <td>
-                            <div className="loadingWrapper">
-                                <div className="activity"></div>
-                            </div>
-                        </td>
-                        <td>
-                            <div className="loadingWrapper">
-                                <div className="activity"></div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr key={Math.random()} >
-                        <td>
-                            <div className="loadingWrapper">
-                                <div className="activity"></div>
-                            </div>
-                        </td>
-                        <td>
-                            <div className="loadingWrapper">
-                                <div className="activity"></div>
-                            </div>
-                        </td>
-                        <td>
-                            <div className="loadingWrapper">
-                                <div className="activity"></div>
-                            </div>
-                        </td>
-                        <td>
-                            <div className="loadingWrapper">
-                                <div className="activity"></div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr key={Math.random()} >
-                        <td>
-                            <div className="loadingWrapper">
-                                <div className="activity"></div>
-                            </div>
-                        </td>
-                        <td>
-                            <div className="loadingWrapper">
-                                <div className="activity"></div>
-                            </div>
-                        </td>
-                        <td>
-                            <div className="loadingWrapper">
-                                <div className="activity"></div>
-                            </div>
-                        </td>
-                        <td>
-                            <div className="loadingWrapper">
-                                <div className="activity"></div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr key={Math.random()} >
-                        <td>
-                            <div className="loadingWrapper">
-                                <div className="activity"></div>
-                            </div>
-                        </td>
-                        <td>
-                            <div className="loadingWrapper">
-                                <div className="activity"></div>
-                            </div>
-                        </td>
-                        <td>
-                            <div className="loadingWrapper">
-                                <div className="activity"></div>
-                            </div>
-                        </td>
-                        <td>
-                            <div className="loadingWrapper">
-                                <div className="activity"></div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr key={Math.random()} >
-                        <td>
-                            <div className="loadingWrapper">
-                                <div className="activity"></div>
-                            </div>
-                        </td>
-                        <td>
-                            <div className="loadingWrapper">
-                                <div className="activity"></div>
-                            </div>
-                        </td>
-                        <td>
-                            <div className="loadingWrapper">
-                                <div className="activity"></div>
-                            </div>
-                        </td>
-                        <td>
-                            <div className="loadingWrapper">
-                                <div className="activity"></div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr key={Math.random()} >
-                        <td>
-                            <div className="loadingWrapper">
-                                <div className="activity"></div>
-                            </div>
-                        </td>
-                        <td>
-                            <div className="loadingWrapper">
-                                <div className="activity"></div>
-                            </div>
-                        </td>
-                        <td>
-                            <div className="loadingWrapper">
-                                <div className="activity"></div>
-                            </div>
-                        </td>
-                        <td>
-                            <div className="loadingWrapper">
-                                <div className="activity"></div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr key={Math.random()} >
-                        <td>
-                            <div className="loadingWrapper">
-                                <div className="activity"></div>
-                            </div>
-                        </td>
-                        <td>
-                            <div className="loadingWrapper">
-                                <div className="activity"></div>
-                            </div>
-                        </td>
-                        <td>
-                            <div className="loadingWrapper">
-                                <div className="activity"></div>
-                            </div>
-                        </td>
-                        <td>
-                            <div className="loadingWrapper">
-                                <div className="activity"></div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr key={Math.random()} >
-                        <td>
-                            <div className="loadingWrapper">
-                                <div className="activity"></div>
-                            </div>
-                        </td>
-                        <td>
-                            <div className="loadingWrapper">
-                                <div className="activity"></div>
-                            </div>
-                        </td>
-                        <td>
-                            <div className="loadingWrapper">
-                                <div className="activity"></div>
-                            </div>
-                        </td>
-                        <td>
-                            <div className="loadingWrapper">
-                                <div className="activity"></div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr key={Math.random()} >
-                        <td>
-                            <div className="loadingWrapper">
-                                <div className="activity"></div>
-                            </div>
-                        </td>
-                        <td>
-                            <div className="loadingWrapper">
-                                <div className="activity"></div>
-                            </div>
-                        </td>
-                        <td>
-                            <div className="loadingWrapper">
-                                <div className="activity"></div>
-                            </div>
-                        </td>
-                        <td>
-                            <div className="loadingWrapper">
-                                <div className="activity"></div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr key={Math.random()} >
-                        <td>
-                            <div className="loadingWrapper">
-                                <div className="activity"></div>
-                            </div>
-                        </td>
-                        <td>
-                            <div className="loadingWrapper">
-                                <div className="activity"></div>
-                            </div>
-                        </td>
-                        <td>
-                            <div className="loadingWrapper">
-                                <div className="activity"></div>
-                            </div>
-                        </td>
-                        <td>
-                            <div className="loadingWrapper">
-                                <div className="activity"></div>
-                            </div>
-                        </td>
-                    </tr> 
-                     </>
+                    ))
+                        :
+                        <tr>
+                            <td colSpan={4}>...Record Not Found</td>
+                        </tr>
                 }
             </>
         );
@@ -261,10 +43,10 @@ const Stations = () => {
         e.preventDefault();
         window.$('#stationModal #modalSpinner').show();
         await callAPI({
-            URL : 'stations/' + stationId,
-            method : stationId === 'new' ? 'POST' : 'PUT',
-            body : {
-                stationName,DSO,address,pincode
+            URL: 'stations/' + stationId,
+            method: stationId === 'new' ? 'POST' : 'PUT',
+            body: {
+                stationName, DSO, address, pincode
             }
         });
         window.$('#stationModal #modalSpinner').hide();
@@ -273,37 +55,41 @@ const Stations = () => {
     }
 
     // modal
-    const [stationId ,setStationId] = useState('new');
+    const [stationId, setStationId] = useState('new');
     const [stationName, setStationName] = useState('');
     const [DSO, setDSO] = useState('');
     const [address, setAddress] = useState('');
     const [pincode, setPincode] = useState('');
     const modal = (action = null, data = null) => {
-        if(action === 'new' || action === 'edit' ) {
+        if (action === 'new' || action === 'edit') {
             window.$('#stationModal').modal('show');
             setStationName(action === 'edit' ? data.stationName : '');
-            setDSO(action === 'edit' ?  data.DSO : '');
+            setDSO(action === 'edit' ? data.DSO : '');
             setAddress(action === 'edit' ? data.address : '');
-            setPincode(action === 'edit' ?  data.pincode : '');
-            setStationId(action === 'edit' ?  data._id : action);
-        }      
+            setPincode(action === 'edit' ? data.pincode : '');
+            setStationId(action === 'edit' ? data._id : action);
+        }
     }
 
     // get all
+//     const progessPageholder = <div className="loadingWrapper " >
+//     <div className="activity"></div>
+// </div>;
     const triggerGetAll = () => setRandom(Math.random());
     const [random, setRandom] = useState(0);
     const [dataArr, setDataArr] = useState([]);
-    const [currentPage,setCurrentPage] = useState(1);
-    const [limit,setLimit] = useState(50);
-    const [total,setTotal] = useState(50000);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [limit, setLimit] = useState(50);
+    const [total, setTotal] = useState(50000);
     useEffect(e => {
-        const getAllStation = async () => {            
-            setDataArr([]);   
+        const getAllStation = async () => {
+            setDataArr([]);
             const response = await callAPI({
-                URL : 'stations/all?page=' + currentPage + '&limit=' + limit,
+                URL: 'stations/all?page=' + currentPage + '&limit=' + limit,
+                abort : true
             });
-            if(response.status !== 200 && response.status !== 404)
-                return ;
+            if (response.status !== 200 && response.status !== 404)
+                return;
             setTotal(response.total);
             setDataArr(response.status === 200 ? response.data : []);
         }
@@ -311,10 +97,10 @@ const Stations = () => {
         return () => {
             window.$('#pageSpinner').show();
         }
-    }, [currentPage,limit,random]);
+    }, [currentPage, limit, random]);
 
     return (
-        <div  className="page-wrapper">
+        <div className="page-wrapper">
             <div className="page-content-wrapper">
                 <motion.div initial={Animation.variants.out} animate={Animation.variants.in} exit={Animation.variants.exit} transition={Animation.PageTransition} className="page-content">
                     <div className="card dataCard">
@@ -325,12 +111,12 @@ const Stations = () => {
                                         <div>
                                             <div className="input-group">
                                                 <div className="input-group-prepend">
-                                                    <span className="input-group-text"><IoSearchOutline /></span>
+                                                    <span className="input-group-text"><RiGasStationLine /></span>
                                                 </div>
                                                 <input type="text" className="form-control" placeholder="Search here" />
                                             </div>
                                             <div className="form-group mb-0 w-50  ">
-                                                <select onChange={e => setLimit(e.target.value)} defaultValue={'50'}  className="form-control">
+                                                <select onChange={e => setLimit(e.target.value)} defaultValue={'50'} className="form-control">
                                                     <option value='50' >Select Result Limit</option>
                                                     <option value="50"  >50</option>
                                                     <option value="100">100</option>
@@ -341,7 +127,7 @@ const Stations = () => {
                                         </div>
                                         <div>
                                             <button type="button" onClick={() => modal('new')} className="btn btnIconC border mr-2" >
-                                                <IoMdAdd /> New 
+                                                <IoMdAdd /> New
                                             </button>
                                             <button type="button" onClick={triggerGetAll} className="btn btnIconC border" >
                                                 <IoRefreshOutline />
@@ -359,35 +145,41 @@ const Stations = () => {
                     </div>
                     {/* modal */}
                     <div className="modal fade" id="stationModal">
-                        <div className="modal-dialog modal-dialog-centered">
+                        <div className="modal-dialog modal-lg modal-dialog-centered">
                             <div className="modal-content">
-                                <div className="modal-header">
+                                <div className="modal-header mb-3 mt-3 ">
                                     <h5 className="modal-title">Station Details</h5>
                                     <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
                                     </button>
                                 </div>
                                 <form onSubmit={submitForm}>
                                     <div className="modal-body">
-                                        <div className="form-group">
-                                            <label htmlFor="inputStationName">Station Name</label>
-                                            <input type="text" value={stationName}  onChange={e => setStationName(e.target.value)} className='form-control' id="inputStationName"/>
-                                        </div>  
-                                        <div className="form-group">
-                                            <label htmlFor="inputDSOName">DSO Name</label>
-                                            <input type="text" value={DSO} onChange={e => setDSO(e.target.value) } className='form-control' id="inputDSOName"/>
+                                        <div className="row">
+                                            <div className="col-md-6">
+                                                <fieldset className='formBox' >
+                                                    <legend>Station Name </legend>
+                                                    <input type="text" placeholder="Station Name" value={stationName} onChange={e => setStationName(e.target.value)} className='formField' />
+                                                </fieldset>
+                                                <fieldset className='formBox' >
+                                                    <legend>Address</legend>
+                                                    <input type="text" value={address} placeholder='Address of Station' onChange={e => setAddress(e.target.value)} className='formField' />
+                                                </fieldset>
+                                            </div>
+                                            <div className="col-md-6">
+                                                <fieldset className='formBox' >
+                                                    <legend>DSO Name</legend>
+                                                    <input type="text" value={DSO} placeholder='DSO name' onChange={e => setDSO(e.target.value)} className='formField' />
+                                                </fieldset>
+                                                <fieldset className='formBox' >
+                                                    <legend>Pincode </legend>
+                                                    <input type="number" placeholder='Pincode of Station' value={pincode} onChange={e => setPincode(e.target.value)} className='formField' />
+                                                </fieldset>
+                                            </div>
                                         </div>
-                                        <div className="form-group">
-                                            <label htmlFor="inputaddress">Address</label>
-                                            <input type="text" value={address} onChange={e => setAddress(e.target.value) } className='form-control' id="inputaddress"/>
-                                        </div>  
-                                        <div className="form-group">
-                                            <label htmlFor="inputPincode">Pincode</label>
-                                            <input type="text" value={pincode} onChange={e => setPincode(e.target.value) } className='form-control' id="inputPincode"/>
-                                        </div>                   
                                     </div>
-                                    <div className="modal-footer">
-                                        <div id="modalSpinner" style={{transform:'scale(0.7)'}} >
-                                            <div className="spinner-border text-success" role="status">	
+                                    <div className="modal-footer mt-3">
+                                        <div id="modalSpinner" style={{ transform: 'scale(0.7)' }} >
+                                            <div className="spinner-border text-success" role="status">
                                                 <span className="sr-only">Loading...</span>
                                             </div>
                                         </div>

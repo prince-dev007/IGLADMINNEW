@@ -2,7 +2,8 @@ import  {VscChevronLeft} from 'react-icons/vsc';
 import  {VscChevronRight} from 'react-icons/vsc';
 const Pagination = ({className = null, total = 0, currentPage = 0,pageSize = 0, setCurrentPage}) => {
     pageSize = Number(pageSize) ? Number(pageSize) : pageSize;
-    const fromPage = currentPage !== 0 ?  ((currentPage - 1) * pageSize) + 1 : 0;
+    let fromPage = currentPage !== 0 ?  ((currentPage - 1) * pageSize) + 1 : 0;
+    fromPage = total === 0 ? 0 : fromPage;
     let toPage = ((currentPage - 1) * pageSize) + pageSize;
     toPage = toPage > total  ? total : toPage;
     return (

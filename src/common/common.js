@@ -1,12 +1,12 @@
 import { getIsLoggedIn, getUser } from "./Auth";
 export const backendbaseURL = 'https://iglapi.herokuapp.com/Admin/';
-// export const backendbaseURL = 'http://localhost:3001/Admin/';
+// export const backendbaseURL = 'http://localhost:3000/Admin/';
 
 let abortController = null;
-export const callAPI = async({ URL = '', method = 'GET', body = '', bodyType = 'raw' }) => {
+export const callAPI = async({ URL = '', method = 'GET', body = '', bodyType = 'raw', abort = false }) => {
     try {
         // window.$('#pageSpinner').show();
-        if (method === 'GET' && URL.includes('all')) {
+        if (method === 'GET' && URL.includes('all') && abort) {
             abortController && abortController.abort();
         }
 

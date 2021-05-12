@@ -10,6 +10,7 @@ import {IoMenuOutline} from 'react-icons/io5';
 import {MdDashboard} from 'react-icons/md';
 import {GoGraph} from 'react-icons/go';
 import {FcStatistics} from 'react-icons/fc';
+import {RiGasStationLine} from 'react-icons/ri';
 
 const Sidebar = ({currentPath}) => {
     const activeClassName = 'mm-active';
@@ -70,7 +71,7 @@ const Sidebar = ({currentPath}) => {
                                     </li>
                                     <li className={currentPath === '/stations' ? activeClassName : ''}  onClick={navToggleSm}>
                                         <Link to={'/stations'} >
-                                            <div className="parent-icon icon-color-3"> <FcStatistics />
+                                            <div className="parent-icon icon-color-3"> <RiGasStationLine />
                                             </div>
                                             <div className="menu-title">Stations</div>
                                         </Link>

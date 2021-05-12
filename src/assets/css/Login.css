@@ -67,49 +67,45 @@
 
 /* form  */
 
-.loginBox form .form-group {
+.loginBox form .formBox {
     border: 2px solid var(--bg);
     border-radius: var(--br);
-    position: relative;
     margin-bottom: 20px;
 }
 
-.loginBox form .form-group label {
-    margin-bottom: 0;
-    position: absolute;
-    font-weight: 600;
-    top: -20px;
+.loginBox form .formBox legend {
     color: var(--bg);
-    padding: 0px 3px;
-    margin-left: -2px;
-    z-index: 100;
-    transition: all 0.2s ease-in-out;
+    font-weight: 600;
+    letter-spacing: 0.5px;
 }
 
-.loginBox form .form-group label:before {
-    /* content: ''; */
-    height: 100%;
-    width: 100%;
-    position: absolute;
-    z-index: -1;
-    background-color: rgba(0, 0, 0, 0.118);
+.loginBox form .formField {
+    background: transparent;
+    color: #fff;
+    letter-spacing: 0.5px;
 }
 
-.loginBox form .form-group input::placeholder {
+.loginBox form .formBox input::placeholder {
     color: #fff !important;
 }
 
-.loginBox form .form-group input {
-    color: #fff !important;
-    letter-spacing: 0.8px;
-    border: none;
-    margin-top: 3px;
-    background-color: transparent !important;
-    margin-bottom: 3px;
+.pswdInputWrap {
+    display: flex;
+    align-items: center;
+    position: relative;
 }
 
-.loginBox form .form-group input:focus {
-    box-shadow: none;
+.pswdInputWrap span {
+    height: 30px;
+    width: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: -5px;
+}
+
+.pswdInputWrap span svg {
+    font-size: 1.5rem;
 }
 
 #loginBtn {

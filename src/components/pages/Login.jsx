@@ -10,13 +10,15 @@ import img_brandLogo from '../../assets/images/custom/brandLogo.png';
 import { logIn, getIsLoggedIn } from '../../common/Auth';
 import { callAPI } from '../../common/common';
 
+// icons
+
 const Login2 = () => {
     const history = useHistory();
-    const [email,setEmail] = useState('');
-    const [pswd,setPswd] = useState('');
-    const [loginBtnTxt,setloginBtnTxt]= useState('Log in');
-    const [alertText,setAlertTxt] = useState('');
-    
+    const [email, setEmail] = useState('');
+    const [pswd, setPswd] = useState('');
+    const [loginBtnTxt, setloginBtnTxt] = useState('Log in');
+    const [alertText, setAlertTxt] = useState('');
+
     const [spinnerClass, setSpinner] = useState('');
     useEffect(() => {
         if (getIsLoggedIn()) {
@@ -25,22 +27,25 @@ const Login2 = () => {
         document.title = 'IGL ADMIN | Login';
     }, [history]);
     const handleLogin = async e => {
+        // e.preventDefault();
+        // return ;
         setAlertTxt('');
-        e.preventDefault();
-        if(!email || !pswd)
-            return setAlertTxt('Required Email and Password');
+        if (!email || !pswd) {
+            return ;
+            // return setAlertTxt('Required Email and Password');
+        }
         setSpinner('loadingBtn');
         const response = await callAPI({
-            URL : 'auth/login',
-            method : 'POST',
-            body : {
-                email : email,
-                password : pswd
+            URL: 'auth/login',
+            method: 'POST',
+            body: {
+                email: email,
+                password: pswd
             }
         });
         setSpinner('');
-        if(response.status !== 200) {
-           return setAlertTxt(response.message);
+        if (response.status !== 200) {
+            return setAlertTxt(response.message);
         }
         setAlertTxt('');
         setloginBtnTxt('Redirecting...');
@@ -74,18 +79,18 @@ const Login2 = () => {
                             <div className="head">
                                 <h6>Log in into your account</h6>
                             </div>
-                            <div className="form-group">
-                                <label htmlFor='inputEmail'>Email</label>
-                                <input type="email" onChange={e => setEmail(e.target.value)} className='form-control' title='Enter email address' placeholder='Email Address' id="inputEmail" />
+                            <fieldset className='formBox' >
+                                <legend>Email</legend>
+                                <input type="email" onChange={e => setEmail(e.target.value)} required placeholder='Email Address' title='Enter email address' className='formField' />
+                            </fieldset>
+                            <fieldset className='formBox' style={{ marginBottom: '10px' }} >
+                                <legend>Password</legend>
+                                <input type="password" onChange={e => setPswd(e.target.value)} required placeholder='Password' title='Enter password' className='formField' />
+                            </fieldset>
+                            <div style={{ opacity: alertText ? 1 : 0, backgroundColor: '#f44336', marginBottom: '10px', transition: 'all 0.2s', borderRadius: '3px', padding: '2px 10px', color: '#fff' }} >
+                                <label style={{ marginBottom: '0' }} >{alertText}</label>
                             </div>
-                            <div className="form-group" style={{marginBottom:'10px'}}>
-                                <label htmlFor='inputPswd'>Password</label>
-                                <input type="password" onChange={e => setPswd(e.target.value)} className='form-control' title='Enter password' placeholder='Password' id="inputPswd" />
-                            </div>
-                            <div style={{ opacity : alertText ? 1 : 0  ,backgroundColor: '#f44336',marginBottom:'10px',transition : 'all 0.2s',borderRadius:'3px',padding:'2px 10px',color:'#fff' }} >
-                                <label style={{marginBottom:'0'}} >{alertText}</label>
-                            </div>
-                            <button className={'btn ' + (spinnerClass ? spinnerClass : '')} onClick={handleLogin} id="loginBtn">
+                            <button className={'btn ' + (spinnerClass ? spinnerClass : '')} type='submit' onClick={handleLogin} id="loginBtn">
                                 <span className={spinnerClass ? 'btnText hideBtnText' : 'btnText'}>{loginBtnTxt}</span>
                             </button>
                         </div>
