@@ -24,7 +24,23 @@ const Sales = () => {
         window.$('#saleModal').modal('show');
         setActiveItem(data);
     }
+    const renderProgress = (row = 0, col = 0) => {
+        const tableSize = [row, col];
+        return [...Array(tableSize[0])].map((tr, trIdx) =>
+            <tr key={trIdx}>
+                {[...Array(tableSize[1])].map((a, tdIdx, arr) =>
+                    <td key={trIdx + tdIdx}>
+                        <div className="loadingWrapper">
+                            <div className="activity"></div>
+                        </div>
+                    </td>
+                )}
+            </tr>
+        )
+    }
     const renderTable = () => {
+        if(dataArr == null)
+            return renderProgress(10,10);
         return (
             <>
             {
@@ -43,543 +59,24 @@ const Sales = () => {
                     </tr>
                 )) 
                 :
-                <>
-                <tr key={Math.random()} >
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
+                <tr>
+                    <td className='text-center' colSpan={10} >...Record Not Found</td>
                 </tr>
-                <tr key={Math.random()} >
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                </tr>
-                <tr key={Math.random()} >
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                </tr>
-                <tr key={Math.random()} >
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                </tr>
-                <tr key={Math.random()} >
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                </tr>
-                <tr key={Math.random()} >
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                </tr>
-                <tr key={Math.random()} >
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                </tr>
-                <tr key={Math.random()} >
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                </tr>
-                <tr key={Math.random()} >
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                </tr>
-                <tr key={Math.random()} >
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="loadingWrapper">
-                            <div className="activity"></div>
-                        </div>
-                    </td>
-                </tr>
-                </>
-            }
+             }
             </>
         );
     }
 
     const triggerGetAll = () => setRandom(Math.random());
     const [random, setRandom] = useState(0);
-    const [dataArr, setDataArr] = useState([]);
+    const [dataArr, setDataArr] = useState(null);
     const [currentPage,setCurrentPage] = useState(1);
     const [lastPage, setLastPage] = useState(0);
     const [limit,setLimit] = useState(50);
-    const [total,setTotal] = useState(50000);
+    const [total,setTotal] = useState(0);
     useEffect( e => {
         const getAllSale = async () => {    
-            setDataArr([]);
+            setDataArr(null);
             const response = await callAPI({
                 URL : 'sales/all?page=' + currentPage + '&limit=' + limit,
                 abort : true
@@ -606,27 +103,26 @@ const Sales = () => {
                                 <div className="row">
                                     <div className="col-12 pageHead">
                                         <div>
-                                            <div className="input-group">
+                                            <div className="input-group" style={{width:'unset'}}>
                                                 <div className="input-group-prepend">
                                                     <span className="input-group-text"><IoSearchOutline /></span>
                                                 </div>
-                                                <input type="text" className="form-control" placeholder="Search here" />
+                                                <input type="text" title={'Search'} className="form-control" placeholder="Search here" />
                                             </div>
-                                            <div className="form-group mb-0 w-50  ">
-                                                <select  onChange={e => setLimit(e.target.value)} defaultValue={'50'} className="form-control">
-                                                    <option value='50'>Select Result Limit</option>
+                                        </div>
+                                        <div>
+                                            <button type="button" data-toggle="tooltip" data-placement="top" title={'Refresh'} onClick={triggerGetAll} className="btn btnIconC mr-2 border" >
+                                                <IoRefreshOutline />
+                                            </button>
+                                            <div className="form-group mb-0 w-50">
+                                                <select title={'Result limit'} onChange={e => setLimit(e.target.value)} defaultValue={limit} value={limit} className="form-control">
                                                     <option value="50">50</option>
                                                     <option value="100">100</option>
                                                     <option value="500">500</option>
                                                     <option value="1000">1000</option>
                                                 </select>
                                             </div>
-                                        </div>
-                                        <div>
-                                            <button type="button" onClick={triggerGetAll} className="btn btnIconC border" >
-                                                <IoRefreshOutline />
-                                            </button>
-                                            <Pagination className='mb-0 ' total={total} currentPage={currentPage} setCurrentPage={setCurrentPage} lastPage={lastPage} pageSize={limit} />
+                                            <Pagination className='mb-0' total={total} currentPage={currentPage} setCurrentPage={setCurrentPage} lastPage={lastPage} pageSize={limit} />
                                         </div>
                                     </div>
                                 </div>

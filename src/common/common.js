@@ -1,12 +1,23 @@
 import { getIsLoggedIn, getUser } from "./Auth";
-export const backendbaseURL = 'https://iglapi.herokuapp.com/Admin/';
-// export const backendbaseURL = 'http://localhost:3000/Admin/';
+// export const backendbaseURL = 'https://iglapi.herokuapp.com/Admin/';
+export const backendbaseURL = 'http://localhost:3000/Admin/';
+
 
 let abortController = null;
 export const callAPI = async({ URL = '', method = 'GET', body = '', bodyType = 'raw', abort = false }) => {
     try {
+
+        // checking internet connection
+        if (!navigator.onLine) {
+            return {
+                status: 500,
+                message: 'NO_INTERNET_CONNECTION'
+            }
+        }
+
+
         // window.$('#pageSpinner').show();
-        if (method === 'GET' && URL.includes('all') && abort) {
+        if (abort) {
             abortController && abortController.abort();
         }
 
