@@ -96,6 +96,7 @@ const Stations = () => {
     }
 
     // get all
+    const [searchStr, setSearchStr] = useState('');
     const triggerGetAll = () => setRandom(Math.random());
     const [random, setRandom] = useState(0);
     const [dataArr, setDataArr] = useState(null);
@@ -106,7 +107,7 @@ const Stations = () => {
         const getAllStation = async () => {
             setDataArr(null);
             const response = await callAPI({
-                URL: 'stations/all?page=' + currentPage + '&limit=' + limit,
+                URL: 'stations/all?page=' + currentPage + '&limit=' + limit + '&search=' + searchStr,
                 abort : true
             });
             if (response.status !== 200 && response.status !== 404)
@@ -118,7 +119,7 @@ const Stations = () => {
         return () => {
             window.$('#pageSpinner').show();
         }
-    }, [currentPage, limit, random]);
+    }, [currentPage, limit, random, searchStr]);
 
     return (
         <div className="page-wrapper">
@@ -134,7 +135,7 @@ const Stations = () => {
                                                 <div className="input-group-prepend">
                                                     <span className="input-group-text"><RiGasStationLine /></span>
                                                 </div>
-                                                <input type="text" className="form-control" title={'Search'} placeholder="Search here" />
+                                                <input type="text" className="form-control" title={'Search'} onChange={e => setSearchStr(e.target.value)} placeholder="Search here" />
                                             </div>
                                         </div>
                                         <div>

@@ -278,12 +278,7 @@ input[type=number] {
 
 .pageHead .form-group {
     width: 35%;
-    /* width: 150px; */
     margin-right: 10px;
-}
-
-.pageHead .pagination {
-    /* padding-left: 10px; */
 }
 
 .pageHead .pagination+button {
