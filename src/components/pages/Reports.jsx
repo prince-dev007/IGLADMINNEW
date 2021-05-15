@@ -53,7 +53,7 @@ const Reports = () => {
                     ))
                         :
                         <tr>
-                            <td className='text-center' colSpan={10} >...Record Not Found</td>
+                            <td className='text-center' colSpan={10} > <span className='badge badge-info'>Record Not Found</span> </td>
                         </tr>
                 }
             </>
@@ -80,7 +80,6 @@ const Reports = () => {
                 return;
             setTotal(response.total);
             setDataArr(response.status === 200 ? response.data : []);
-            window.$('#pageSpinner').hide();
         }
         getAllBill();
         return () => {

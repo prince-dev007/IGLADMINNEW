@@ -185,10 +185,6 @@ input[type=number] {
     background: #ac2925;
 }
 
-.btnDanger:active {
-    background: #c9302c;
-}
-
 .btnTdIcon {
     border-radius: 50%;
 }

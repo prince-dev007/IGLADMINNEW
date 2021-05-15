@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import {handleSidebar} from '../../common/navbar';
 import { motion } from "framer-motion";
 // styles
@@ -21,6 +21,15 @@ const Navbar = () => {
             y : '-100%'
         }
     }
+	const [isOnline, setIsOnline] = useState(false);
+	useEffect(() => {
+		const init = () => {
+			setInterval(() => {
+				navigator.onLine ? setIsOnline(true) : setIsOnline(false);	
+			}, 500);
+		}
+		init();
+	}, [])
 	return (
 		<motion.header initial='out' animate='in' exit='out' variants={variants}  className="top-header">
 			<nav className="navbar navbar-expand">
@@ -37,12 +46,12 @@ const Navbar = () => {
 							<div className="nav-link dropdown-toggle dropdown-toggle-nocaret px-3" data-toggle="dropdown" aria-expanded="false">
 								<div className="media user-box align-items-center">
 									<div className="media-body user-info">
-										<p className="user-name mb-0">Jessica Doe</p>
-										<p className="designation mb-0">Available</p>
+										<p className="user-name mb-0">Admin</p>
+										<span style={{display:'block', fontSize:'12px', fontWeight:'700', padding:'2px 5px', background : (isOnline ? '#4BB543 ' : '#c9302c')}} className={" badge " + (isOnline ? 'badge-success' : 'badge-danger' )}>{isOnline ? 'Online' : 'Offline'}</span>
 									</div>
 									<div style={{position:'relative',cursor : 'pointer'}} className='userAvatar' >
 										<RiAdminLine style={{zIndex : 3}}  />
-										<div className="spinner-border" id="pageSpinner" style={{borderWidth:'1.5px'}}  role="status">	
+										<div className="spinner-border" id="pageSpinner" style={{borderWidth:'1.5px', display : isOnline ? ' none' : ' block'}}  role="status">	
 											<span className="sr-only">Loading...</span>
 										</div>
 									</div>

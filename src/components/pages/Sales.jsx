@@ -16,7 +16,6 @@ import { callAPI } from '../../common/common';
 const Sales = () => {
     document.title = 'IGL ADMIN | Sales';
     window.$('#activePageHead').text('Sales');
-    window.$('#pageSpinner').hide();
 
     const [activeItem, setActiveItem] = useState({});
     // modal
@@ -60,7 +59,7 @@ const Sales = () => {
                 )) 
                 :
                 <tr>
-                    <td className='text-center' colSpan={10} >...Record Not Found</td>
+                    <td className='text-center' colSpan={10} > <span className='badge badge-info'>Record Not Found</span></td>
                 </tr>
              }
             </>

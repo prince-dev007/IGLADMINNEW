@@ -19,7 +19,6 @@ const Stations = () => {
     // defaults
     document.title = 'IGL ADMIN | Stations';
     window.$('#activePageHead').text('Stations');
-    window.$('#pageSpinner').hide();
     window.$('#stationModal #modalSpinner').hide();
 
     const renderProgress = (row = 0, col = 0) => {
@@ -56,7 +55,7 @@ const Stations = () => {
                     ))
                         :
                         <tr>
-                            <td colSpan={5}>...Record Not Found</td>
+                            <td className='text-center' colSpan={5}> <span className='badge badge-info'>Record Not Found</span></td>
                         </tr>
                 }
             </>
