@@ -1,6 +1,6 @@
 import { getIsLoggedIn, getUser } from "./Auth";
-export const backendbaseURL = 'https://iglapi.herokuapp.com/Admin/';
-// export const backendbaseURL = 'http://localhost:3000/Admin/';
+// export const backendbaseURL = 'https://iglapi.herokuapp.com/Admin/';
+export const backendbaseURL = 'http://localhost:3000/Admin/';
 
 
 let abortController = null;
@@ -103,6 +103,14 @@ function errorHandler(err) {
 export const fDate = date => {
     var month = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"];
     var defDate = new Date(date);
-    var newDate = defDate.getDate() + ' ' + month[defDate.getMonth()] + ' ' + defDate.getFullYear() + ' ' + defDate.getHours() + ':' + (defDate.getMinutes() / 10 < 1 ? '0' + defDate.getMinutes() : defDate.getMinutes()) + ':' + (defDate.getSeconds() / 10 < 1 ? '0' + defDate.getSeconds() : defDate.getSeconds());
+    const dateObj = {
+        sec: (defDate.getSeconds() / 10 < 1 ? '0' + defDate.getSeconds() : defDate.getSeconds()),
+        min: (defDate.getMinutes() / 10 < 1 ? '0' + defDate.getMinutes() : defDate.getMinutes()),
+        hour: (defDate.getHours() / 10 < 1 ? '0' + defDate.getHours() : defDate.getHours()),
+        day: (defDate.getDate() / 10 < 1 ? '0' + defDate.getDate() : defDate.getDate()),
+        month: month[defDate.getMonth()],
+        year: defDate.getFullYear()
+    }
+    var newDate = `${dateObj.hour}:${dateObj.min}:${dateObj.sec} - ${dateObj.day} ${dateObj.month} ${dateObj.year}`;
     return newDate;
 }

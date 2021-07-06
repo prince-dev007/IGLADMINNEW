@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 // icons
 import { IoRefreshOutline } from 'react-icons/io5';
-import {RiGasStationLine,RiDeleteBinLine} from 'react-icons/ri';
+import { RiGasStationLine, RiDeleteBinLine } from 'react-icons/ri';
 import { IoMdAdd } from 'react-icons/io';
 // import {MdModeEdit} from 'react-icons/md';
 
@@ -19,7 +19,7 @@ const Stations = () => {
     // defaults
     document.title = 'IGL ADMIN | Stations';
     window.$('#activePageHead').text('Stations');
-    window.$('#stationModal #modalSpinner').hide();
+    // window.$('#stationModal #modalSpinner').hide();
 
     const renderProgress = (row = 0, col = 0) => {
         const tableSize = [row, col];
@@ -37,19 +37,19 @@ const Stations = () => {
     }
 
     const renderTable = () => {
-        if(dataArr == null)
-            return renderProgress(10,5);
+        if (dataArr == null)
+            return renderProgress(10, 5);
         return (
             <>
                 {
                     dataArr.length > 0 ? dataArr.map(item => (
                         <tr key={Math.random()} >
-                            <td onClick={() => modal('edit', item)} >{item.stationName}</td>
-                            <td onClick={() => modal('edit', item)} >{item.DSO}</td>
-                            <td onClick={() => modal('edit', item)} >{item.address}</td>
-                            <td onClick={() => modal('edit', item)} >{item.pincode}</td>
-                            <td style={{display:'flex', alignItems:'center'}}>
-                                <button className='btn btn-sm border btnDanger m-1 ' ><RiDeleteBinLine /> </button>
+                            <td onClick={() => modal('EDIT', item)} >{item.stationName}</td>
+                            <td onClick={() => modal('EDIT', item)} >{item.DSO}</td>
+                            <td onClick={() => modal('EDIT', item)} >{item.address}</td>
+                            <td onClick={() => modal('EDIT', item)} >{item.pincode}</td>
+                            <td style={{ display: 'flex', alignItems: 'center' }}>
+                                <button className='btn btn-sm border btnDanger m-1 ' onClick={() => modal('DELETE', item)}  ><RiDeleteBinLine /> </button>
                             </td>
                         </tr>
                     ))
@@ -65,33 +65,76 @@ const Stations = () => {
     // submit form PUT/POST
     const submitForm = async e => {
         e.preventDefault();
+        setSubmitNoteTxt('');
         window.$('#stationModal #modalSpinner').show();
-        await callAPI({
+        const response = await callAPI({
             URL: 'stations/' + stationId,
-            method: stationId === 'new' ? 'POST' : 'PUT',
+            method: stationId === 'NEW' ? 'POST' : 'PUT',
             body: {
                 stationName, DSO, address, pincode
             }
         });
         window.$('#stationModal #modalSpinner').hide();
-        window.$('#stationModal #closeBtn').click();
-        triggerGetAll();
+        if(response.status === 200) { 
+            setSubmitNoteClass('text-success');
+            setSubmitNoteTxt( stationId === 'NEW' ? 'Added' : 'Updated');
+            setTimeout(() => {
+                window.$('#stationModal #closeBtn').click();    
+                triggerGetAll();
+            }, 1000);            
+        } else {
+            setSubmitNoteClass('text-danger');
+            setSubmitNoteTxt('Something went wrong !');
+        }
+    }
+
+    // delete station
+    const deleteStation = async e => {
+        e.preventDefault();
+        setSubmitNoteTxt('');
+        window.$('#deleteModal #modalSpinner').show();
+        const response = await callAPI({
+            URL : 'stations/' + stationId,
+            method : 'DELETE'
+        });
+        window.$('#deleteModal #modalSpinner').hide();
+        if(response.status === 200) {
+            setSubmitNoteClass('text-success');
+            setSubmitNoteTxt('Deleted');
+            setTimeout(() => {
+                window.$('#deleteModal #closeBtn').click();    
+                triggerGetAll();
+            }, 1000);   
+        } else {
+            setSubmitNoteClass('text-danger');
+            setSubmitNoteTxt('Something went wrong !');
+        }
     }
 
     // modal
-    const [stationId, setStationId] = useState('new');
+    const [submitNoteClass, setSubmitNoteClass] = useState('');
+    const [submitNoteTxt, setSubmitNoteTxt] = useState('');
+
+
+    const [stationId, setStationId] = useState('NEW');
     const [stationName, setStationName] = useState('');
     const [DSO, setDSO] = useState('');
     const [address, setAddress] = useState('');
     const [pincode, setPincode] = useState('');
     const modal = (action = null, data = null) => {
-        if (action === 'new' || action === 'edit') {
+        setSubmitNoteTxt('');
+        if (action === 'NEW' || action === 'EDIT') {
+            window.$('#stationModal #modalSpinner').hide();
             window.$('#stationModal').modal('show');
-            setStationName(action === 'edit' ? data.stationName : '');
-            setDSO(action === 'edit' ? data.DSO : '');
-            setAddress(action === 'edit' ? data.address : '');
-            setPincode(action === 'edit' ? data.pincode : '');
-            setStationId(action === 'edit' ? data._id : action);
+            setStationName(action === 'EDIT' ? data.stationName : '');
+            setDSO(action === 'EDIT' ? data.DSO : '');
+            setAddress(action === 'EDIT' ? data.address : '');
+            setPincode(action === 'EDIT' ? data.pincode : '');
+            setStationId(action === 'EDIT' ? data._id : action);
+        } else if(action === 'DELETE') {
+            window.$('#deleteModal').modal('show');
+            setStationId(data._id);
+            setStationName(data.stationName)
         }
     }
 
@@ -108,7 +151,7 @@ const Stations = () => {
             setDataArr(null);
             const response = await callAPI({
                 URL: 'stations/all?page=' + currentPage + '&limit=' + limit + '&search=' + searchStr,
-                abort : true
+                abort: true
             });
             if (response.status !== 200 && response.status !== 404)
                 return;
@@ -131,7 +174,7 @@ const Stations = () => {
                                 <div className="row">
                                     <div className="col-12 pageHead">
                                         <div>
-                                            <div className="input-group " style={{width:'unset'}}>
+                                            <div className="input-group " style={{ width: 'unset' }}>
                                                 <div className="input-group-prepend">
                                                     <span className="input-group-text"><RiGasStationLine /></span>
                                                 </div>
@@ -139,13 +182,13 @@ const Stations = () => {
                                             </div>
                                         </div>
                                         <div>
-                                            <button type="button" onClick={() => modal('new')} title={'New Station'} className="btn btnIconC border mr-2" >
-                                                <IoMdAdd /> 
+                                            <button type="button" onClick={() => modal('NEW')} title={'New Station'} className="btn btnIconC border mr-2" >
+                                                <IoMdAdd />
                                             </button>
-                                            <button type="button" onClick={triggerGetAll}  title={'Refresh'} className="btn btnIconC border mr-2" >
+                                            <button type="button" onClick={triggerGetAll} title={'Refresh'} className="btn btnIconC border mr-2" >
                                                 <IoRefreshOutline />
                                             </button>
-                                            <div className="form-group mb-0 w-50">
+                                            <div className="form-group mb-0 w-50 mr-2">
                                                 <select onChange={e => setLimit(e.target.value)} title={'Result Limit'} defaultValue={limit} value={limit} className="form-control">
                                                     <option value="50"  >50</option>
                                                     <option value="100">100</option>
@@ -153,7 +196,7 @@ const Stations = () => {
                                                     <option value="1000">1000</option>
                                                 </select>
                                             </div>
-                                            <Pagination className='mb-0 ' total={total} currentPage={currentPage} setCurrentPage={setCurrentPage} pageSize={limit} />
+                                            <Pagination className='mb-0' total={total} currentPage={currentPage} setCurrentPage={setCurrentPage} pageSize={limit} />
                                         </div>
                                     </div>
                                 </div>
@@ -173,7 +216,7 @@ const Stations = () => {
                                     <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
                                     </button>
                                 </div>
-                                <form onSubmit={submitForm}>
+                                <form onSubmit={e => e.preventDefault()}>
                                     <div className="modal-body">
                                         <div className="row">
                                             <div className="col-md-6">
@@ -191,23 +234,56 @@ const Stations = () => {
                                                 </fieldset>
                                             </div>
                                             <div className="col-md-6">
-                                            <fieldset className='formBox' >
+                                                <fieldset className='formBox' >
                                                     <legend>Address</legend>
-                                                    <textarea className='formField' style={{height:'165px'}} onChange={e => setAddress(e.target.value)}  value={address} placeholder='Address of Station' ></textarea>
+                                                    <textarea className='formField' style={{ height: '165px' }} onChange={e => setAddress(e.target.value)} value={address} placeholder='Address of Station' ></textarea>
                                                 </fieldset>
                                             </div>
                                         </div>
                                     </div>
                                     <div className="modal-footer mt-3">
+                                        <div className="submitNote" >
+                                            <span id="submitNote" className={submitNoteClass} >{submitNoteTxt}</span>
+                                        </div>
                                         <div id="modalSpinner" style={{ transform: 'scale(0.7)' }} >
                                             <div className="spinner-border text-success" role="status">
                                                 <span className="sr-only">Loading...</span>
                                             </div>
                                         </div>
-                                        <button type='submit' className='btn btn-primary' >Submit</button>
+                                        <button type='submit' className='btn btn-primary' onClick={submitForm} >Submit</button>
                                         <button type="button" id="closeBtn" className="btn btn-secondary" data-dismiss="modal">Close</button>
                                     </div>
                                 </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/*  delete modal */}
+                    <div className="modal fade" id="deleteModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div className="modal-dialog modal-dialog-centered">
+                            <div className="modal-content">
+                                <div className="modal-header">
+                                    <h5 className="modal-title">Confirm Delete</h5>
+                                    <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div className="modal-body">
+                                    <p style={{fontSize:'16px'}} >Are you sure to delete this Station  record ?</p>
+                                    <p style={{fontSize:'16px'}} >Selected Station : <strong>{stationName}</strong></p>
+                                </div>
+                                <div className="modal-footer mt-3">
+                                    <div className="submitNote" >
+                                            <span className={submitNoteClass} >{submitNoteTxt}</span>
+                                        </div>
+                                        <div id="modalSpinner" style={{ transform: 'scale(0.7)' }} >
+                                            <div className="spinner-border text-success" role="status">
+                                                <span className="sr-only">Loading...</span>
+                                            </div>
+                                        </div>
+                                    <button type="button" className="btn btn-danger" onClick={deleteStation} >Confirm</button>
+                                    <button type="button" className="btn btn-secondary" id="closeBtn"  data-dismiss="modal">Close</button>
+                                </div>
                             </div>
                         </div>
                     </div>

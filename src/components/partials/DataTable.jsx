@@ -3,7 +3,7 @@ const DataTable = ({ tableRowHead, renderTable }) => {
     return (
         <>
         <div className="table-responsive scrollTable">
-            <table className="table table-hover">
+            <table className="table table-hover" id="dataTable">
                 <thead className="thead-light">
                     <tr >
                         {tableRowHead.map((item) => <th key={Math.random()} >{item}</th>)}

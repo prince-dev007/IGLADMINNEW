@@ -261,6 +261,7 @@ input[type=number] {
     /* width: 65%; */
     margin-right: auto;
     margin-left: unset;
+    justify-content: flex-start;
 }
 
 .pageHead>div {
@@ -392,6 +393,10 @@ input[type=number] {
     padding-bottom: 0;
 }
 
+.modal-title {
+    font-weight: bold;
+}
+
 .modal-header {
     display: flex;
     padding: 10px 1rem;
@@ -496,6 +501,7 @@ td {
     border: 1px solid #ced4da;
     border-radius: 5px;
     overflow: hidden;
+    padding-right: 5px;
 }
 
 .formBox legend {
@@ -512,6 +518,7 @@ td {
     font-size: 1rem;
     letter-spacing: 0.2px;
     border: none;
+    outline: none;
 }
 
 textarea.formField {
@@ -529,4 +536,20 @@ input {
 .form-control:focus {
     outline: none;
     box-shadow: none;
+}
+
+
+/* submitNote */
+
+#modalSpinner {
+    display: none;
+}
+
+.submitNote {
+    margin-right: auto;
+}
+
+.submitNote span {
+    font-size: 18px;
+    font-weight: bold;
 }

@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
 import DataTable from '../partials/DataTable';
 import { motion } from "framer-motion";
+import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 
+import '../../assets/css/pdf.css';
 // images
 // import img_vnp from '../../assets/images/custom/vnp.jpg';
 // import img_vnp1 from '../../assets/images/custom/vnp1.png';
@@ -9,9 +11,12 @@ import { motion } from "framer-motion";
 
 // icons
 import { IoSearchOutline, IoRefreshOutline } from 'react-icons/io5';
+import { BiExport } from 'react-icons/bi';
+
+// components
 import Pagination from '../partials/Pagination';
 import Animation from '../../common/Animation';
-import { callAPI } from '../../common/common';
+import { callAPI, fDate, backendbaseURL } from '../../common/common';
 
 const Sales = () => {
     document.title = 'IGL ADMIN | Sales';
@@ -20,9 +25,17 @@ const Sales = () => {
     const [activeItem, setActiveItem] = useState({});
     // modal
     const modal = (action = null, data = null) => {
-        window.$('#saleModal').modal('show');
-        setActiveItem(data);
+        if(action === 'VIEW') {
+            window.$('#saleModal').modal('show');
+            setActiveItem(data);
+        } else if(action === 'EXPORT') {
+            window.$('#exportModal').modal('show');
+            // initExport();
+        }
     }
+
+    // 
+
     const renderProgress = (row = 0, col = 0) => {
         const tableSize = [row, col];
         return [...Array(tableSize[0])].map((tr, trIdx) =>
@@ -37,6 +50,7 @@ const Sales = () => {
             </tr>
         )
     }
+    let saleCounter = 0;
     const renderTable = () => {
         if(dataArr == null)
             return renderProgress(10,10);
@@ -44,17 +58,18 @@ const Sales = () => {
             <>
             {
                 dataArr.length > 0 ? dataArr.map(item => (
-                    <tr key={Math.random()} onClick={() => modal('edit', item)}>
-                        <td>{item.Station}</td>
-                        <td>{item.dispensor}</td>
-                        <td>{item.side}</td>
-                        <td>{item.name}</td>
-                        <td>{item.contactNumber}</td>
+                    <tr key={Math.random()} onClick={() => modal('VIEW', item)}>
+                        <td>{++saleCounter}</td>
                         <td>{item.billNumber}</td>
+                        <td>{item.Station ? item.Station.stationName : item.Station}</td>
+                        <td>{fDate(item.createdAt)}</td>
+                        <td>{item.dispensor}<br/> { 'Side : ' + item.side}</td>
+                        <td>{item.name} <br/> {item.contactNumber}</td>
                         <td>{item.vehicleNumber}</td>
-                        <td>{item.CNGRate}</td>
                         <td>{item.quantity}</td>
+                        <td>{item.CNGRate}</td>
                         <td>{item.amount}</td>
+                        <td></td>
                     </tr>
                 )) 
                 :
@@ -66,6 +81,39 @@ const Sales = () => {
         );
     }
 
+    // export
+    // const initExport = async () => {
+
+    //     // all stations
+    //     const response = await callAPI({
+    //         URL: 'stations/mini' 
+    //     });
+    //     setStationArr(response.status === 200 ? response.data : []);
+
+    // }
+    const exportData = async format => {
+        if(format === 'PDF') {
+            window.$('#exportModal #closeBtn').click();
+
+            setTimeout(() => {
+                window.print();
+            }, 250);
+            
+
+        } else if(format === 'XLS') {
+            // const response = await callAPI({
+            //     URL :  '/sales/export'
+            // })
+        }
+    }
+
+
+    // const [submitNoteClass, setSubmitNoteClass] = useState('');
+    // const [submitNoteTxt, setSubmitNoteTxt] = useState('');
+    // const [stationArr, setStationArr] = useState([]);
+    // const [employeeArr, setEmployeeArr] = useState(null);
+
+    // get all
     const triggerGetAll = () => setRandom(Math.random());
     const [random, setRandom] = useState(0);
     const [dataArr, setDataArr] = useState(null);
@@ -110,10 +158,13 @@ const Sales = () => {
                                             </div>
                                         </div>
                                         <div>
+                                            <button type="button" data-toggle="tooltip" data-placement="top" title={'Excprt PDF'} onClick={e => modal('EXPORT')} className="btn btnIconC mr-2 border" >
+                                                <BiExport />
+                                            </button>
                                             <button type="button" data-toggle="tooltip" data-placement="top" title={'Refresh'} onClick={triggerGetAll} className="btn btnIconC mr-2 border" >
                                                 <IoRefreshOutline />
                                             </button>
-                                            <div className="form-group mb-0 w-50">
+                                            <div className="form-group mb-0 w-50 mr-2">
                                                 <select title={'Result limit'} onChange={e => setLimit(e.target.value)} defaultValue={limit} value={limit} className="form-control">
                                                     <option value="50">50</option>
                                                     <option value="100">100</option>
@@ -127,7 +178,7 @@ const Sales = () => {
                                 </div>
                             </div>
                             <DataTable
-                                tableRowHead={'Station,Dispensor,Side,Name,Contact Number,Bill Number,Vehicle Number, CNG Rate,Quantity (Kg),Amount (INR)'}
+                                tableRowHead={'Sr No.,Bill No.,Station,DateTime,Dispensor,Customer,Vehicle,Qty(Kg),Rate,Amount, DSM'}
                                 renderTable={renderTable}
                             />
                         </div>
@@ -189,6 +240,67 @@ const Sales = () => {
                                 </div>
                                 <div className="modal-footer">
                                     <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/*  export modal */}
+                    <div className="modal fade" id="exportModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div className="modal-dialog modal-dialog-centered">
+                            <div className="modal-content">
+                                <div className="modal-header">
+                                    <h5 className="modal-title">Export Sales</h5>
+                                    <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div className="modal-body">
+                                    <div className="row">
+                                        <div className="col-12">
+                                            {/* <fieldset className='formBox' >
+                                                <legend>Station Name</legend>
+                                                <select className='formField' name="stationId" >
+                                                    <option>All Station</option>
+                                                    {stationArr.map(stationItem => <option key={stationItem._id} value={stationItem._id} >{stationItem.stationName}</option>)}
+                                                </select>
+                                            </fieldset>
+                                            <fieldset className='formBox' >
+                                                <legend>Employee</legend>
+                                                <select className='formField' name="stationId" >
+                                                    <option>All Employee</option>
+                                                </select>
+                                            </fieldset>
+                                            <fieldset className='formBox' >
+                                                <legend>Start Date</legend>
+                                                <input type="date" placeholder='Start Date'  className='formField' />
+                                            </fieldset>
+                                            <fieldset className='formBox' >
+                                                <legend>End Date</legend>
+                                                <input type="date" placeholder='End Date'  className='formField' />
+                                            </fieldset> */}
+                                            <ReactHTMLTableToExcel
+                                                className="btn btn-sm btn-info m-2 border"
+                                                table="dataTable"
+                                                filename="Sales"
+                                                sheet="Sales"
+                                                buttonText="Export as XLS" 
+                                            />
+                                            <button class="btn btn-info btn-sm m-2" onClick={e => exportData('PDF')} > Export as PDF</button>
+                                            {/* <button class="btn btn-info" onClick={e => exportData('XLS')} >Export as XLS</button> */}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="modal-footer mt-3">
+                                    <div className="submitNote" >
+                                        {/* <span className={submitNoteClass} >{submitNoteTxt}</span>    */}
+                                    </div>
+                                    <div id="modalSpinner" style={{ transform: 'scale(0.7)' }} >
+                                        <div className="spinner-border text-success" role="status">
+                                            <span className="sr-only">Loading...</span>
+                                        </div>
+                                    </div>
+                                    <button type="button" className="btn btn-secondary" id="closeBtn"  data-dismiss="modal">Close</button>
                                 </div>
                             </div>
                         </div>
