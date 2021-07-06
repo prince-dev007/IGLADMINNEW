@@ -16,7 +16,7 @@ import { BiExport } from 'react-icons/bi';
 // components
 import Pagination from '../partials/Pagination';
 import Animation from '../../common/Animation';
-import { callAPI, fDate, backendbaseURL } from '../../common/common';
+import { callAPI, fDate } from '../../common/common';
 
 const Sales = () => {
     document.title = 'IGL ADMIN | Sales';
