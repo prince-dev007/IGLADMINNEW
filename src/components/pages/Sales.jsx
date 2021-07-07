@@ -3,7 +3,7 @@ import DataTable from '../partials/DataTable';
 import { motion } from "framer-motion";
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 
-import '../../assets/css/pdf.css';
+import '../../assets/css/sale.pdf.css';
 // images
 // import img_vnp from '../../assets/images/custom/vnp.jpg';
 // import img_vnp1 from '../../assets/images/custom/vnp1.png';
@@ -195,28 +195,10 @@ const Sales = () => {
                                 <div className="modal-body">
                                     <div className='row textBlock'>
                                         <div className='col-md-6 col-sm-12' >
-                                            <div className="block d-flex justify-content-center " style={{ marginTop: '20px', borderRadius: '8px' }} >
-                                                <label className='blockHead'>Vehicle Image</label>
-                                                <img src={activeItem.vehicleImage} className='img-fluid' alt="" />
-                                            </div>
-                                            <div className="block" style={{ marginTop: '30px' }}>
-                                                <label className='blockHead'>Site Details</label>
-                                                <label>CNG Station</label>
-                                                <span>{activeItem.CNGStation}</span>
-                                                <label>Manager</label>
-                                                <span>{activeItem.manager} </span>
-                                                <label>DSM</label>
-                                                <span> {activeItem.DSM} </span>
-                                                <label>Dispensor</label>
-                                                <span>{activeItem.dispensor} </span>
-                                                <label>Site</label>
-                                                <span>{activeItem.site} </span>
-                                            </div>
-
-                                        </div>
-                                        <div className='col-md-6 col-sm-12' >
-                                            <div className="block " style={{ marginTop: '20px' }} >
+                                            <div className="block " >
                                                 <label className='blockHead'>Bill Details</label>
+                                                <label>CNG Station</label>
+                                                <span>{activeItem.Station ? activeItem.Station.stationName : ''}</span>
                                                 <label>Bill No.</label>
                                                 <span>{activeItem.billNumber}</span>
                                                 <label>Quantity (KG) </label>
@@ -226,7 +208,13 @@ const Sales = () => {
                                                 <label>CNG Rate</label>
                                                 <span>{activeItem.CNGRate} </span>
                                             </div>
-                                            <div className="block " style={{ marginTop: '30px' }}>
+                                        </div>
+                                        <div className='col-md-6 col-sm-12' >
+                                            {/* <div className="block d-flex justify-content-center " style={{ borderRadius: '8px' }} >
+                                                <label className='blockHead'>Vehicle Image</label>
+                                                <img src={activeItem.vehicleImage} className='img-fluid' alt="" />
+                                            </div> */}
+                                            <div className="block" >
                                                 <label className='blockHead'>Customer Details</label>
                                                 <label>Name</label>
                                                 <span>{activeItem.name} </span>

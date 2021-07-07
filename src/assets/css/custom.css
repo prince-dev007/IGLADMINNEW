@@ -352,11 +352,6 @@ input[type=number] {
     transition: 50ms ease-in-out;
 }
 
-.block:hover {
-    box-shadow: 0 0 10px lightgray;
-    transform: scale(1.01);
-}
-
 .block label {
     color: rgba(128, 128, 128, 0.672);
     margin-bottom: 2px;

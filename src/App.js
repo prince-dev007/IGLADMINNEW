@@ -18,6 +18,7 @@ import Sales from "./components/pages/Sales";
 import Reports from "./components/pages/Reports";
 import Login from "./components/pages/Login";
 import Stations from "./components/pages/Stations";
+import QR from "./components/pages/QRCode";
 
 function App() {
   const location = useLocation();
@@ -37,6 +38,7 @@ function App() {
           <ProtectedRoute path="/sales" exact component={Sales} />
           <ProtectedRoute path="/reports" exact component={Reports} />
           <ProtectedRoute path="/stations" exact component={Stations} />
+          <ProtectedRoute path="/qr" exact component={QR} />
           <Redirect to={{ pathname: '/' }} />
         </Switch>
       </AnimatePresence>
@@ -46,4 +48,5 @@ function App() {
 }
 
 export default App;
+
 

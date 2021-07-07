@@ -1,0 +1,29 @@
+@media print {
+    .print_hide {
+        display: none;
+        text-align: left;
+    }
+    .print_hideBorder {
+        border: none;
+    }
+    .screen_textLeft {
+        text-align: left;
+    }
+    .screen_hide {
+        display: block;
+    }
+}
+
+@media screen {
+    .screen_textLeft {
+        text-align: center;
+    }
+    .screen_hide {
+        display: none;
+    }
+}
+
+@page {
+    size: portrait;
+    margin: 0;
+}

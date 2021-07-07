@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import DataTable from '../partials/DataTable';
 import { motion } from "framer-motion";
+import QRCode from "react-qr-code";
 
 // icons
 import { IoRefreshOutline } from 'react-icons/io5';
@@ -220,6 +221,10 @@ const Stations = () => {
                                     <div className="modal-body">
                                         <div className="row">
                                             <div className="col-md-6">
+                                                <fieldset className='formBox p-2 text-center' >
+                                                    <legend>QR Code</legend>
+                                                    <QRCode value={JSON.stringify({stationName,DSO, pincode, address})} />
+                                                </fieldset>
                                                 <fieldset className='formBox' >
                                                     <legend>Station Name </legend>
                                                     <input type="text" placeholder="Station Name" value={stationName} onChange={e => setStationName(e.target.value)} className='formField' />

@@ -10,7 +10,7 @@ import {IoMenuOutline} from 'react-icons/io5';
 import {MdDashboard} from 'react-icons/md';
 import {GoGraph} from 'react-icons/go';
 import {FcStatistics} from 'react-icons/fc';
-import {RiGasStationLine} from 'react-icons/ri';
+import {RiGasStationLine,RiQrCodeLine} from 'react-icons/ri';
 
 const Sidebar = ({currentPath}) => {
     const activeClassName = 'mm-active';
@@ -74,6 +74,13 @@ const Sidebar = ({currentPath}) => {
                                             <div className="parent-icon icon-color-3"> <RiGasStationLine />
                                             </div>
                                             <div className="menu-title">Stations</div>
+                                        </Link>
+                                    </li>
+                                    <li className={currentPath === '/qr' ? activeClassName : ''}  onClick={navToggleSm}>
+                                        <Link to={'/qr'} >
+                                            <div className="parent-icon icon-color-3"> <RiQrCodeLine />
+                                            </div>
+                                            <div className="menu-title">QR Generate</div>
                                         </Link>
                                     </li>
                                 </ul>
