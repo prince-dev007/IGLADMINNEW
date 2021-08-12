@@ -19,7 +19,7 @@ html.dark-sidebar .sidebar-wrapper .metismenu a {
 html.dark-sidebar .sidebar-wrapper .metismenu a:hover,
 html.dark-sidebar .sidebar-wrapper .metismenu a:focus,
 html.dark-sidebar .sidebar-wrapper .metismenu a:active,
-html.dark-sidebar .sidebar-wrapper .metismenu .mm-active>a {
+html.dark-sidebar .sidebar-wrapper .metismenu .mm-active > a {
 	color: #fff;
 	text-decoration: none;
 	background: rgb(255 255 255 / 18%);
@@ -29,7 +29,7 @@ html.dark-sidebar .sidebar-wrapper .metismenu ul {
 	background: rgb(255 255 255 / 8%);
 }
 html.dark-sidebar .simplebar-scrollbar:before {
-	background: rgba(255, 255, 255, 0.40);
+	background: rgba(255, 255, 255, 0.4);
 }
 html.ColorLessIcons .sidebar-wrapper .metismenu .icon-color-1,
 html.ColorLessIcons .sidebar-wrapper .metismenu .icon-color-2,

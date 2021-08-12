@@ -1,30 +1,30 @@
 @media print {
-    .sidebar-wrapper,
-    .top-header {
-        display: none;
-    }
-    .page-wrapper {
-        margin-top: 0;
-    }
-    .card-title {
-        display: none;
-    }
-    .page-content-wrapper {
-        margin-left: 0;
-    }
-    #dataTable * {
-        font-size: 12px;
-    }
-    #dataTable thead th,
-    #dataTable thead td {
-        max-width: 60px;
-    }
-    .page-content {
-        padding: 0 !important;
-    }
+	.sidebar-wrapper,
+	.top-header {
+		display: none;
+	}
+	.page-wrapper {
+		margin-top: 0;
+	}
+	.card-title {
+		display: none;
+	}
+	.page-content-wrapper {
+		margin-left: 0;
+	}
+	#dataTable * {
+		font-size: 12px;
+	}
+	#dataTable thead th,
+	#dataTable thead td {
+		max-width: 60px;
+	}
+	.page-content {
+		padding: 0 !important;
+	}
 }
 
 @page {
-    size: landscape;
-    margin: 0;
+	size: landscape;
+	margin: 0;
 }

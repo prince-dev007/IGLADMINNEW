@@ -1,166 +1,164 @@
 :root {
-    --br: 7px;
-    --bg: rgb(128, 235, 123);
+	--br: 7px;
+	--bg: rgb(128, 235, 123);
 }
 
 .backdrop {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    backdrop-filter: blur(8px) brightness(60%);
-    background: rgb(87, 185, 82, 0.1);
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	backdrop-filter: blur(8px) brightness(60%);
+	background: rgb(87, 185, 82, 0.1);
 }
 
 .loginBox {
-    background-image: url(../images/custom/loginBanner.webp);
-    background-repeat: no-repeat;
-    background-size: cover;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    width: 100%;
-    margin-bottom: 10px;
-    overflow-y: auto;
+	background-image: url(../images/custom/loginBanner.webp);
+	background-repeat: no-repeat;
+	background-size: cover;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	width: 100%;
+	margin-bottom: 10px;
+	overflow-y: auto;
 }
 
 .loginBox .login {
-    /* width: 370px; */
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    height: 100vh;
-    overflow-y: auto;
-    padding-top: 30px;
-    /* padding-bottom: 10px; */
-    /* margin-bottom: 5px; */
+	/* width: 370px; */
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	height: 100vh;
+	overflow-y: auto;
+	padding-top: 30px;
+	/* padding-bottom: 10px; */
+	/* margin-bottom: 5px; */
 }
 
 .imgWrapper {
-    padding: 30px 0;
+	padding: 30px 0;
 }
 
 .cardLogin {
-    width: 370px;
-    /* height: 100%; */
-    background: transparent;
-    backdrop-filter: blur(30px) brightness(63%);
-    margin-top: 10px;
+	width: 370px;
+	/* height: 100%; */
+	background: transparent;
+	backdrop-filter: blur(30px) brightness(63%);
+	margin-top: 10px;
 }
 
 .loginBox form .card {
-    border-radius: 10px;
+	border-radius: 10px;
 }
 
 .loginBox .card-title {
-    margin: 0;
+	margin: 0;
 }
 
 .loginBox .card-body .head {
-    text-align: center;
-    margin-bottom: 30px;
-    color: #fff;
+	text-align: center;
+	margin-bottom: 30px;
+	color: #fff;
 }
-
 
 /* form  */
 
 .loginBox form .formBox {
-    border: 2px solid var(--bg);
-    border-radius: var(--br);
-    margin-bottom: 20px;
+	border: 2px solid var(--bg);
+	border-radius: var(--br);
+	margin-bottom: 20px;
 }
 
 .loginBox form .formBox legend {
-    color: var(--bg);
-    font-weight: 600;
-    letter-spacing: 0.5px;
+	color: var(--bg);
+	font-weight: 600;
+	letter-spacing: 0.5px;
 }
 
 .loginBox form .formField {
-    background: transparent;
-    color: #fff;
-    letter-spacing: 0.5px;
+	background: transparent;
+	color: #fff;
+	letter-spacing: 0.5px;
 }
 
 .loginBox form .formBox input::placeholder {
-    color: #fff !important;
+	color: #fff !important;
 }
 
 .pswdInputWrap {
-    display: flex;
-    align-items: center;
-    position: relative;
+	display: flex;
+	align-items: center;
+	position: relative;
 }
 
 .pswdInputWrap span {
-    height: 30px;
-    width: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: -5px;
+	height: 30px;
+	width: 30px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-top: -5px;
 }
 
 .pswdInputWrap span svg {
-    font-size: 1.5rem;
+	font-size: 1.5rem;
 }
 
 #loginBtn {
-    background-color: var(--bg);
-    border: none;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    width: 100%;
-    height: 40px;
-    text-transform: inherit;
-    position: relative;
-    transition: all 100ms ease-in-out;
+	background-color: var(--bg);
+	border: none;
+	font-weight: 600;
+	letter-spacing: 0.5px;
+	width: 100%;
+	height: 40px;
+	text-transform: inherit;
+	position: relative;
+	transition: all 100ms ease-in-out;
 }
 
 #loginBtn:active {
-    background-color: rgba(129, 235, 123, 0.864);
+	background-color: rgba(129, 235, 123, 0.864);
 }
 
 #loginBtn .btnText {
-    color: #ffffff;
-    /* padding: 0; */
-    transform: translateX(20px);
-    transition: all 50ms ease-in-out;
+	color: #ffffff;
+	/* padding: 0; */
+	transform: translateX(20px);
+	transition: all 50ms ease-in-out;
 }
 
 .hideBtnText {
-    /* transform: translateY(-30px) !important; */
-    /* padding: 40px; */
-    color: var(--bg) !important;
+	/* transform: translateY(-30px) !important; */
+	/* padding: 40px; */
+	color: var(--bg) !important;
 }
-
 
 /* loading button */
 
 .loadingBtn::after {
-    content: "";
-    position: absolute;
-    width: 18px;
-    height: 18px;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    margin: auto;
-    border: 3px solid transparent;
-    border-top-color: #ffffff;
-    border-radius: 50%;
-    animation: loadingBtnSpinner 1s ease-in-out infinite;
+	content: "";
+	position: absolute;
+	width: 18px;
+	height: 18px;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	margin: auto;
+	border: 3px solid transparent;
+	border-top-color: #ffffff;
+	border-radius: 50%;
+	animation: loadingBtnSpinner 1s ease-in-out infinite;
 }
 
 @keyframes loadingBtnSpinner {
-    from {
-        transform: rotate(0turn);
-    }
-    to {
-        transform: rotate(1turn);
-    }
+	from {
+		transform: rotate(0turn);
+	}
+	to {
+		transform: rotate(1turn);
+	}
 }
