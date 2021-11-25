@@ -67,7 +67,7 @@ const Login2 = () => {
 		<motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="loginBox">
 			<div className="backdrop"></div>
 			<div className="login">
-				<form onSubmit={handleLogin}>
+				<form onSubmit={(e) => false}>
 					<motion.div initial={variants.out} animate={variants.in} exit={variants.out} variants={variants} className="card cardLogin">
 						<div className="card-title text-center">
 							<div className="imgWrapper text-center">

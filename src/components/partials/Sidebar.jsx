@@ -11,6 +11,7 @@ import { MdDashboard } from "react-icons/md";
 import { GoGraph } from "react-icons/go";
 // import { FcStatistics } from "react-icons/fc";
 import { RiGasStationLine, RiAdminLine } from "react-icons/ri";
+import { getIsAdmin } from "../../common/Auth";
 
 const Sidebar = ({ currentPath }) => {
 	const activeClassName = "mm-active";
@@ -32,6 +33,10 @@ const Sidebar = ({ currentPath }) => {
 			x: "-100%",
 		},
 	};
+
+	// profile type
+	const [isAdmin, setIsAdmin] = useState(getIsAdmin());
+
 	return (
 		<motion.div
 			initial="out"
@@ -98,22 +103,38 @@ const Sidebar = ({ currentPath }) => {
 											<div className="menu-title">Reports</div>
 										</Link>
 									</li> */}
-									<li className={currentPath === "/stations" ? activeClassName : ""} onClick={navToggleSm}>
-										<Link to={"/stations"}>
-											<div className="parent-icon icon-color-3">
-												<RiGasStationLine />
-											</div>
-											<div className="menu-title">Stations</div>
-										</Link>
-									</li>
-									<li className={currentPath === "/manager" ? activeClassName : ""} onClick={navToggleSm}>
-										<Link to={"/manager"}>
-											<div className="parent-icon icon-color-3">
-												<RiAdminLine />
-											</div>
-											<div className="menu-title">Manager</div>
-										</Link>
-									</li>
+									{isAdmin ? (
+										<>
+											<li className={currentPath === "/stations" ? activeClassName : ""} onClick={navToggleSm}>
+												<Link to={"/stations"}>
+													<div className="parent-icon icon-color-3">
+														<RiGasStationLine />
+													</div>
+													<div className="menu-title">Stations</div>
+												</Link>
+											</li>
+											<li className={currentPath === "/manager" ? activeClassName : ""} onClick={navToggleSm}>
+												<Link to={"/manager"}>
+													<div className="parent-icon icon-color-3">
+														<RiAdminLine />
+													</div>
+													<div className="menu-title">Manager</div>
+												</Link>
+											</li>
+										</>
+									) : (
+										<>
+											<li className={currentPath === "/mystations" ? activeClassName : ""} onClick={navToggleSm}>
+												<Link to={"/mystations"}>
+													<div className="parent-icon icon-color-3">
+														<RiGasStationLine />
+													</div>
+													<div className="menu-title">My Station</div>
+												</Link>
+											</li>
+										</>
+									)}
+
 									{/* <li className={currentPath === "/qr" ? activeClassName : ""} onClick={navToggleSm}>
 										<Link to={"/qr"}>
 											<div className="parent-icon icon-color-3">
