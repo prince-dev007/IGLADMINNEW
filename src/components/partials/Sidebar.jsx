@@ -91,7 +91,7 @@ const Sidebar = ({ currentPath }) => {
 											<div className="menu-title">Sales</div>
 										</Link>
 									</li>
-									<li className={currentPath === "/reports" ? activeClassName : ""} onClick={navToggleSm}>
+									{/* <li className={currentPath === "/reports" ? activeClassName : ""} onClick={navToggleSm}>
 										<Link to={"/reports"}>
 											<div className="parent-icon icon-color-3">
 												{" "}
@@ -99,7 +99,7 @@ const Sidebar = ({ currentPath }) => {
 											</div>
 											<div className="menu-title">Reports</div>
 										</Link>
-									</li>
+									</li> */}
 									<li className={currentPath === "/stations" ? activeClassName : ""} onClick={navToggleSm}>
 										<Link to={"/stations"}>
 											<div className="parent-icon icon-color-3">
