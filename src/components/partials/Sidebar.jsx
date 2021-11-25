@@ -9,8 +9,8 @@ import img_brandLogo from "../../assets/images/custom/brandLogo.png";
 import { IoMenuOutline } from "react-icons/io5";
 import { MdDashboard } from "react-icons/md";
 import { GoGraph } from "react-icons/go";
-import { FcStatistics } from "react-icons/fc";
-import { RiGasStationLine, RiQrCodeLine } from "react-icons/ri";
+// import { FcStatistics } from "react-icons/fc";
+import { RiGasStationLine, RiAdminLine } from "react-icons/ri";
 
 const Sidebar = ({ currentPath }) => {
 	const activeClassName = "mm-active";
@@ -54,7 +54,6 @@ const Sidebar = ({ currentPath }) => {
 							<div className="simplebar-content mm-active" style={{ padding: "0" }}>
 								<div className="sidebar-header" style={{ position: "relative" }}>
 									<button onClick={navToggle} className=" toggle-btn d-flex align-items-center justify-content-center">
-										{" "}
 										{navToggled ? (
 											<img
 												src={img_brandLogo}
@@ -85,7 +84,6 @@ const Sidebar = ({ currentPath }) => {
 									<li className={currentPath === "/sales" ? activeClassName : ""} onClick={navToggleSm}>
 										<Link to={"/sales"}>
 											<div className="parent-icon icon-color-3">
-												{" "}
 												<GoGraph />
 											</div>
 											<div className="menu-title">Sales</div>
@@ -103,21 +101,27 @@ const Sidebar = ({ currentPath }) => {
 									<li className={currentPath === "/stations" ? activeClassName : ""} onClick={navToggleSm}>
 										<Link to={"/stations"}>
 											<div className="parent-icon icon-color-3">
-												{" "}
 												<RiGasStationLine />
 											</div>
 											<div className="menu-title">Stations</div>
 										</Link>
 									</li>
-									<li className={currentPath === "/qr" ? activeClassName : ""} onClick={navToggleSm}>
+									<li className={currentPath === "/manager" ? activeClassName : ""} onClick={navToggleSm}>
+										<Link to={"/manager"}>
+											<div className="parent-icon icon-color-3">
+												<RiAdminLine />
+											</div>
+											<div className="menu-title">Manager</div>
+										</Link>
+									</li>
+									{/* <li className={currentPath === "/qr" ? activeClassName : ""} onClick={navToggleSm}>
 										<Link to={"/qr"}>
 											<div className="parent-icon icon-color-3">
-												{" "}
 												<RiQrCodeLine />
 											</div>
 											<div className="menu-title">QR Generate</div>
 										</Link>
-									</li>
+									</li> */}
 								</ul>
 							</div>
 						</div>

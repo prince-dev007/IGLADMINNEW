@@ -19,17 +19,19 @@ import Reports from "./components/pages/Reports";
 import Login from "./components/pages/Login";
 import Stations from "./components/pages/Stations";
 import QR from "./components/pages/QRCode";
+import Manager from "./components/pages/Manager";
 
 function App() {
 	const location = useLocation();
 	return (
 		<div className="wrapper" id="wrapperDiv" style={{ overflowX: "hidden" }}>
+			{" "}
 			{getIsLoggedIn() && (
 				<>
 					<Navbar />
-					<Sidebar currentPath={location.pathname} />
+					<Sidebar currentPath={location.pathname} />{" "}
 				</>
-			)}
+			)}{" "}
 			<AnimatePresence exitBeforeEnter>
 				<Switch location={location} key={location.pathname}>
 					<Route path="/" exact component={Login} />
@@ -37,11 +39,13 @@ function App() {
 					<ProtectedRoute path="/sales" exact component={Sales} />
 					<ProtectedRoute path="/reports" exact component={Reports} />
 					<ProtectedRoute path="/stations" exact component={Stations} />
-					<ProtectedRoute path="/qr" exact component={QR} />
-					<Redirect to={{ pathname: "/" }} />
-				</Switch>
-			</AnimatePresence>
-			<div className="overlay toggle-btn-mobile" onClick={handleSidebar}></div>
+					<ProtectedRoute path="/manager" exact component={Manager} />
+					<ProtectedRoute path="/qr" exact component={QR} /> <Redirect to={{ pathname: "/" }} />{" "}
+				</Switch>{" "}
+			</AnimatePresence>{" "}
+			<div className="overlay toggle-btn-mobile" onClick={handleSidebar}>
+				{" "}
+			</div>{" "}
 		</div>
 	);
 }
