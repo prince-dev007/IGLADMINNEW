@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import DataTable from "../partials/DataTable";
 import { motion } from "framer-motion";
-import QRCode from "react-qr-code";
+// import QRCode from "react-qr-code";
 
 // icons
 import { IoRefreshOutline } from "react-icons/io5";
@@ -80,6 +80,8 @@ const Stations = () => {
 				DSO,
 				address,
 				pincode,
+				TINNumber,
+				CNGRate,
 			},
 		});
 		window.$("#stationModal #modalSpinner").hide();
@@ -128,16 +130,19 @@ const Stations = () => {
 	const [DSO, setDSO] = useState("");
 	const [address, setAddress] = useState("");
 	const [pincode, setPincode] = useState("");
+	const [TINNumber, setTINNumber] = useState("");
+	const [CNGRate, setCNGRate] = useState("");
 	const modal = (action = null, data = null) => {
-		setSubmitNoteTxt("");
 		if (action === "NEW" || action === "EDIT") {
 			window.$("#stationModal #modalSpinner").hide();
 			window.$("#stationModal").modal("show");
-			setStationName(action === "EDIT" ? data.stationName : "");
-			setDSO(action === "EDIT" ? data.DSO : "");
-			setAddress(action === "EDIT" ? data.address : "");
-			setPincode(action === "EDIT" ? data.pincode : "");
-			setStationId(action === "EDIT" ? data._id : action);
+			setStationName(action === "EDIT" && data.stationName ? data.stationName : "");
+			setDSO(action === "EDIT" && data.DSO ? data.DSO : "");
+			setAddress(action === "EDIT" && data.address ? data.address : "");
+			setPincode(action === "EDIT" && data.pincode ? data.pincode : "");
+			setTINNumber(action === "EDIT" && data.TINNumber ? data.TINNumber : "");
+			setCNGRate(action === "EDIT" && data.CNGRate ? data.CNGRate : "");
+			setStationId(action === "EDIT" && data._id ? data._id : action);
 		} else if (action === "DELETE") {
 			window.$("#deleteModal").modal("show");
 			setStationId(data._id);
@@ -229,13 +234,9 @@ const Stations = () => {
 									<div className="modal-body">
 										<div className="row">
 											<div className="col-md-6">
-												<fieldset className="formBox p-2 text-center">
-													<legend>QR Code</legend>
-													<QRCode value={JSON.stringify({ stationName, DSO, pincode, address })} />
-												</fieldset>
 												<fieldset className="formBox">
 													<legend>Station Name </legend>
-													<input type="text" placeholder="Station Name" value={stationName} onChange={(e) => setStationName(e.target.value)} className="formField" />
+													<input type="text" required placeholder="Station Name" value={stationName} onChange={(e) => setStationName(e.target.value)} className="formField" />
 												</fieldset>
 												<fieldset className="formBox">
 													<legend>DSO Name</legend>
@@ -244,6 +245,14 @@ const Stations = () => {
 												<fieldset className="formBox">
 													<legend>Pincode </legend>
 													<input type="number" placeholder="Pincode of Station" value={pincode} onChange={(e) => setPincode(e.target.value)} className="formField" />
+												</fieldset>
+												<fieldset className="formBox">
+													<legend>TIN Number</legend>
+													<input type="text" placeholder="TIN Number of Station" value={TINNumber} onChange={(e) => setTINNumber(e.target.value)} className="formField" />
+												</fieldset>
+												<fieldset className="formBox">
+													<legend>CNG Rate</legend>
+													<input type="number" required placeholder="CNG Rate of Station" value={CNGRate} onChange={(e) => setCNGRate(e.target.value)} className="formField" />
 												</fieldset>
 											</div>
 											<div className="col-md-6">
