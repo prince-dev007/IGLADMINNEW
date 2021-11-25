@@ -216,6 +216,14 @@ export default function Manager() {
 											<button type="button" onClick={triggerGetAll} title={"Refresh"} className="btn btnIconC border mr-2">
 												<IoRefreshOutline />
 											</button>
+											<div className="form-group mb-0 w-50 mr-2">
+												<select onChange={(e) => setLimit(e.target.value)} title={"Result Limit"} defaultValue={limit} value={limit} className="form-control">
+													<option value="50">50</option>
+													<option value="100">100</option>
+													<option value="500">500</option>
+													<option value="1000">1000</option>
+												</select>
+											</div>
 											<Pagination className="mb-0" total={total} currentPage={currentPage} setCurrentPage={setCurrentPage} pageSize={limit} />
 										</div>
 									</div>

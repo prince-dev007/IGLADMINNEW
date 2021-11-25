@@ -36,7 +36,7 @@ const Sidebar = ({ currentPath }) => {
 	};
 
 	// profile type
-	const [isAdmin, setIsAdmin] = useState(getIsAdmin());
+	// const [isAdmin, setIsAdmin] = useState(getIsAdmin());
 
 	useEffect(() => {
 		console.log(getIsAdmin());
@@ -108,7 +108,7 @@ const Sidebar = ({ currentPath }) => {
 											<div className="menu-title">Reports</div>
 										</Link>
 									</li> */}
-									{isAdmin ? (
+									{getIsAdmin() ? (
 										<>
 											<li className={currentPath === "/stations" ? activeClassName : ""} onClick={navToggleSm}>
 												<Link to={"/stations"}>

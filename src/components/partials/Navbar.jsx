@@ -32,7 +32,7 @@ const Navbar = () => {
 	}, []);
 
 	// user
-	const [userName, setUserName] = useState(getUser().fullName);
+	// const [userName, setUserName] = useState(getUser().fullName);
 
 	return (
 		<motion.header initial="out" animate="in" exit="out" variants={variants} className="top-header">
@@ -43,7 +43,7 @@ const Navbar = () => {
 					</button>
 					<div className="d-flex">
 						<h4 style={{ marginBottom: 0, fontWeight: 300 }} id="activePageHead">
-							{" "}
+							{}
 						</h4>
 					</div>
 				</div>
@@ -53,7 +53,7 @@ const Navbar = () => {
 							<div className="nav-link dropdown-toggle dropdown-toggle-nocaret px-3" data-toggle="dropdown" aria-expanded="false">
 								<div className="media user-box align-items-center">
 									<div className="media-body user-info">
-										<p className="user-name mb-0">{userName}</p>
+										<p className="user-name mb-0">{getUser().fullName}</p>
 										<span style={{ display: "block", fontSize: "12px", fontWeight: "700", padding: "2px 5px", background: isOnline ? "#4BB543 " : "#c9302c" }} className={" badge " + (isOnline ? "badge-success" : "badge-danger")}>
 											{isOnline ? "Online" : "Offline"}
 										</span>

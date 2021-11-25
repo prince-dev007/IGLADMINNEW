@@ -8,30 +8,30 @@ import { getUser } from "../../common/Auth";
 // icons
 
 export default function MyStation() {
-	const [dispensor, setDispensor] = useState("");
-	const [side, setSide] = useState("");
-	const [qrString, setQRString] = useState("");
-	const [isHiddenQR, setIsHiddenQR] = useState(true);
+	// const [dispensor, setDispensor] = useState("");
+	// const [side, setSide] = useState("");
+	// const [qrString, setQRString] = useState("");
+	// const [isHiddenQR, setIsHiddenQR] = useState(true);
 
-	const genQR = () => {
-		setIsHiddenQR(true);
-		setQRString(
-			JSON.stringify({
-				dispensor,
-				side,
-			})
-		);
-		setIsHiddenQR(false);
-	};
+	// const genQR = () => {
+	// 	setIsHiddenQR(true);
+	// 	setQRString(
+	// 		JSON.stringify({
+	// 			dispensor,
+	// 			side,
+	// 		})
+	// 	);
+	// 	setIsHiddenQR(false);
+	// };
 
 	// submit
 	function submitForm() {}
 
 	// get
-	const [submitNoteClass, setSubmitNoteClass] = useState("");
-	const [submitNoteTxt, setSubmitNoteTxt] = useState("");
+	// const [submitNoteClass, setSubmitNoteClass] = useState("");
+	// const [submitNoteTxt, setSubmitNoteTxt] = useState("");
 
-	const [stationId, setStationId] = useState("");
+	// const [stationId, setStationId] = useState("");
 	const [stationName, setStationName] = useState("");
 	const [DSO, setDSO] = useState("");
 	const [address, setAddress] = useState("");
@@ -104,8 +104,8 @@ export default function MyStation() {
 										</div>
 										<div className="col-md-12 d-none" style={{ display: "flex", alignItems: "center", justifyContent: "flex-end" }}>
 											<div className="submitNote">
-												<span id="submitNote" className={submitNoteClass}>
-													{submitNoteTxt}
+												<span id="submitNote" className={""}>
+													{/* {submitNoteTxt} */}
 												</span>
 											</div>
 											<div id="modalSpinner" style={{ transform: "scale(0.7)" }}>
