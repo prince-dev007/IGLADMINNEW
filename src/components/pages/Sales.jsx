@@ -132,7 +132,7 @@ const Sales = () => {
 			const getAllSale = async () => {
 				setDataArr(null);
 				const response = await callAPI({
-					URL: "sales/all?page=" + currentPage + "&limit=" + limit + "&Station=" + user.Station,
+					URL: "sales/all?page=" + currentPage + "&limit=" + limit + "&station=" + user.Station,
 					abort: true,
 				});
 				if (response.status !== 200 && response.status !== 404) return;
