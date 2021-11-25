@@ -18,7 +18,8 @@ export const getUser = (key = "") => {
 
 export const getIsAdmin = () => {
     if (localStorage.getItem("isAuth") === "true" && localStorage.getItem("user")) {
-        return localStorage.getItem("user").profileType === "ADMIN";
+        const user = JSON.parse(localStorage.getItem("user"));
+        return user.profileType === "ADMIN";
     }
     return false;
 };

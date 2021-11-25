@@ -12,6 +12,7 @@ import { GoGraph } from "react-icons/go";
 // import { FcStatistics } from "react-icons/fc";
 import { RiGasStationLine, RiAdminLine } from "react-icons/ri";
 import { getIsAdmin } from "../../common/Auth";
+import { useEffect } from "react/cjs/react.development";
 
 const Sidebar = ({ currentPath }) => {
 	const activeClassName = "mm-active";
@@ -36,6 +37,10 @@ const Sidebar = ({ currentPath }) => {
 
 	// profile type
 	const [isAdmin, setIsAdmin] = useState(getIsAdmin());
+
+	useEffect(() => {
+		console.log(getIsAdmin());
+	});
 
 	return (
 		<motion.div
