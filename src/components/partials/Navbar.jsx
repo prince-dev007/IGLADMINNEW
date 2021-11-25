@@ -6,7 +6,7 @@ import "../../assets/css/Sidebar.css";
 // icons
 import { RiAdminLine } from "react-icons/ri";
 import { IoMenuOutline } from "react-icons/io5";
-import { logOut } from "../../common/Auth";
+import { getUser, logOut } from "../../common/Auth";
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
@@ -30,6 +30,10 @@ const Navbar = () => {
 		};
 		init();
 	}, []);
+
+	// user
+	const [userName, setUserName] = useState(getUser().fullName);
+
 	return (
 		<motion.header initial="out" animate="in" exit="out" variants={variants} className="top-header">
 			<nav className="navbar navbar-expand">
@@ -49,7 +53,7 @@ const Navbar = () => {
 							<div className="nav-link dropdown-toggle dropdown-toggle-nocaret px-3" data-toggle="dropdown" aria-expanded="false">
 								<div className="media user-box align-items-center">
 									<div className="media-body user-info">
-										<p className="user-name mb-0">Admin</p>
+										<p className="user-name mb-0">{userName}</p>
 										<span style={{ display: "block", fontSize: "12px", fontWeight: "700", padding: "2px 5px", background: isOnline ? "#4BB543 " : "#c9302c" }} className={" badge " + (isOnline ? "badge-success" : "badge-danger")}>
 											{isOnline ? "Online" : "Offline"}
 										</span>

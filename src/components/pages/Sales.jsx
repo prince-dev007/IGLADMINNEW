@@ -17,6 +17,7 @@ import { BiExport } from "react-icons/bi";
 import Pagination from "../partials/Pagination";
 import Animation from "../../common/Animation";
 import { callAPI, fDate } from "../../common/common";
+import { getUser } from "../../common/Auth";
 
 const Sales = () => {
 	document.title = "IGL ADMIN | Sales";
@@ -127,10 +128,11 @@ const Sales = () => {
 	const [total, setTotal] = useState(0);
 	useEffect(
 		(e) => {
+			const user = getUser();
 			const getAllSale = async () => {
 				setDataArr(null);
 				const response = await callAPI({
-					URL: "sales/all?page=" + currentPage + "&limit=" + limit,
+					URL: "sales/all?page=" + currentPage + "&limit=" + limit + "&Station=" + user.Station,
 					abort: true,
 				});
 				if (response.status !== 200 && response.status !== 404) return;

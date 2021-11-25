@@ -124,8 +124,8 @@ const Sidebar = ({ currentPath }) => {
 										</>
 									) : (
 										<>
-											<li className={currentPath === "/mystations" ? activeClassName : ""} onClick={navToggleSm}>
-												<Link to={"/mystations"}>
+											<li className={currentPath === "/myStation" ? activeClassName : ""} onClick={navToggleSm}>
+												<Link to={"/myStation"}>
 													<div className="parent-icon icon-color-3">
 														<RiGasStationLine />
 													</div>

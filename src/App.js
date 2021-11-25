@@ -20,6 +20,7 @@ import Login from "./components/pages/Login";
 import Stations from "./components/pages/Stations";
 import QR from "./components/pages/QRCode";
 import Manager from "./components/pages/Manager";
+import MyStation from "./components/pages/MyStation";
 
 function App() {
 	const location = useLocation();
@@ -39,6 +40,7 @@ function App() {
 					<ProtectedRoute path="/sales" exact component={Sales} />
 					<ProtectedRoute path="/reports" exact component={Reports} />
 					<ProtectedRoute path="/stations" exact component={Stations} />
+					<ProtectedRoute path="/myStation" exact component={MyStation} />
 					<ProtectedRoute path="/manager" exact component={Manager} />
 					<ProtectedRoute path="/qr" exact component={QR} /> <Redirect to={{ pathname: "/" }} />{" "}
 				</Switch>{" "}
