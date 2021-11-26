@@ -78,7 +78,7 @@ export default function Manager() {
 				Station: stationId,
 				email,
 				password,
-				profileType: "ADMIN",
+				profileType: "MANAGER",
 			},
 		});
 		window.$("#stationModal #modalSpinner").hide();
