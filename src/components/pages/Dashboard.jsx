@@ -7,6 +7,7 @@ import Animation from "../../common/Animation";
 // components
 import { Graph1, CardGraph1, CardGraph2, ColumnChart, Donut } from "../partials/Graph";
 import { callAPI } from "../../common/common";
+import { getUser } from "../../common/Auth";
 
 const Dashboard = () => {
 	useEffect(() => {
@@ -24,8 +25,9 @@ const Dashboard = () => {
 	const [todayTotalAmt, setTodayTotalAmt] = useState(0);
 	useEffect(() => {
 		const initAPI = async () => {
+			const user = getUser();
 			const response = await callAPI({
-				URL: "dashboard/summary",
+				URL: "dashboard/summary?station=" + user.Station,
 			});
 			if (response.status !== 200) return;
 			const data = response.data;
