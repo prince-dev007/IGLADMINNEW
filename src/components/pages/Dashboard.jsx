@@ -1,13 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 // animation
 import { motion } from "framer-motion";
 import Animation from "../../common/Animation";
 // components
 import { Graph1, CardGraph1, CardGraph2, ColumnChart, Donut } from "../partials/Graph";
 import { callAPI } from "../../common/common";
-import { useState } from "react/cjs/react.development";
 
 const Dashboard = () => {
 	useEffect(() => {
