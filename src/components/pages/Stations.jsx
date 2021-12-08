@@ -77,6 +77,7 @@ const Stations = () => {
 			method: stationId === "NEW" ? "POST" : "PUT",
 			body: {
 				stationName,
+				stationCode,
 				DSO,
 				address,
 				pincode,
@@ -132,6 +133,7 @@ const Stations = () => {
 	const [pincode, setPincode] = useState("");
 	const [TINNumber, setTINNumber] = useState("");
 	const [CNGRate, setCNGRate] = useState("");
+	const [stationCode, setStationCode] = useState("");
 	const modal = (action = null, data = null) => {
 		if (action === "NEW" || action === "EDIT") {
 			window.$("#stationModal #modalSpinner").hide();
@@ -142,6 +144,7 @@ const Stations = () => {
 			setPincode(action === "EDIT" && data.pincode ? data.pincode : "");
 			setTINNumber(action === "EDIT" && data.TINNumber ? data.TINNumber : "");
 			setCNGRate(action === "EDIT" && data.CNGRate ? data.CNGRate : "");
+			setStationCode(action === "EDIT" && data.stationCode ? data.stationCode : "");
 			setStationId(action === "EDIT" && data._id ? data._id : action);
 		} else if (action === "DELETE") {
 			window.$("#deleteModal").modal("show");
@@ -237,6 +240,10 @@ const Stations = () => {
 												<fieldset className="formBox">
 													<legend>Station Name </legend>
 													<input type="text" required placeholder="Station Name" value={stationName} onChange={(e) => setStationName(e.target.value)} className="formField" />
+												</fieldset>
+												<fieldset className="formBox">
+													<legend>Station Code</legend>
+													<input type="text" required placeholder="Station Code for Bill" value={stationCode} onChange={(e) => setStationCode(e.target.value)} className="formField" />
 												</fieldset>
 												<fieldset className="formBox">
 													<legend>DSO Name</legend>
