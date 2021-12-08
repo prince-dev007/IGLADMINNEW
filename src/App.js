@@ -21,6 +21,8 @@ import Stations from "./components/pages/Stations";
 import QR from "./components/pages/QRCode";
 import Manager from "./components/pages/Manager";
 import MyStation from "./components/pages/MyStation";
+import Profile from "./components/pages/Profile";
+import Employee from "./components/pages/Employee";
 
 function App() {
 	const location = useLocation();
@@ -41,7 +43,9 @@ function App() {
 					<ProtectedRoute path="/reports" exact component={Reports} />
 					<ProtectedRoute path="/stations" exact component={Stations} />
 					<ProtectedRoute path="/myStation" exact component={MyStation} />
+					<ProtectedRoute path="/profile" exact component={Profile} />
 					<ProtectedRoute path="/manager" exact component={Manager} />
+					<ProtectedRoute path="/employee" exact component={Employee} />
 					<ProtectedRoute path="/qr" exact component={QR} /> <Redirect to={{ pathname: "/" }} />{" "}
 				</Switch>{" "}
 			</AnimatePresence>{" "}

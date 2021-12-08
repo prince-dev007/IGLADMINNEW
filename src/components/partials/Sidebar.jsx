@@ -118,7 +118,7 @@ const Sidebar = ({ currentPath }) => {
 													<div className="parent-icon icon-color-3">
 														<RiAdminLine />
 													</div>
-													<div className="menu-title">Manager</div>
+													<div className="menu-title">Managers</div>
 												</Link>
 											</li>
 										</>
@@ -134,6 +134,22 @@ const Sidebar = ({ currentPath }) => {
 											</li>
 										</>
 									)}
+									<li className={currentPath === "/employee" ? activeClassName : ""} onClick={navToggleSm}>
+										<Link to={"/employee"}>
+											<div className="parent-icon icon-color-2">
+												<MdDashboard />
+											</div>
+											<div className="menu-title">Employees</div>
+										</Link>
+									</li>
+									<li className={currentPath === "/profile" ? activeClassName : ""} onClick={navToggleSm}>
+										<Link to={"/profile"}>
+											<div className="parent-icon icon-color-2">
+												<MdDashboard />
+											</div>
+											<div className="menu-title">My Profile</div>
+										</Link>
+									</li>
 
 									{/* <li className={currentPath === "/qr" ? activeClassName : ""} onClick={navToggleSm}>
 										<Link to={"/qr"}>

@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 
 // icons
 import { IoRefreshOutline } from "react-icons/io5";
-import { RiGasStationLine, RiDeleteBinLine } from "react-icons/ri";
+import { RiGasStationLine } from "react-icons/ri";
 import { IoMdAdd } from "react-icons/io";
 // import {MdModeEdit} from 'react-icons/md';
 
@@ -15,11 +15,12 @@ import Animation from "../../common/Animation";
 
 // utils
 import { callAPI } from "../../common/common";
+import { getUser } from "../../common/Auth";
 
-export default function Manager() {
+export default function Employee() {
 	// defaults
-	document.title = "IGL ADMIN | Manager";
-	window.$("#activePageHead").text("Manager");
+	document.title = "IGL ADMIN | Employees";
+	window.$("#activePageHead").text("Employees");
 	// window.$('#stationModal #modalSpinner').hide();
 
 	const renderProgress = (row = 0, col = 0) => {
@@ -44,13 +45,14 @@ export default function Manager() {
 				{dataArr.length > 0 ? (
 					dataArr.map((item) => (
 						<tr key={Math.random()}>
-							<td onClick={() => modal("EDIT", item)}>{item.fullName}</td>
+							<td onClick={() => modal("EDIT", item)}>{item.name}</td>
 							<td onClick={() => modal("EDIT", item)}>{item.email}</td>
-							<td onClick={() => modal("EDIT", item)}>{item.Station ? item.Station.stationName : item.Station}</td>
+							<td onClick={() => modal("EDIT", item)}>{getStationManagerName(item.Manager)}</td>
+							<td onClick={() => modal("EDIT", item)}>{getStationNameByManager(item.Manager)}</td>
 							<td style={{ display: "flex", alignItems: "center" }}>
-								<button className="btn btn-sm border btnDanger m-1 " onClick={() => modal("DELETE", item)}>
+								{/* <button className="btn btn-sm border btnDanger m-1 " onClick={() => modal("DELETE", item)}>
 									<RiDeleteBinLine />{" "}
-								</button>
+								</button> */}
 							</td>
 						</tr>
 					))
@@ -65,26 +67,71 @@ export default function Manager() {
 		);
 	};
 
+	const getStationManagerName = (_id) => {
+		const filteredManagerArr = managerArr.filter((arrItem) => arrItem._id === _id);
+		console.log("filteredManagerArr: ", filteredManagerArr);
+		if (filteredManagerArr.length === 0) return "";
+
+		return filteredManagerArr[0].fullName;
+	};
+	const getStationNameByManager = (managerId) => {
+		const filteredManagerArr = managerArr.filter((arrItem) => arrItem._id === managerId);
+		if (filteredManagerArr.length === 0) return "";
+		const stationId = filteredManagerArr[0].Station;
+
+		const filterStationArr = stationArr.filter((curItem) => curItem._id === stationId);
+		if (filterStationArr.length === 0) return "";
+		return filterStationArr[0].stationName;
+	};
+
+	// modal
+	const [submitNoteClass, setSubmitNoteClass] = useState("");
+	const [submitNoteTxt, setSubmitNoteTxt] = useState("");
+
+	// primary key
+	const [employeeId, setEmployeeId] = useState("NEW");
+
+	const [fullName, setFullName] = useState("");
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
+	const modal = (action = null, data = null) => {
+		if (action === "NEW" || action === "EDIT") {
+			window.$("#stationModal #modalSpinner").hide();
+			window.$("#stationModal").modal("show");
+			setFullName(action === "EDIT" && data.name ? data.name : "");
+			setEmail(action === "EDIT" && data.email ? data.email : "");
+			setStationId(action === "EDIT" && data.Station ? data.Station._id : "");
+			setManagerId(action === "EDIT" && data.Manager ? data.Manager._id : "");
+			setPassword("");
+			setEmployeeId(action === "EDIT" && data._id ? data._id : action);
+		} else if (action === "DELETE") {
+			//window.$("#deleteModal").modal("show");
+			setEmployeeId(data._id);
+			setFullName(data.name);
+		}
+		setSubmitNoteTxt("");
+	};
+
 	// submit form PUT/POST
 	const submitForm = async (e) => {
 		e.preventDefault();
 		setSubmitNoteTxt("");
 		window.$("#stationModal #modalSpinner").show();
 		const response = await callAPI({
-			URL: "user/" + userId,
-			method: userId === "NEW" ? "POST" : "PUT",
+			URL: "employee/" + employeeId,
+			method: employeeId === "NEW" ? "POST" : "PUT",
 			body: {
-				fullName,
-				Station: stationId,
+				name: fullName,
 				email,
 				password,
-				profileType: "MANAGER",
+				Station: stationId,
+				Manager: managerId,
 			},
 		});
 		window.$("#stationModal #modalSpinner").hide();
 		if (response.status === 200) {
 			setSubmitNoteClass("text-success");
-			setSubmitNoteTxt(userId === "NEW" ? "Added" : "Updated");
+			setSubmitNoteTxt(employeeId === "NEW" ? "Added" : "Updated");
 			setTimeout(() => {
 				window.$("#stationModal #closeBtn").click();
 				triggerGetAll();
@@ -96,12 +143,12 @@ export default function Manager() {
 	};
 
 	// delete station
-	const deleteManager = async (e) => {
+	const deleteHandler = async (e) => {
 		e.preventDefault();
 		setSubmitNoteTxt("");
 		window.$("#deleteModal #modalSpinner").show();
 		const response = await callAPI({
-			URL: "user/" + userId,
+			URL: "employee/" + employeeId,
 			method: "DELETE",
 		});
 		window.$("#deleteModal #modalSpinner").hide();
@@ -118,34 +165,7 @@ export default function Manager() {
 		}
 	};
 
-	// modal
-	const [submitNoteClass, setSubmitNoteClass] = useState("");
-	const [submitNoteTxt, setSubmitNoteTxt] = useState("");
-
-	// primary key
-	const [userId, setUserId] = useState("NEW");
-
-	const [fullName, setFullName] = useState("");
-	const [email, setEmail] = useState("");
-	const [password, setPassword] = useState("");
-	const modal = (action = null, data = null) => {
-		if (action === "NEW" || action === "EDIT") {
-			window.$("#stationModal #modalSpinner").hide();
-			window.$("#stationModal").modal("show");
-			setFullName(action === "EDIT" && data.fullName ? data.fullName : "");
-			setEmail(action === "EDIT" && data.email ? data.email : "");
-			setStationId(action === "EDIT" && data.Station ? data.Station._id : "");
-			setPassword("");
-			setUserId(action === "EDIT" && data._id ? data._id : action);
-		} else if (action === "DELETE") {
-			window.$("#deleteModal").modal("show");
-			setUserId(data._id);
-			setFullName(data.fullName);
-		}
-		setSubmitNoteTxt("");
-	};
-
-	// get all
+	// get all employee
 	const [searchStr, setSearchStr] = useState("");
 	const triggerGetAll = () => setRandom(Math.random());
 	const [random, setRandom] = useState(0);
@@ -155,17 +175,18 @@ export default function Manager() {
 	const [total, setTotal] = useState(0);
 	useEffect(
 		(e) => {
-			const getAllStation = async () => {
+			const user = getUser();
+			const getAllEmployee = async () => {
 				setDataArr(null);
 				const response = await callAPI({
-					URL: "user/all?page=" + currentPage + "&limit=" + limit + "&search=" + searchStr,
+					URL: `employee/all?page=${currentPage}&limit=${limit}&search=${searchStr}&station=${user.Station}`,
 					abort: true,
 				});
 				if (response.status !== 200 && response.status !== 404) return;
 				setTotal(response.total);
 				setDataArr(response.status === 200 ? response.data : []);
 			};
-			getAllStation();
+			getAllEmployee();
 			return () => {
 				window.$("#pageSpinner").show();
 			};
@@ -177,17 +198,44 @@ export default function Manager() {
 	// getting stations for dropdown
 	const [stationArr, setStationArr] = useState([]);
 	const [stationId, setStationId] = useState("DEFAULT");
+
+	const [managerArr, setManagerArr] = useState([]);
+	const [managerId, setManagerId] = useState("DEFAULT");
 	useEffect(() => {
+		// stations
 		const getAllStation = async () => {
 			const response = await callAPI({
-				URL: "stations/mini?fields=stationId,stationName",
+				URL: "stations/mini?fields=managerName,stationName,stationId",
 			});
 			if (response.status === 200) {
 				setStationArr(response.data);
 			}
 		};
 		getAllStation();
+
+		// managers
+		const getAllManager = async () => {
+			const response = await callAPI({
+				URL: "user/mini",
+			});
+			if (response.status === 200) {
+				setManagerArr(response.data);
+			}
+		};
+		getAllManager();
 	}, []);
+
+	// station change
+	const [stationManagerArr, setStationManagerArr] = useState([]);
+	useEffect(() => {
+		const stationChangeHandler = () => {
+			const filteredManagerArr = managerArr.filter((arrItem) => arrItem.Station === stationId);
+			if (filteredManagerArr.length === 0) return;
+
+			setStationManagerArr(filteredManagerArr);
+		};
+		stationChangeHandler();
+	}, [stationId, managerArr]);
 
 	return (
 		<div className="page-wrapper">
@@ -209,7 +257,7 @@ export default function Manager() {
 											</div>
 										</div>
 										<div>
-											<button type="button" onClick={() => modal("NEW")} title={"New Station"} className="btn btnIconC border mr-2">
+											<button type="button" onClick={() => modal("NEW")} title={"New Station"} className="d-none btn btnIconC border mr-2">
 												<IoMdAdd />
 											</button>
 											<button type="button" onClick={triggerGetAll} title={"Refresh"} className="btn btnIconC border mr-2">
@@ -228,7 +276,7 @@ export default function Manager() {
 									</div>
 								</div>
 							</div>
-							<DataTable tableRowHead={"Manager Name, Email, Station,Action"} renderTable={renderTable} />
+							<DataTable tableRowHead={"Employee Name, Email, Manager, Station, Action"} renderTable={renderTable} />
 						</div>
 					</div>
 					{/* modal */}
@@ -236,7 +284,7 @@ export default function Manager() {
 						<div className="modal-dialog modal-dialog-centered">
 							<div className="modal-content">
 								<div className="modal-header mb-3 mt-3 ">
-									<h5 className="modal-title">Manager Details</h5>
+									<h5 className="modal-title">Employee Details</h5>
 									<button type="button" className="close" data-dismiss="modal" aria-label="Close">
 										<span aria-hidden="true">×</span>
 									</button>
@@ -252,14 +300,35 @@ export default function Manager() {
 											<input type="text" value={email} placeholder="Email" onChange={(e) => setEmail(e.target.value)} className="formField" />
 										</fieldset>
 										<fieldset className="formBox">
-											<legend>Station </legend>
-											<select onChange={(e) => setStationId(e.target.value)} title={"Stations"} defaultValue={stationId} value={stationId} className="form-control formField">
+											<legend>Station</legend>
+											<select
+												onChange={(e) => {
+													setStationId(e.target.value);
+												}}
+												title={"Stations"}
+												defaultValue={stationId}
+												value={stationId}
+												className="form-control formField"
+											>
 												<option key={"null"} value={"DEFAULT"}>
 													Select Station
 												</option>
-												{stationArr.map((stationItem) => (
-													<option key={stationItem._id} value={stationItem._id}>
-														{stationItem.stationName}
+												{stationArr.map((arrItem) => (
+													<option key={arrItem._id} value={arrItem._id}>
+														{arrItem.stationName}
+													</option>
+												))}
+											</select>
+										</fieldset>
+										<fieldset className="formBox">
+											<legend>Manager</legend>
+											<select onChange={(e) => setManagerId(e.target.value)} title={"Manager"} defaultValue={managerId} value={managerId} className="form-control formField">
+												<option key={"null"} value={"DEFAULT"}>
+													Select Manager
+												</option>
+												{stationManagerArr.map((arrItem) => (
+													<option key={arrItem._id} value={arrItem._id}>
+														{arrItem.fullName}
 													</option>
 												))}
 											</select>
@@ -303,9 +372,9 @@ export default function Manager() {
 									</button>
 								</div>
 								<div className="modal-body">
-									<p style={{ fontSize: "16px" }}>Are you sure to delete this Manager record ?</p>
+									<p style={{ fontSize: "16px" }}>Are you sure to delete this Employee record ?</p>
 									<p style={{ fontSize: "16px" }}>
-										Selected Manager : <strong>{fullName}</strong>
+										Selected Employee : <strong>{fullName}</strong>
 									</p>
 								</div>
 								<div className="modal-footer mt-3">
@@ -317,7 +386,7 @@ export default function Manager() {
 											<span className="sr-only">Loading...</span>
 										</div>
 									</div>
-									<button type="button" className="btn btn-danger" onClick={deleteManager}>
+									<button type="button" className="btn btn-danger" onClick={deleteHandler}>
 										Confirm
 									</button>
 									<button type="button" className="btn btn-secondary" id="closeBtn" data-dismiss="modal">
