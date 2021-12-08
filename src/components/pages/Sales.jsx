@@ -207,6 +207,8 @@ const Sales = () => {
 												<label className="blockHead">Bill Details</label>
 												<label>CNG Station</label>
 												<span>{activeItem.Station ? activeItem.Station.stationName : ""}</span>
+												<label>Manager</label>
+												<span>{activeItem.Manager ? activeItem.Manager.fullName : ""}</span>
 												<label>Bill No.</label>
 												<span>{activeItem.billNumber}</span>
 												<label>Quantity (KG) </label>

@@ -47,8 +47,7 @@ export default function Employee() {
 						<tr key={Math.random()}>
 							<td onClick={() => modal("EDIT", item)}>{item.name}</td>
 							<td onClick={() => modal("EDIT", item)}>{item.email}</td>
-							<td onClick={() => modal("EDIT", item)}>{getStationManagerName(item.Manager)}</td>
-							<td onClick={() => modal("EDIT", item)}>{getStationNameByManager(item.Manager)}</td>
+							<td onClick={() => modal("EDIT", item)}>{item.Station ? item.Station.stationName : "Not Assigned"}</td>
 							<td style={{ display: "flex", alignItems: "center" }}>
 								{/* <button className="btn btn-sm border btnDanger m-1 " onClick={() => modal("DELETE", item)}>
 									<RiDeleteBinLine />{" "}
@@ -67,23 +66,6 @@ export default function Employee() {
 		);
 	};
 
-	const getStationManagerName = (_id) => {
-		const filteredManagerArr = managerArr.filter((arrItem) => arrItem._id === _id);
-		console.log("filteredManagerArr: ", filteredManagerArr);
-		if (filteredManagerArr.length === 0) return "";
-
-		return filteredManagerArr[0].fullName;
-	};
-	const getStationNameByManager = (managerId) => {
-		const filteredManagerArr = managerArr.filter((arrItem) => arrItem._id === managerId);
-		if (filteredManagerArr.length === 0) return "";
-		const stationId = filteredManagerArr[0].Station;
-
-		const filterStationArr = stationArr.filter((curItem) => curItem._id === stationId);
-		if (filterStationArr.length === 0) return "";
-		return filterStationArr[0].stationName;
-	};
-
 	// modal
 	const [submitNoteClass, setSubmitNoteClass] = useState("");
 	const [submitNoteTxt, setSubmitNoteTxt] = useState("");
@@ -93,7 +75,6 @@ export default function Employee() {
 
 	const [fullName, setFullName] = useState("");
 	const [email, setEmail] = useState("");
-	const [password, setPassword] = useState("");
 	const modal = (action = null, data = null) => {
 		if (action === "NEW" || action === "EDIT") {
 			window.$("#stationModal #modalSpinner").hide();
@@ -101,8 +82,6 @@ export default function Employee() {
 			setFullName(action === "EDIT" && data.name ? data.name : "");
 			setEmail(action === "EDIT" && data.email ? data.email : "");
 			setStationId(action === "EDIT" && data.Station ? data.Station._id : "");
-			setManagerId(action === "EDIT" && data.Manager ? data.Manager._id : "");
-			setPassword("");
 			setEmployeeId(action === "EDIT" && data._id ? data._id : action);
 		} else if (action === "DELETE") {
 			//window.$("#deleteModal").modal("show");
@@ -123,9 +102,7 @@ export default function Employee() {
 			body: {
 				name: fullName,
 				email,
-				password,
 				Station: stationId,
-				Manager: managerId,
 			},
 		});
 		window.$("#stationModal #modalSpinner").hide();
@@ -199,8 +176,6 @@ export default function Employee() {
 	const [stationArr, setStationArr] = useState([]);
 	const [stationId, setStationId] = useState("DEFAULT");
 
-	const [managerArr, setManagerArr] = useState([]);
-	const [managerId, setManagerId] = useState("DEFAULT");
 	useEffect(() => {
 		// stations
 		const getAllStation = async () => {
@@ -212,30 +187,7 @@ export default function Employee() {
 			}
 		};
 		getAllStation();
-
-		// managers
-		const getAllManager = async () => {
-			const response = await callAPI({
-				URL: "user/mini",
-			});
-			if (response.status === 200) {
-				setManagerArr(response.data);
-			}
-		};
-		getAllManager();
 	}, []);
-
-	// station change
-	const [stationManagerArr, setStationManagerArr] = useState([]);
-	useEffect(() => {
-		const stationChangeHandler = () => {
-			const filteredManagerArr = managerArr.filter((arrItem) => arrItem.Station === stationId);
-			if (filteredManagerArr.length === 0) return;
-
-			setStationManagerArr(filteredManagerArr);
-		};
-		stationChangeHandler();
-	}, [stationId, managerArr]);
 
 	return (
 		<div className="page-wrapper">
@@ -276,7 +228,7 @@ export default function Employee() {
 									</div>
 								</div>
 							</div>
-							<DataTable tableRowHead={"Employee Name, Email, Manager, Station, Action"} renderTable={renderTable} />
+							<DataTable tableRowHead={"Employee, Email,  Station, Action"} renderTable={renderTable} />
 						</div>
 					</div>
 					{/* modal */}
@@ -292,8 +244,8 @@ export default function Employee() {
 								<form onSubmit={(e) => e.preventDefault()}>
 									<div className="modal-body">
 										<fieldset className="formBox">
-											<legend>Manager Name</legend>
-											<input type="text" required placeholder="Manager Name" value={fullName} onChange={(e) => setFullName(e.target.value)} className="formField" />
+											<legend> Name</legend>
+											<input type="text" required placeholder=" Name" value={fullName} onChange={(e) => setFullName(e.target.value)} className="formField" />
 										</fieldset>
 										<fieldset className="formBox">
 											<legend>Email</legend>
@@ -319,23 +271,6 @@ export default function Employee() {
 													</option>
 												))}
 											</select>
-										</fieldset>
-										<fieldset className="formBox">
-											<legend>Manager</legend>
-											<select onChange={(e) => setManagerId(e.target.value)} title={"Manager"} defaultValue={managerId} value={managerId} className="form-control formField">
-												<option key={"null"} value={"DEFAULT"}>
-													Select Manager
-												</option>
-												{stationManagerArr.map((arrItem) => (
-													<option key={arrItem._id} value={arrItem._id}>
-														{arrItem.fullName}
-													</option>
-												))}
-											</select>
-										</fieldset>
-										<fieldset className="formBox">
-											<legend>Password</legend>
-											<input type="text" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} className="formField" />
 										</fieldset>
 									</div>
 									<div className="modal-footer mt-3">
