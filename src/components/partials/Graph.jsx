@@ -1,5 +1,6 @@
 import { Chart } from "react-google-charts";
 import ApexChart from "react-apexcharts";
+import { useEffect, useState } from "react";
 // import  {randomizeArra} from 'react-apexcharts'
 export const Graph = () => {
 	return (
@@ -295,13 +296,33 @@ export const ColumnChart = () => {
 		</div>
 	);
 };
-export const Donut = () => {
+export const Donut = ({ ...props }) => {
+	const [series, setSeries] = useState([1, 2, 3, 4, 5]);
+	const [labels, setLabels] = useState(["Station1", "Station2", "Station3", "Station4", "Station5"]);
+	const [triggerRender, setTriggerRender] = useState(0);
+
+	useEffect(() => {
+		const seriesArr = [];
+		const labelArr = [];
+		for (const obj of props.donutData) {
+			seriesArr.push(obj.count);
+			labelArr.push(obj.stationName);
+		}
+		setLabels(labelArr);
+		setSeries(seriesArr);
+		console.log(props, props.donutData);
+		if (props.donutData && props.donutData.length > 0) {
+			setTriggerRender(Math.random());
+		}
+	}, [props.donutData]);
+
 	const data = {
-		series: [44, 55, 41, 17, 15],
+		series: series,
 		options: {
 			chart: {
 				type: "donut",
 			},
+			labels: labels,
 			responsive: [
 				{
 					breakpoint: 480,
@@ -319,7 +340,7 @@ export const Donut = () => {
 	};
 	return (
 		<div>
-			<ApexChart options={data.options} series={data.series} type="donut" height="350" />
+			<ApexChart options={data.options} series={data.series} labels={data.labels} type="donut" height="350" />
 		</div>
 	);
 };

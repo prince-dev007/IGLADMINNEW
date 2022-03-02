@@ -1,13 +1,11 @@
 import { useState, useEffect } from "react";
 import DataTable from "../partials/DataTable";
 import { motion } from "framer-motion";
-// import QRCode from "react-qr-code";
 
 // icons
 import { IoRefreshOutline } from "react-icons/io5";
 import { RiGasStationLine, RiDeleteBinLine } from "react-icons/ri";
 import { IoMdAdd } from "react-icons/io";
-// import {MdModeEdit} from 'react-icons/md';
 
 // components
 import Pagination from "../partials/Pagination";
@@ -20,7 +18,6 @@ const Stations = () => {
 	// defaults
 	document.title = "IGL ADMIN | Stations";
 	window.$("#activePageHead").text("Stations");
-	// window.$('#stationModal #modalSpinner').hide();
 
 	const renderProgress = (row = 0, col = 0) => {
 		const tableSize = [row, col];

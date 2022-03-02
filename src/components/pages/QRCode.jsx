@@ -53,7 +53,7 @@ const QR = () => {
 								<div className="col-md-6 ">
 									<fieldset className="formBox p-2 screen_textLeft print_hideBorder" style={{ display: isHiddenQR === false ? "block" : "none" }}>
 										<legend>QR Code</legend>
-										<h5 style={{ fontWeight: "bold", marginBottom: "20px" }} class="screen_hide">
+										<h5 style={{ fontWeight: "bold", marginBottom: "20px" }} className="screen_hide">
 											Dispensor : {dispensor} , Side : {side}
 										</h5>
 										<QRCode size={250} value={qrString} />

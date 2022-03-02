@@ -28,13 +28,12 @@ function App() {
 	const location = useLocation();
 	return (
 		<div className="wrapper" id="wrapperDiv" style={{ overflowX: "hidden" }}>
-			{" "}
 			{getIsLoggedIn() && (
 				<>
 					<Navbar />
-					<Sidebar currentPath={location.pathname} />{" "}
+					<Sidebar currentPath={location.pathname} />
 				</>
-			)}{" "}
+			)}
 			<AnimatePresence exitBeforeEnter>
 				<Switch location={location} key={location.pathname}>
 					<Route path="/" exact component={Login} />
@@ -46,12 +45,10 @@ function App() {
 					<ProtectedRoute path="/profile" exact component={Profile} />
 					<ProtectedRoute path="/manager" exact component={Manager} />
 					<ProtectedRoute path="/employee" exact component={Employee} />
-					<ProtectedRoute path="/qr" exact component={QR} /> <Redirect to={{ pathname: "/" }} />{" "}
-				</Switch>{" "}
-			</AnimatePresence>{" "}
-			<div className="overlay toggle-btn-mobile" onClick={handleSidebar}>
-				{" "}
-			</div>{" "}
+					<ProtectedRoute path="/qr" exact component={QR} /> <Redirect to={{ pathname: "/" }} />
+				</Switch>
+			</AnimatePresence>
+			<div className="overlay toggle-btn-mobile" onClick={handleSidebar}></div>
 		</div>
 	);
 }

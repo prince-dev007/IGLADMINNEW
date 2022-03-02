@@ -23,6 +23,10 @@ const Dashboard = () => {
 	const [billCount, setBillCount] = useState(0);
 	const [totalQuantity, setTotalQuantity] = useState(0);
 	const [todayTotalAmt, setTodayTotalAmt] = useState(0);
+
+	// donut data
+	const [donutData, setDonutData] = useState([]);
+
 	useEffect(() => {
 		const initAPI = async () => {
 			const user = getUser();
@@ -30,11 +34,12 @@ const Dashboard = () => {
 				URL: "dashboard/summary?station=" + user.Station,
 			});
 			if (response.status !== 200) return;
-			const data = response.data;
-			setBillCount(data.billCount);
-			setTotalAmount(data.totalAmount);
-			setTotalQuantity(data.totalQuantity);
-			setTodayTotalAmt(data.todayTotalAmt);
+			const data = response.data.counts;
+			setBillCount(data.billCount.toFixed(0));
+			setTotalAmount(data.totalAmount.toFixed(0));
+			setTotalQuantity(data.totalQuantity.toFixed(0));
+			setTodayTotalAmt(data.todayTotalAmt.toFixed(0));
+			setDonutData(response.data.stationGroup);
 		};
 		initAPI();
 	}, []);
@@ -102,7 +107,7 @@ const Dashboard = () => {
 						</div>
 						<div className="col-md-6">
 							<div className="card p-4" style={{ borderRadius: "15px", overflow: "hidden" }}>
-								<Donut />
+								<Donut donutData={donutData} />
 							</div>
 						</div>
 					</div>
