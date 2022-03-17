@@ -1,6 +1,6 @@
-import { getIsLoggedIn, getUser } from "./Auth";
+import { getUser } from "../Context/Reducer";
 // export const backendbaseURL = "https://iglapi.herokuapp.com/Admin/";
-// export const backendbaseURL = "https://iglapistaging.herokuapp.com/";
+// export const backendbaseURL = "https://iglapistaging.herokuapp.com/admin/";
 export const backendbaseURL = "http://localhost:3000/Admin/";
 
 let abortController = null;
@@ -14,7 +14,6 @@ export const callAPI = async({ URL = "", method = "GET", body = "", bodyType = "
             };
         }
 
-        window.$("#pageSpinner").show();
         if (abort) {
             abortController && abortController.abort();
         }
@@ -33,10 +32,11 @@ export const callAPI = async({ URL = "", method = "GET", body = "", bodyType = "
         }
 
         // adding auth token
-        if (!URL.includes("auth") && getIsLoggedIn()) {
+        if (!URL.includes("auth")) {
+            const user = getUser();
             if (!options.headers) options.headers = {};
-            options.headers.authToken = getUser("authToken");
-            options.headers.userId = getUser("_id");
+            options.headers.authToken = user.authToken;
+            options.headers.userId = user._id;
         }
         URL = backendbaseURL + URL;
 
@@ -51,7 +51,6 @@ export const callAPI = async({ URL = "", method = "GET", body = "", bodyType = "
 
         // getting response
         console.log("FETCH_RESPONSE  : ", response);
-        window.$("#pageSpinner").hide();
 
         if (response.status !== 200) {
             console.log(await response.text());
@@ -104,6 +103,6 @@ export const fDate = (date) => {
         month: month[defDate.getMonth()],
         year: defDate.getFullYear(),
     };
-    var newDate = `${dateObj.hour}:${dateObj.min}:${dateObj.sec} - ${dateObj.day} ${dateObj.month} ${dateObj.year}`;
+    var newDate = `${dateObj.day} ${dateObj.month} ${dateObj.year} ${dateObj.hour}:${dateObj.min}:${dateObj.sec}`;
     return newDate;
 };

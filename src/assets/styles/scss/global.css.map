@@ -1,0 +1,13 @@
+{
+    "version": 3,
+    "mappings": "AGAA,AAAA,YAAY,CAAC;EACT,OAAO,EAAE,IAAI;EACb,KAAK,EAAE,KAAK;EAOZ,YAAY,EAAE,MAAM;CACvB;;AAPI,AAAD,mBAAQ,CAAC;EACL,aAAa,EAAE,mBAAmB;CACrC;;AACA,AAAD,mBAAQ,CAAC;EACL,KAAK,EAAE,KAAK;CACf;;ACPA,AAAD,YAAO,CAAC;EACJ,OAAO,EAAE,IAAI;CAChB",
+    "sources": [
+        "global.scss",
+        "components/_station.scss",
+        "components/_pagination.scss",
+        "components/_form.scss",
+        "components/_card.scss"
+    ],
+    "names": [],
+    "file": "global.css"
+}

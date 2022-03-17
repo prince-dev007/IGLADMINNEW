@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 // animation
@@ -7,17 +7,29 @@ import Animation from "../../common/Animation";
 // components
 import { Graph1, CardGraph1, CardGraph2, ColumnChart, Donut } from "../partials/Graph";
 import { callAPI } from "../../common/common";
-import { getUser } from "../../common/Auth";
+import { AppContext } from "../../Context/Context";
 
 const Dashboard = () => {
+	const { user, contextDispatch } = useContext(AppContext);
+
 	useEffect(() => {
-		document.title = "IGL ADMIN | Dashboard";
-		window.$("#activePageHead").text("Dashboard");
-		window.$("#pageSpinner").hide();
+		contextDispatch({
+			type: "SET_PAGE_TITLE",
+			payload: "Dashboard",
+		});
+		contextDispatch({
+			type: "SET_ACTIVE_PAGE_HEAD",
+			payload: "Dashboard",
+		});
+		// window.$("#pageSpinner").hide();
+
 		return () => {
-			window.$("#pageSpinner").show();
+			contextDispatch({
+				type: "SET_ACTIVE_PAGE_SPINNER",
+				payload: true,
+			});
 		};
-	}, []);
+	}, [contextDispatch]);
 
 	const [totalAmount, setTotalAmount] = useState(0);
 	const [billCount, setBillCount] = useState(0);
@@ -29,9 +41,16 @@ const Dashboard = () => {
 
 	useEffect(() => {
 		const initAPI = async () => {
-			const user = getUser();
+			contextDispatch({
+				type: "SET_ACTIVE_PAGE_SPINNER",
+				payload: true,
+			});
 			const response = await callAPI({
 				URL: "dashboard/summary?station=" + user.Station,
+			});
+			contextDispatch({
+				type: "SET_ACTIVE_PAGE_SPINNER",
+				payload: false,
 			});
 			if (response.status !== 200) return;
 			const data = response.data.counts;
@@ -42,7 +61,7 @@ const Dashboard = () => {
 			setDonutData(response.data.stationGroup);
 		};
 		initAPI();
-	}, []);
+	}, [user, contextDispatch]);
 
 	return (
 		<div className="page-wrapper">
@@ -106,9 +125,11 @@ const Dashboard = () => {
 							</div>
 						</div>
 						<div className="col-md-6">
-							<div className="card p-4" style={{ borderRadius: "15px", overflow: "hidden" }}>
-								<Donut donutData={donutData} />
-							</div>
+							{donutData != null && donutData.length > 0 && (
+								<div className="card p-4" style={{ borderRadius: "15px", overflow: "hidden" }}>
+									<Donut donutData={donutData} />
+								</div>
+							)}
 						</div>
 					</div>
 				</motion.div>

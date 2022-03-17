@@ -1,45 +1,35 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 // animation
 import { motion } from "framer-motion";
 import Animation from "../../common/Animation";
 import { callAPI } from "../../common/common";
-import { getUser } from "../../common/Auth";
+
+// Context
+import { AppContext } from "../../Context/Context";
 
 // icons
 
 export default function Profile() {
-	// const [dispensor, setDispensor] = useState("");
-	// const [side, setSide] = useState("");
-	// const [qrString, setQRString] = useState("");
-	// const [isHiddenQR, setIsHiddenQR] = useState(true);
-
-	// const genQR = () => {
-	// 	setIsHiddenQR(true);
-	// 	setQRString(
-	// 		JSON.stringify({
-	// 			dispensor,
-	// 			side,
-	// 		})
-	// 	);
-	// 	setIsHiddenQR(false);
-	// };
-
-	// submit
-	function submitForm() {}
+	const { user, contextDispatch } = useContext(AppContext);
 
 	useEffect(() => {
-		window.$("#activePageHead").text("My Profile");
-		window.$("#pageSpinner").hide();
-		document.title = "IGL ADMIN | My Profile";
-	}, []);
+		contextDispatch({
+			type: "SET_PAGE_TITLE",
+			payload: "My Profile",
+		});
+		contextDispatch({
+			type: "SET_ACTIVE_PAGE_HEAD",
+			payload: "My Profile",
+		});
 
-	// get
-	// const [submitNoteClass, setSubmitNoteClass] = useState("");
-	// const [submitNoteTxt, setSubmitNoteTxt] = useState("");
-
-	// const [stationId, setStationId] = useState("");
-
-	// const [userId, setUserId] = useState("");
+		return () => {
+			contextDispatch({
+				type: "SET_ACTIVE_PAGE_SPINNER",
+				payload: true,
+			});
+		};
+	}, [contextDispatch]);
+	function submitForm() {}
 
 	const [stationName, setStationName] = useState("");
 	const [DSO, setDSO] = useState("");
@@ -48,9 +38,7 @@ export default function Profile() {
 	const [TINNumber, setTINNumber] = useState("");
 	const [CNGRate, setCNGRate] = useState("");
 	useEffect(() => {
-		const user = getUser();
-		// setUserId(user.id);
-		async function getStation() {
+		async function getProfile() {
 			const response = await callAPI({
 				URL: "profile/" + user._id,
 			});
@@ -64,12 +52,12 @@ export default function Profile() {
 			setTINNumber(data.TINNumber);
 			setCNGRate(data.CNGRate);
 		}
-		getStation();
+		getProfile();
 	}, []);
 
 	return (
 		<div className="page-wrapper">
-			<div className="d-none" >{DSO + address + pincode + TINNumber + CNGRate}</div>
+			<div className="d-none">{DSO + address + pincode + TINNumber + CNGRate}</div>
 			<div className="page-content-wrapper">
 				<motion.div initial={Animation.variants.out} animate={Animation.variants.in} exit={Animation.variants.exit} transition={Animation.PageTransition} className="page-content">
 					<div className="card dataCard">

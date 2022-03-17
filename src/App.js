@@ -1,6 +1,6 @@
-import { Switch, Route, useLocation, Redirect } from "react-router-dom";
-import { getIsLoggedIn } from "./common/Auth";
+import { Switch, Route, useLocation } from "react-router-dom";
 import ProtectedRoute from "./components/partials/ProtectedRoute";
+import { useContext, useEffect } from "react";
 import { AnimatePresence } from "framer-motion";
 
 // styles
@@ -8,6 +8,7 @@ import "./App.css";
 import "./assets/css/app.css";
 import "./assets/css/bootstrap.min.css";
 import "./assets/css/custom.css";
+import "./assets/styles/scss/global.css";
 
 // components
 import Navbar from "./components/partials/Navbar";
@@ -24,11 +25,23 @@ import MyStation from "./components/pages/MyStation";
 import Profile from "./components/pages/Profile";
 import Employee from "./components/pages/Employee";
 
-function App() {
+import { AppContext } from "./Context/Context";
+import Station_All from "./components/pages/Station_All";
+import { Redirect } from "react-router-dom";
+
+export default function App() {
 	const location = useLocation();
-	return (
+	const { isLoggedIn, contextDispatch } = useContext(AppContext);
+
+	useEffect(() => {
+		contextDispatch({
+			type: "REINIT_STATE",
+		});
+	}, [contextDispatch]);
+
+	return isLoggedIn !== null ? (
 		<div className="wrapper" id="wrapperDiv" style={{ overflowX: "hidden" }}>
-			{getIsLoggedIn() && (
+			{isLoggedIn && (
 				<>
 					<Navbar />
 					<Sidebar currentPath={location.pathname} />
@@ -40,17 +53,21 @@ function App() {
 					<ProtectedRoute path="/dashboard" exact component={Dashboard} />
 					<ProtectedRoute path="/sales" exact component={Sales} />
 					<ProtectedRoute path="/reports" exact component={Reports} />
-					<ProtectedRoute path="/stations" exact component={Stations} />
-					<ProtectedRoute path="/myStation" exact component={MyStation} />
+					<ProtectedRoute path="/station/all" exact component={Station_All} />
+					<ProtectedRoute path="/station/all1" exact component={Stations} />
+					<ProtectedRoute path="/station/me" exact component={MyStation} />
 					<ProtectedRoute path="/profile" exact component={Profile} />
 					<ProtectedRoute path="/manager" exact component={Manager} />
 					<ProtectedRoute path="/employee" exact component={Employee} />
-					<ProtectedRoute path="/qr" exact component={QR} /> <Redirect to={{ pathname: "/" }} />
+					<ProtectedRoute path="/qr" exact component={QR} />
+					<Redirect to={{ pathname: "/" }} />
 				</Switch>
 			</AnimatePresence>
 			<div className="overlay toggle-btn-mobile" onClick={handleSidebar}></div>
 		</div>
+	) : (
+		<>
+			<h2> {isLoggedIn ? "true" : "false"} </h2>
+		</>
 	);
 }
-
-export default App;

@@ -15,12 +15,30 @@ import Animation from "../../common/Animation";
 
 // utils
 import { callAPI } from "../../common/common";
-import { getUser } from "../../common/Auth";
+import { useContext } from "react";
+import { AppContext } from "../../Context/Context";
 
 export default function Employee() {
-	// defaults
-	document.title = "IGL ADMIN | Employees";
-	window.$("#activePageHead").text("Employees");
+	const { contextDispatch } = useContext(AppContext);
+
+	useEffect(() => {
+		contextDispatch({
+			type: "SET_PAGE_TITLE",
+			payload: "Employee",
+		});
+		contextDispatch({
+			type: "SET_ACTIVE_PAGE_HEAD",
+			payload: "Employee",
+		});
+		// window.$("#pageSpinner").hide();
+
+		return () => {
+			contextDispatch({
+				type: "SET_ACTIVE_PAGE_SPINNER",
+				payload: true,
+			});
+		};
+	}, [contextDispatch]);
 	// window.$('#stationModal #modalSpinner').hide();
 
 	const renderProgress = (row = 0, col = 0) => {
@@ -152,7 +170,7 @@ export default function Employee() {
 	const [total, setTotal] = useState(0);
 	useEffect(
 		(e) => {
-			const user = getUser();
+			const user = {};
 			const getAllEmployee = async () => {
 				setDataArr(null);
 				const response = await callAPI({

@@ -24,11 +24,7 @@ const QR = () => {
 		setIsHiddenQR(false);
 	};
 
-	useEffect(() => {
-		window.$("#activePageHead").text("QR Code Generate");
-		window.$("#pageSpinner").hide();
-		document.title = "IGL ADMIN | QR Code Generate";
-	}, []);
+	useEffect(() => {}, []);
 	return (
 		<div className="page-wrapper">
 			<div className="page-content-wrapper">

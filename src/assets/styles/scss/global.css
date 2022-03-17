@@ -1,0 +1,22 @@
+.inputGroupC {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 20rem;
+  margin-right: 0.5rem;
+}
+
+.inputGroupC__label {
+  border-radius: 0.25rem 0 0 0.25rem;
+}
+
+.inputGroupC__input {
+  width: 12rem;
+}
+
+.cardC__head {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+/*# sourceMappingURL=global.css.map */

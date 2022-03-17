@@ -1,13 +1,34 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 // animation
 import { motion } from "framer-motion";
 import Animation from "../../common/Animation";
 import { callAPI } from "../../common/common";
-import { getUser } from "../../common/Auth";
+
+// Context
+import { AppContext } from "../../Context/Context";
 
 // icons
 
 export default function MyStation() {
+	const { user, contextDispatch } = useContext(AppContext);
+
+	useEffect(() => {
+		contextDispatch({
+			type: "SET_PAGE_TITLE",
+			payload: "My Station",
+		});
+		contextDispatch({
+			type: "SET_ACTIVE_PAGE_HEAD",
+			payload: "My Station",
+		});
+
+		return () => {
+			contextDispatch({
+				type: "SET_ACTIVE_PAGE_SPINNER",
+				payload: true,
+			});
+		};
+	}, [contextDispatch]);
 	// const [dispensor, setDispensor] = useState("");
 	// const [side, setSide] = useState("");
 	// const [qrString, setQRString] = useState("");
@@ -40,13 +61,6 @@ export default function MyStation() {
 	const [CNGRate, setCNGRate] = useState("");
 
 	useEffect(() => {
-		window.$("#activePageHead").text("My Station");
-		window.$("#pageSpinner").hide();
-		document.title = "IGL ADMIN | My Station";
-	}, []);
-
-	useEffect(() => {
-		const user = getUser();
 		async function getStation() {
 			const response = await callAPI({
 				URL: "stations/" + user.Station,
@@ -62,7 +76,7 @@ export default function MyStation() {
 			setCNGRate(data.CNGRate);
 		}
 		getStation();
-	}, []);
+	}, [user]);
 
 	return (
 		<div className="page-wrapper">

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { handleSidebar } from "../../common/navbar";
 import { motion } from "framer-motion";
@@ -11,9 +11,12 @@ import { MdDashboard } from "react-icons/md";
 import { GoGraph } from "react-icons/go";
 // import { FcStatistics } from "react-icons/fc";
 import { RiGasStationLine, RiAdminLine } from "react-icons/ri";
-import { getIsAdmin } from "../../common/Auth";
+import { AppContext } from "../../Context/Context";
 
 const Sidebar = ({ currentPath }) => {
+	// Context
+	const { isAdminLoggedIn } = useContext(AppContext);
+
 	const activeClassName = "mm-active";
 	const [navToggled, setNavToggled] = useState(false);
 	const navToggle = () => {
@@ -23,26 +26,22 @@ const Sidebar = ({ currentPath }) => {
 	const navToggleSm = () => {
 		if (window.innerWidth <= 1024) navToggle();
 	};
-	const variants = {
-		in: {
-			opactiy: 1,
-			x: 0,
-		},
-		out: {
-			opactiy: 0,
-			x: "-100%",
-		},
-	};
-
-	// profile type
-	// const [isAdmin, setIsAdmin] = useState(getIsAdmin());
 
 	return (
 		<motion.div
 			initial="out"
 			animate="in"
 			exit="out"
-			variants={variants}
+			variants={{
+				in: {
+					opactiy: 1,
+					x: 0,
+				},
+				out: {
+					opactiy: 0,
+					x: "-100%",
+				},
+			}}
 			className="sidebar-wrapper"
 			data-simplebar="init"
 			style={{
@@ -94,19 +93,10 @@ const Sidebar = ({ currentPath }) => {
 											<div className="menu-title">Sales</div>
 										</Link>
 									</li>
-									{/* <li className={currentPath === "/reports" ? activeClassName : ""} onClick={navToggleSm}>
-										<Link to={"/reports"}>
-											<div className="parent-icon icon-color-3">
-												{" "}
-												<FcStatistics />
-											</div>
-											<div className="menu-title">Reports</div>
-										</Link>
-									</li> */}
-									{getIsAdmin() ? (
+									{isAdminLoggedIn ? (
 										<>
-											<li className={currentPath === "/stations" ? activeClassName : ""} onClick={navToggleSm}>
-												<Link to={"/stations"}>
+											<li className={currentPath === "/station/all" ? activeClassName : ""} onClick={navToggleSm}>
+												<Link to={"/station/all"}>
 													<div className="parent-icon icon-color-3">
 														<RiGasStationLine />
 													</div>
@@ -124,8 +114,8 @@ const Sidebar = ({ currentPath }) => {
 										</>
 									) : (
 										<>
-											<li className={currentPath === "/myStation" ? activeClassName : ""} onClick={navToggleSm}>
-												<Link to={"/myStation"}>
+											<li className={currentPath === "/station/me" ? activeClassName : ""} onClick={navToggleSm}>
+												<Link to={"/station/me"}>
 													<div className="parent-icon icon-color-3">
 														<RiGasStationLine />
 													</div>
@@ -150,15 +140,6 @@ const Sidebar = ({ currentPath }) => {
 											<div className="menu-title">My Profile</div>
 										</Link>
 									</li>
-
-									{/* <li className={currentPath === "/qr" ? activeClassName : ""} onClick={navToggleSm}>
-										<Link to={"/qr"}>
-											<div className="parent-icon icon-color-3">
-												<RiQrCodeLine />
-											</div>
-											<div className="menu-title">QR Generate</div>
-										</Link>
-									</li> */}
 								</ul>
 							</div>
 						</div>

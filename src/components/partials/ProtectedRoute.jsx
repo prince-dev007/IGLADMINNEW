@@ -1,12 +1,12 @@
 import { Route, Redirect } from "react-router-dom";
-import { getIsLoggedIn } from "../../common/Auth";
+import { getUser } from "../../Context/Reducer";
 
 const ProtectedRoute = ({ component: Comp, ...rest }) => {
 	return (
 		<Route
 			{...rest}
 			render={(props) => {
-				return getIsLoggedIn() ? (
+				return getUser() ? (
 					<Comp {...props} />
 				) : (
 					<Redirect

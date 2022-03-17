@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
-import DataTable from "../partials/DataTable";
+import { useState, useEffect, useContext } from "react";
 import { motion } from "framer-motion";
 
+import { Table } from "react-bootstrap";
 // icons
 import { IoRefreshOutline } from "react-icons/io5";
 import { RiGasStationLine, RiDeleteBinLine } from "react-icons/ri";
@@ -14,10 +14,29 @@ import Animation from "../../common/Animation";
 // utils
 import { callAPI } from "../../common/common";
 
+// Context
+import { AppContext } from "../../Context/Context";
+
 const Stations = () => {
-	// defaults
-	document.title = "IGL ADMIN | Stations";
-	window.$("#activePageHead").text("Stations");
+	const { contextDispatch } = useContext(AppContext);
+
+	useEffect(() => {
+		contextDispatch({
+			type: "SET_PAGE_TITLE",
+			payload: "All Stations",
+		});
+		contextDispatch({
+			type: "SET_ACTIVE_PAGE_HEAD",
+			payload: "All Stations",
+		});
+
+		return () => {
+			contextDispatch({
+				type: "SET_ACTIVE_PAGE_SPINNER",
+				payload: true,
+			});
+		};
+	}, [contextDispatch]);
 
 	const renderProgress = (row = 0, col = 0) => {
 		const tableSize = [row, col];
@@ -35,7 +54,7 @@ const Stations = () => {
 	};
 
 	const renderTable = () => {
-		if (dataArr == null) return renderProgress(10, 5);
+		if (dataArr == null) return renderProgress(50, 5);
 		return (
 			<>
 				{dataArr.length > 0 ? (
@@ -55,7 +74,6 @@ const Stations = () => {
 				) : (
 					<tr>
 						<td className="text-center" colSpan={5}>
-							{" "}
 							<span className="badge badge-info">Record Not Found</span>
 						</td>
 					</tr>
@@ -92,7 +110,7 @@ const Stations = () => {
 			}, 1000);
 		} else {
 			setSubmitNoteClass("text-danger");
-			setSubmitNoteTxt("Something went wrong !");
+			setSubmitNoteTxt(response.message);
 		}
 	};
 
@@ -115,7 +133,7 @@ const Stations = () => {
 			}, 1000);
 		} else {
 			setSubmitNoteClass("text-danger");
-			setSubmitNoteTxt("Something went wrong !");
+			setSubmitNoteTxt(response.message);
 		}
 	};
 
@@ -162,9 +180,17 @@ const Stations = () => {
 		(e) => {
 			const getAllStation = async () => {
 				setDataArr(null);
+				contextDispatch({
+					type: "SET_ACTIVE_PAGE_SPINNER",
+					payload: true,
+				});
 				const response = await callAPI({
 					URL: "stations/all?page=" + currentPage + "&limit=" + limit + "&search=" + searchStr,
 					abort: true,
+				});
+				contextDispatch({
+					type: "SET_ACTIVE_PAGE_SPINNER",
+					payload: false,
 				});
 				if (response.status !== 200 && response.status !== 404) return;
 				setTotal(response.total);
@@ -172,7 +198,10 @@ const Stations = () => {
 			};
 			getAllStation();
 			return () => {
-				window.$("#pageSpinner").show();
+				contextDispatch({
+					type: "SET_ACTIVE_PAGE_SPINNER",
+					payload: true,
+				});
 			};
 		},
 		[currentPage, limit, random, searchStr]
@@ -217,7 +246,18 @@ const Stations = () => {
 									</div>
 								</div>
 							</div>
-							<DataTable tableRowHead={"Station Name,DSO,Address,Pincode,Action"} renderTable={renderTable} />
+							<Table bordered responsive hover>
+								<thead>
+									<tr>
+										<th>Station Name</th>
+										<th>DSO</th>
+										<th>Pincode</th>
+										<th>Address</th>
+										<th>Action</th>
+									</tr>
+								</thead>
+								<tbody>{renderTable()}</tbody>
+							</Table>
 						</div>
 					</div>
 					{/* modal */}

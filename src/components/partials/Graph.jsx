@@ -302,6 +302,7 @@ export const Donut = ({ ...props }) => {
 	const [triggerRender, setTriggerRender] = useState(0);
 
 	useEffect(() => {
+		console.log(props);
 		const seriesArr = [];
 		const labelArr = [];
 		for (const obj of props.donutData) {
@@ -310,11 +311,10 @@ export const Donut = ({ ...props }) => {
 		}
 		setLabels(labelArr);
 		setSeries(seriesArr);
-		console.log(props, props.donutData);
 		if (props.donutData && props.donutData.length > 0) {
 			setTriggerRender(Math.random());
 		}
-	}, [props.donutData]);
+	}, []);
 
 	const data = {
 		series: series,

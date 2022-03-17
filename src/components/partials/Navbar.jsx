@@ -1,26 +1,21 @@
-import { useState, useEffect } from "react";
-import { handleSidebar } from "../../common/navbar";
+import { useState, useEffect, useContext } from "react";
+import { Link } from "react-router-dom";
+
 import { motion } from "framer-motion";
 // styles
 import "../../assets/css/Sidebar.css";
 // icons
 import { RiAdminLine } from "react-icons/ri";
 import { IoMenuOutline } from "react-icons/io5";
-import { getUser, logOut } from "../../common/Auth";
-import { Link } from "react-router-dom";
+import { handleSidebar } from "../../common/navbar";
+import { AppContext } from "../../Context/Context";
 
 const Navbar = () => {
+	// Context
+	const { user, isActivePageSpinner, pageHead } = useContext(AppContext);
+
 	const [isHidden, setIsHidden] = useState(false);
-	const variants = {
-		in: {
-			opactiy: 1,
-			y: 0,
-		},
-		out: {
-			opactiy: 0,
-			y: "-100%",
-		},
-	};
+
 	const [isOnline, setIsOnline] = useState(false);
 	useEffect(() => {
 		const init = () => {
@@ -31,8 +26,18 @@ const Navbar = () => {
 		init();
 	}, []);
 
-	// user
-	// const [userName, setUserName] = useState(getUser().fullName);
+	function handleLogout() {}
+
+	const variants = {
+		in: {
+			opactiy: 1,
+			y: 0,
+		},
+		out: {
+			opactiy: 0,
+			y: "-100%",
+		},
+	};
 
 	return (
 		<motion.header initial="out" animate="in" exit="out" variants={variants} className="top-header">
@@ -43,7 +48,7 @@ const Navbar = () => {
 					</button>
 					<div className="d-flex">
 						<h4 style={{ marginBottom: 0, fontWeight: 300 }} id="activePageHead">
-							{}
+							{pageHead}
 						</h4>
 					</div>
 				</div>
@@ -53,14 +58,14 @@ const Navbar = () => {
 							<div className="nav-link dropdown-toggle dropdown-toggle-nocaret px-3" data-toggle="dropdown" aria-expanded="false">
 								<div className="media user-box align-items-center">
 									<div className="media-body user-info">
-										<p className="user-name mb-0">{getUser().fullName}</p>
+										<p className="user-name mb-0">{user.fullName}</p>
 										<span style={{ display: "block", fontSize: "12px", fontWeight: "700", padding: "2px 5px", background: isOnline ? "#4BB543 " : "#c9302c" }} className={" badge " + (isOnline ? "badge-success" : "badge-danger")}>
 											{isOnline ? "Online" : "Offline"}
 										</span>
 									</div>
 									<div style={{ position: "relative", cursor: "pointer" }} className="userAvatar">
 										<RiAdminLine style={{ zIndex: 3 }} />
-										<div className="spinner-border" id="pageSpinner" style={{ borderWidth: "1.5px", display: isOnline ? " none" : " block" }} role="status">
+										<div className="spinner-border" id="pageSpinner" style={{ borderWidth: "1.5px", display: isOnline || isActivePageSpinner ? " none" : " block" }} role="status">
 											<span className="sr-only">Loading...</span>
 										</div>
 									</div>
@@ -80,7 +85,7 @@ const Navbar = () => {
 									<span>Dashboard</span>
 								</Link>
 								<div className="dropdown-divider mb-0"></div>
-								<Link className="dropdown-item" onClick={logOut} to="/">
+								<Link className="dropdown-item" onClick={handleLogout} to="/">
 									<i className="bx bx-power-off"></i>
 									<span>Logout</span>
 								</Link>
