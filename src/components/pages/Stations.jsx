@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import { motion } from "framer-motion";
 
-import { Table } from "react-bootstrap";
+import { Form, InputGroup, Table } from "react-bootstrap";
 // icons
 import { IoRefreshOutline } from "react-icons/io5";
 import { RiGasStationLine, RiDeleteBinLine } from "react-icons/ri";
@@ -62,11 +62,11 @@ const Stations = () => {
 						<tr key={Math.random()}>
 							<td onClick={() => modal("EDIT", item)}>{item.stationName}</td>
 							<td onClick={() => modal("EDIT", item)}>{item.DSO}</td>
-							<td onClick={() => modal("EDIT", item)}>{item.address}</td>
 							<td onClick={() => modal("EDIT", item)}>{item.pincode}</td>
+							<td onClick={() => modal("EDIT", item)}>{item.CNGRate}</td>
 							<td style={{ display: "flex", alignItems: "center" }}>
 								<button className="btn btn-sm border btnDanger m-1 " onClick={() => modal("DELETE", item)}>
-									<RiDeleteBinLine />{" "}
+									<RiDeleteBinLine />
 								</button>
 							</td>
 						</tr>
@@ -213,38 +213,33 @@ const Stations = () => {
 				<motion.div initial={Animation.variants.out} animate={Animation.variants.in} exit={Animation.variants.exit} transition={Animation.PageTransition} className="page-content">
 					<div className="card dataCard">
 						<div className="card-body">
-							<div className="card-title ">
-								<div className="row">
-									<div className="col-12 pageHead">
-										<div>
-											<div className="input-group " style={{ width: "unset" }}>
-												<div className="input-group-prepend">
-													<span className="input-group-text">
-														<RiGasStationLine />
-													</span>
-												</div>
-												<input type="text" className="form-control" title={"Search"} onChange={(e) => setSearchStr(e.target.value)} placeholder="Search here" />
-											</div>
+							<div className="card-title cardC__head">
+								<div>
+									<div className="input-group inputGroupC" style={{ width: "unset" }}>
+										<div className="input-group-prepend">
+											<span className="input-group-text">
+												<RiGasStationLine />
+											</span>
 										</div>
-										<div>
-											<button type="button" onClick={() => modal("NEW")} title={"New Station"} className="btn btnIconC border mr-2">
-												<IoMdAdd />
-											</button>
-											<button type="button" onClick={triggerGetAll} title={"Refresh"} className="btn btnIconC border mr-2">
-												<IoRefreshOutline />
-											</button>
-											<div className="form-group mb-0 w-50 mr-2">
-												<select onChange={(e) => setLimit(e.target.value)} title={"Result Limit"} defaultValue={limit} value={limit} className="form-control">
-													<option value="50">50</option>
-													<option value="100">100</option>
-													<option value="500">500</option>
-													<option value="1000">1000</option>
-												</select>
-											</div>
-											<Pagination className="mb-0" total={total} currentPage={currentPage} setCurrentPage={setCurrentPage} pageSize={limit} />
-										</div>
+										<input type="text" className="form-control" title={"Search"} onChange={(e) => setSearchStr(e.target.value)} placeholder="Search here" />
 									</div>
 								</div>
+
+								<button type="button" onClick={() => modal("NEW")} title={"New Station"} className="btn btnIconC border mr-2">
+									<IoMdAdd />
+								</button>
+								<button type="button" onClick={triggerGetAll} title={"Refresh"} className="btn btnIconC border mr-2">
+									<IoRefreshOutline />
+								</button>
+								<InputGroup className="inputGroupC">
+									<Form.Select className="form-control inputGroupC__input" title="Station" onChange={(e) => setLimit(e.target.value)} defaultValue={limit}>
+										<option value="50">50</option>
+										<option value="100">100</option>
+										<option value="500">500</option>
+										<option value="1000">1000</option>
+									</Form.Select>
+								</InputGroup>
+								<Pagination className="mb-0" total={total} currentPage={currentPage} setCurrentPage={setCurrentPage} pageSize={limit} />
 							</div>
 							<Table bordered responsive hover>
 								<thead>
@@ -252,7 +247,7 @@ const Stations = () => {
 										<th>Station Name</th>
 										<th>DSO</th>
 										<th>Pincode</th>
-										<th>Address</th>
+										<th>CNG Rate</th>
 										<th>Action</th>
 									</tr>
 								</thead>
@@ -356,7 +351,7 @@ const Stations = () => {
 										</div>
 									</div>
 									<button type="button" className="btn btn-danger" onClick={deleteStation}>
-										Confirm
+										Confirm Delete
 									</button>
 									<button type="button" className="btn btn-secondary" id="closeBtn" data-dismiss="modal">
 										Close

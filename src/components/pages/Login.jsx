@@ -85,8 +85,8 @@ export default function Login() {
 									<h6>Log in into your account</h6>
 								</div>
 								<fieldset className="formBox">
-									<legend>Email</legend>
-									<input type="email" onChange={(e) => setEmail(e.target.value)} required placeholder="Email Address" title="Enter email address" className="formField" />
+									<legend>UserID</legend>
+									<input type="text" onChange={(e) => setEmail(e.target.value)} required placeholder="User Id (Mobile or Email)" title="Enter email or Mobile" className="formField" />
 								</fieldset>
 								<fieldset className="formBox" style={{ marginBottom: "10px" }}>
 									<legend>Password</legend>

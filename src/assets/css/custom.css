@@ -282,8 +282,12 @@ input[type="number"] {
     margin-right: 10px;
 }
 
-.pageHead .pagination+button {
+.pagination+button {
     margin-left: 10px;
+}
+
+.pagination {
+    margin-left: auto;
 }
 
 .pagination .page-link:focus {

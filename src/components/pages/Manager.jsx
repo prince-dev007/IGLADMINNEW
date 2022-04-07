@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import DataTable from "../partials/DataTable";
 import { motion } from "framer-motion";
 // import QRCode from "react-qr-code";
@@ -15,11 +15,29 @@ import Animation from "../../common/Animation";
 
 // utils
 import { callAPI } from "../../common/common";
+import { Form, InputGroup, Table } from "react-bootstrap";
+import { AppContext } from "../../Context/Context";
 
 export default function Manager() {
+	const { user, contextDispatch } = useContext(AppContext);
 	// defaults
-	document.title = "IGL ADMIN | Manager";
-	window.$("#activePageHead").text("Manager");
+	useEffect(() => {
+		contextDispatch({
+			type: "SET_PAGE_TITLE",
+			payload: "Manager",
+		});
+		contextDispatch({
+			type: "SET_ACTIVE_PAGE_HEAD",
+			payload: "Manager",
+		});
+
+		return () => {
+			contextDispatch({
+				type: "SET_ACTIVE_PAGE_SPINNER",
+				payload: true,
+			});
+		};
+	}, [contextDispatch]);
 	// window.$('#stationModal #modalSpinner').hide();
 
 	const renderProgress = (row = 0, col = 0) => {
@@ -47,7 +65,7 @@ export default function Manager() {
 							<td onClick={() => modal("EDIT", item)}>{item.fullName}</td>
 							<td onClick={() => modal("EDIT", item)}>{item.email}</td>
 							<td onClick={() => modal("EDIT", item)}>{item.Station ? item.Station.stationName : item.Station}</td>
-							<td style={{ display: "flex", alignItems: "center" }}>
+							<td>
 								<button className="btn btn-sm border btnDanger m-1 " onClick={() => modal("DELETE", item)}>
 									<RiDeleteBinLine />{" "}
 								</button>
@@ -145,6 +163,7 @@ export default function Manager() {
 		setSubmitNoteTxt("");
 	};
 
+	const [selectedStation, setSelectedStation] = useState(null);
 	// get all
 	const [searchStr, setSearchStr] = useState("");
 	const triggerGetAll = () => setRandom(Math.random());
@@ -155,10 +174,11 @@ export default function Manager() {
 	const [total, setTotal] = useState(0);
 	useEffect(
 		(e) => {
+			const stationGet = user.profileType === "ADMIN" ? selectedStation : user.Station;
 			const getAllStation = async () => {
 				setDataArr(null);
 				const response = await callAPI({
-					URL: "user/all?page=" + currentPage + "&limit=" + limit + "&search=" + searchStr,
+					URL: "user/all?page=" + currentPage + "&limit=" + limit + "&search=" + searchStr + "&station=" + stationGet,
 					abort: true,
 				});
 				if (response.status !== 200 && response.status !== 404) return;
@@ -170,13 +190,14 @@ export default function Manager() {
 				window.$("#pageSpinner").show();
 			};
 		},
-		[currentPage, limit, random, searchStr]
+		[currentPage, limit, random, searchStr, selectedStation, user]
 	);
 
 	// all station
 	// getting stations for dropdown
 	const [stationArr, setStationArr] = useState([]);
 	const [stationId, setStationId] = useState("DEFAULT");
+
 	useEffect(() => {
 		const getAllStation = async () => {
 			const response = await callAPI({
@@ -195,40 +216,63 @@ export default function Manager() {
 				<motion.div initial={Animation.variants.out} animate={Animation.variants.in} exit={Animation.variants.exit} transition={Animation.PageTransition} className="page-content">
 					<div className="card dataCard">
 						<div className="card-body">
-							<div className="card-title ">
-								<div className="row">
-									<div className="col-12 pageHead">
-										<div>
-											<div className="input-group " style={{ width: "unset" }}>
-												<div className="input-group-prepend">
-													<span className="input-group-text">
-														<RiGasStationLine />
-													</span>
-												</div>
-												<input type="text" className="form-control" title={"Search"} onChange={(e) => setSearchStr(e.target.value)} placeholder="Search here" />
-											</div>
-										</div>
-										<div>
-											<button type="button" onClick={() => modal("NEW")} title={"New Station"} className="btn btnIconC border mr-2">
-												<IoMdAdd />
-											</button>
-											<button type="button" onClick={triggerGetAll} title={"Refresh"} className="btn btnIconC border mr-2">
-												<IoRefreshOutline />
-											</button>
-											<div className="form-group mb-0 w-50 mr-2">
-												<select onChange={(e) => setLimit(e.target.value)} title={"Result Limit"} defaultValue={limit} value={limit} className="form-control">
-													<option value="50">50</option>
-													<option value="100">100</option>
-													<option value="500">500</option>
-													<option value="1000">1000</option>
-												</select>
-											</div>
-											<Pagination className="mb-0" total={total} currentPage={currentPage} setCurrentPage={setCurrentPage} pageSize={limit} />
-										</div>
+							<div className="card-title cardC__head">
+								<InputGroup className="inputGroupC">
+									<InputGroup.Text id="basic-addon1" className="inputGroupC__label">
+										Station
+									</InputGroup.Text>
+									<Form.Select
+										className="form-control inputGroupC__input"
+										title="Station"
+										value={selectedStation}
+										onChange={(e) => {
+											setSelectedStation(e.target.value);
+											setCurrentPage(1);
+										}}
+									>
+										<option value={"null"}>All Station</option>
+										{stationArr.map((obj) => {
+											return (
+												<option value={obj._id} key={obj._id}>
+													{obj.stationName}
+												</option>
+											);
+										})}
+									</Form.Select>
+								</InputGroup>
+								<div className="input-group inputGroupC" style={{ width: "unset" }}>
+									<div className="input-group-prepend">
+										<span className="input-group-text">Search</span>
 									</div>
+									<input type="text" className="form-control" title={"Search"} onChange={(e) => setSearchStr(e.target.value)} placeholder="Search here" />
 								</div>
+								<button type="button" onClick={() => modal("NEW")} title={"New Station"} className="btn btnIconC border mr-2">
+									<IoMdAdd />
+								</button>
+								<button type="button" onClick={triggerGetAll} title={"Refresh"} className="btn btnIconC border mr-2">
+									<IoRefreshOutline />
+								</button>
+								<InputGroup className="inputGroupC">
+									<Form.Select className="form-control inputGroupC__input" title="Station" onChange={(e) => setLimit(e.target.value)} defaultValue={limit}>
+										<option value="50">50</option>
+										<option value="100">100</option>
+										<option value="500">500</option>
+										<option value="1000">1000</option>
+									</Form.Select>
+								</InputGroup>
+								<Pagination className="mb-0" total={total} currentPage={currentPage} setCurrentPage={setCurrentPage} pageSize={limit} />
 							</div>
-							<DataTable tableRowHead={"Manager Name, Email, Station,Action"} renderTable={renderTable} />
+							<Table bordered responsive hover>
+								<thead>
+									<tr>
+										<th>Manager</th>
+										<th>ManagerId</th>
+										<th>Station</th>
+										<th>Action</th>
+									</tr>
+								</thead>
+								<tbody>{renderTable()}</tbody>
+							</Table>
 						</div>
 					</div>
 					{/* modal */}
@@ -248,8 +292,8 @@ export default function Manager() {
 											<input type="text" required placeholder="Manager Name" value={fullName} onChange={(e) => setFullName(e.target.value)} className="formField" />
 										</fieldset>
 										<fieldset className="formBox">
-											<legend>Email</legend>
-											<input type="text" value={email} placeholder="Email" onChange={(e) => setEmail(e.target.value)} className="formField" />
+											<legend>ManagerID</legend>
+											<input type="text" value={email} placeholder="Manager ID" onChange={(e) => setEmail(e.target.value)} className="formField" />
 										</fieldset>
 										<fieldset className="formBox">
 											<legend>Station </legend>
@@ -318,7 +362,7 @@ export default function Manager() {
 										</div>
 									</div>
 									<button type="button" className="btn btn-danger" onClick={deleteManager}>
-										Confirm
+										Confirm Delete
 									</button>
 									<button type="button" className="btn btn-secondary" id="closeBtn" data-dismiss="modal">
 										Close

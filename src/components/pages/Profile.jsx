@@ -40,12 +40,12 @@ export default function Profile() {
 	useEffect(() => {
 		async function getProfile() {
 			const response = await callAPI({
-				URL: "profile/" + user._id,
+				URL: "user/one/" + user._id,
 			});
 			if (response.status !== 200) return;
 
 			const data = response.data;
-			setStationName(data.stationName);
+			setStationName(data.Station.stationName);
 			setDSO(data.DSO);
 			setAddress(data.address);
 			setPincode(data.pincode);
@@ -69,7 +69,11 @@ export default function Profile() {
 										<div className="col-md-6">
 											<fieldset className="formBox">
 												<legend>Full Name</legend>
-												<input type="text" required placeholder="Station Name" value={stationName} onChange={(e) => setStationName(e.target.value)} className="formField" />
+												<input type="text" required placeholder="Full Name" readOnly value={user.fullName} onChange={(e) => setStationName(e.target.value)} className="formField" />
+											</fieldset>
+											<fieldset className="formBox">
+												<legend>Station</legend>
+												<input type="text" required placeholder="Station" readOnly value={stationName} onChange={(e) => setStationName(e.target.value)} className="formField" />
 											</fieldset>
 										</div>
 										<div className="col-md-12 d-none" style={{ display: "flex", alignItems: "center", justifyContent: "flex-end" }}>

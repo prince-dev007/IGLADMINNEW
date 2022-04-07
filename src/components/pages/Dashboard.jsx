@@ -40,13 +40,17 @@ const Dashboard = () => {
 	const [donutData, setDonutData] = useState([]);
 
 	useEffect(() => {
+		let queryStr = "";
+		if (user.profileType !== "ADMIN") {
+			queryStr = "?station=" + user.Station + "&user=" + user._id;
+		}
 		const initAPI = async () => {
 			contextDispatch({
 				type: "SET_ACTIVE_PAGE_SPINNER",
 				payload: true,
 			});
 			const response = await callAPI({
-				URL: "dashboard/summary?station=" + user.Station,
+				URL: "dashboard/summary" + queryStr,
 			});
 			contextDispatch({
 				type: "SET_ACTIVE_PAGE_SPINNER",

@@ -12,7 +12,7 @@ import { AppContext } from "../../Context/Context";
 
 const Navbar = () => {
 	// Context
-	const { user, isActivePageSpinner, pageHead } = useContext(AppContext);
+	const { user, isActivePageSpinner, pageHead, contextDispatch } = useContext(AppContext);
 
 	const [isHidden, setIsHidden] = useState(false);
 
@@ -26,7 +26,11 @@ const Navbar = () => {
 		init();
 	}, []);
 
-	function handleLogout() {}
+	function handleLogout() {
+		contextDispatch({
+			type: "LOGOUT",
+		});
+	}
 
 	const variants = {
 		in: {

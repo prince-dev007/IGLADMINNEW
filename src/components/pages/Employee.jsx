@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 
 // icons
 import { IoRefreshOutline } from "react-icons/io5";
-import { RiGasStationLine } from "react-icons/ri";
+import { RiDeleteBinLine, RiGasStationLine } from "react-icons/ri";
 import { IoMdAdd } from "react-icons/io";
 // import {MdModeEdit} from 'react-icons/md';
 
@@ -17,9 +17,10 @@ import Animation from "../../common/Animation";
 import { callAPI } from "../../common/common";
 import { useContext } from "react";
 import { AppContext } from "../../Context/Context";
+import { Button, Form, InputGroup, Modal, Table } from "react-bootstrap";
 
 export default function Employee() {
-	const { contextDispatch } = useContext(AppContext);
+	const { user, contextDispatch } = useContext(AppContext);
 
 	useEffect(() => {
 		contextDispatch({
@@ -30,7 +31,6 @@ export default function Employee() {
 			type: "SET_ACTIVE_PAGE_HEAD",
 			payload: "Employee",
 		});
-		// window.$("#pageSpinner").hide();
 
 		return () => {
 			contextDispatch({
@@ -39,7 +39,6 @@ export default function Employee() {
 			});
 		};
 	}, [contextDispatch]);
-	// window.$('#stationModal #modalSpinner').hide();
 
 	const renderProgress = (row = 0, col = 0) => {
 		const tableSize = [row, col];
@@ -63,13 +62,15 @@ export default function Employee() {
 				{dataArr.length > 0 ? (
 					dataArr.map((item) => (
 						<tr key={Math.random()}>
-							<td onClick={() => modal("EDIT", item)}>{item.name}</td>
+							<td onClick={() => modal("EDIT", item)} style={{ fontWeight: "bold" }}>
+								{item.name}
+							</td>
 							<td onClick={() => modal("EDIT", item)}>{item.email}</td>
 							<td onClick={() => modal("EDIT", item)}>{item.Station ? item.Station.stationName : "Not Assigned"}</td>
-							<td style={{ display: "flex", alignItems: "center" }}>
-								{/* <button className="btn btn-sm border btnDanger m-1 " onClick={() => modal("DELETE", item)}>
-									<RiDeleteBinLine />{" "}
-								</button> */}
+							<td>
+								<button className="btn btn-sm border btnDanger m-1 " onClick={() => modal("DELETE", item)}>
+									<RiDeleteBinLine />
+								</button>
 							</td>
 						</tr>
 					))
@@ -102,7 +103,7 @@ export default function Employee() {
 			setStationId(action === "EDIT" && data.Station ? data.Station._id : "");
 			setEmployeeId(action === "EDIT" && data._id ? data._id : action);
 		} else if (action === "DELETE") {
-			//window.$("#deleteModal").modal("show");
+			showDeleteModal();
 			setEmployeeId(data._id);
 			setFullName(data.name);
 		}
@@ -151,7 +152,7 @@ export default function Employee() {
 			setSubmitNoteClass("text-success");
 			setSubmitNoteTxt("Deleted");
 			setTimeout(() => {
-				window.$("#deleteModal #closeBtn").click();
+				hideDeleteModal();
 				triggerGetAll();
 			}, 1000);
 		} else {
@@ -159,6 +160,8 @@ export default function Employee() {
 			setSubmitNoteTxt("Something went wrong !");
 		}
 	};
+
+	const [selectedStation, setSelectedStation] = useState(null);
 
 	// get all employee
 	const [searchStr, setSearchStr] = useState("");
@@ -170,11 +173,11 @@ export default function Employee() {
 	const [total, setTotal] = useState(0);
 	useEffect(
 		(e) => {
-			const user = {};
+			const stationGet = user.profileType === "ADMIN" ? selectedStation : user.Station;
 			const getAllEmployee = async () => {
 				setDataArr(null);
 				const response = await callAPI({
-					URL: `employee/all?page=${currentPage}&limit=${limit}&search=${searchStr}&station=${user.Station}`,
+					URL: `employee/all?page=${currentPage}&limit=${limit}&search=${searchStr}&station=${stationGet}`,
 					abort: true,
 				});
 				if (response.status !== 200 && response.status !== 404) return;
@@ -186,7 +189,7 @@ export default function Employee() {
 				window.$("#pageSpinner").show();
 			};
 		},
-		[currentPage, limit, random, searchStr]
+		[currentPage, limit, random, searchStr, selectedStation, user]
 	);
 
 	// all station
@@ -198,7 +201,7 @@ export default function Employee() {
 		// stations
 		const getAllStation = async () => {
 			const response = await callAPI({
-				URL: "stations/mini?fields=managerName,stationName,stationId",
+				URL: "stations/mini?fields=stationId,stationName",
 			});
 			if (response.status === 200) {
 				setStationArr(response.data);
@@ -207,46 +210,77 @@ export default function Employee() {
 		getAllStation();
 	}, []);
 
+	// delete Modal
+	const [deleteModalShow, setDeleteModalShow] = useState(false);
+
+	const hideDeleteModal = () => setDeleteModalShow(false);
+	const showDeleteModal = () => setDeleteModalShow(true);
+
 	return (
 		<div className="page-wrapper">
 			<div className="page-content-wrapper">
 				<motion.div initial={Animation.variants.out} animate={Animation.variants.in} exit={Animation.variants.exit} transition={Animation.PageTransition} className="page-content">
 					<div className="card dataCard">
 						<div className="card-body">
-							<div className="card-title ">
-								<div className="row">
-									<div className="col-12 pageHead">
-										<div>
-											<div className="input-group " style={{ width: "unset" }}>
-												<div className="input-group-prepend">
-													<span className="input-group-text">
-														<RiGasStationLine />
-													</span>
-												</div>
-												<input type="text" className="form-control" title={"Search"} onChange={(e) => setSearchStr(e.target.value)} placeholder="Search here" />
-											</div>
-										</div>
-										<div>
-											<button type="button" onClick={() => modal("NEW")} title={"New Station"} className="d-none btn btnIconC border mr-2">
-												<IoMdAdd />
-											</button>
-											<button type="button" onClick={triggerGetAll} title={"Refresh"} className="btn btnIconC border mr-2">
-												<IoRefreshOutline />
-											</button>
-											<div className="form-group mb-0 w-50 mr-2">
-												<select onChange={(e) => setLimit(e.target.value)} title={"Result Limit"} defaultValue={limit} value={limit} className="form-control">
-													<option value="50">50</option>
-													<option value="100">100</option>
-													<option value="500">500</option>
-													<option value="1000">1000</option>
-												</select>
-											</div>
-											<Pagination className="mb-0" total={total} currentPage={currentPage} setCurrentPage={setCurrentPage} pageSize={limit} />
-										</div>
+							<div className="card-title cardC__head">
+								{user.profileType === "ADMIN" && (
+									<InputGroup className="inputGroupC">
+										<InputGroup.Text id="basic-addon1" className="inputGroupC__label">
+											Station
+										</InputGroup.Text>
+										<Form.Select
+											className="form-control inputGroupC__input"
+											title="Station"
+											value={selectedStation}
+											onChange={(e) => {
+												setSelectedStation(e.target.value);
+												setCurrentPage(1);
+											}}
+										>
+											<option value={"null"}>All Station</option>
+											{stationArr.map((obj) => {
+												return (
+													<option value={obj._id} key={obj._id}>
+														{obj.stationName}
+													</option>
+												);
+											})}
+										</Form.Select>
+									</InputGroup>
+								)}
+								<div className="input-group inputGroupC" style={{ width: "unset" }}>
+									<div className="input-group-prepend">
+										<span className="input-group-text">Search</span>
 									</div>
+									<input type="text" className="form-control" title={"Search"} onChange={(e) => setSearchStr(e.target.value)} placeholder="Search here" />
 								</div>
+								<button type="button" onClick={() => modal("NEW")} title={"New Station"} className="d-none btn btnIconC border mr-2">
+									<IoMdAdd />
+								</button>
+								<button type="button" onClick={triggerGetAll} title={"Refresh"} className="btn btnIconC border mr-2">
+									<IoRefreshOutline />
+								</button>
+								<InputGroup className="inputGroupC">
+									<Form.Select className="form-control inputGroupC__input" title="Station" onChange={(e) => setLimit(e.target.value)} defaultValue={limit}>
+										<option value="50">50</option>
+										<option value="100">100</option>
+										<option value="500">500</option>
+										<option value="1000">1000</option>
+									</Form.Select>
+								</InputGroup>
+								<Pagination className="mb-0" total={total} currentPage={currentPage} setCurrentPage={setCurrentPage} pageSize={limit} />
 							</div>
-							<DataTable tableRowHead={"Employee, Email,  Station, Action"} renderTable={renderTable} />
+							<Table bordered responsive hover>
+								<thead>
+									<tr>
+										<th>Employee</th>
+										<th>Email</th>
+										<th>Station</th>
+										<th>Action</th>
+									</tr>
+								</thead>
+								<tbody>{renderTable()}</tbody>
+							</Table>
 						</div>
 					</div>
 					{/* modal */}
@@ -315,40 +349,36 @@ export default function Employee() {
 					</div>
 
 					{/*  delete modal */}
-					<div className="modal fade" id="deleteModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-						<div className="modal-dialog modal-dialog-centered">
-							<div className="modal-content">
-								<div className="modal-header">
-									<h5 className="modal-title">Confirm Delete</h5>
-									<button type="button" className="close" data-dismiss="modal" aria-label="Close">
-										<span aria-hidden="true">&times;</span>
-									</button>
-								</div>
-								<div className="modal-body">
-									<p style={{ fontSize: "16px" }}>Are you sure to delete this Employee record ?</p>
-									<p style={{ fontSize: "16px" }}>
-										Selected Employee : <strong>{fullName}</strong>
-									</p>
-								</div>
-								<div className="modal-footer mt-3">
-									<div className="submitNote">
-										<span className={submitNoteClass}>{submitNoteTxt}</span>
-									</div>
-									<div id="modalSpinner" style={{ transform: "scale(0.7)" }}>
-										<div className="spinner-border text-success" role="status">
-											<span className="sr-only">Loading...</span>
-										</div>
-									</div>
-									<button type="button" className="btn btn-danger" onClick={deleteHandler}>
-										Confirm
-									</button>
-									<button type="button" className="btn btn-secondary" id="closeBtn" data-dismiss="modal">
-										Close
-									</button>
+					<Modal show={deleteModalShow} centered onHide={hideDeleteModal}>
+						<Modal.Header>
+							<Modal.Title>Confirm Delete</Modal.Title>
+							<button type="button" className="close" onClick={hideDeleteModal}>
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</Modal.Header>
+						<Modal.Body>
+							<p style={{ fontSize: "16px" }}>Are you sure to delete this Employee record ?</p>
+							<p style={{ fontSize: "16px" }}>
+								Selected Employee : <strong>{fullName}</strong>
+							</p>
+						</Modal.Body>
+						<Modal.Footer>
+							<div className="submitNote">
+								<span className={submitNoteClass}>{submitNoteTxt}</span>
+							</div>
+							<div id="modalSpinner" style={{ transform: "scale(0.7)" }}>
+								<div className="spinner-border text-success" role="status">
+									<span className="sr-only">Loading...</span>
 								</div>
 							</div>
-						</div>
-					</div>
+							<Button variant="danger" onClick={deleteHandler}>
+								Confirm Delete
+							</Button>
+							<Button variant="secondary" onClick={hideDeleteModal}>
+								Close
+							</Button>
+						</Modal.Footer>
+					</Modal>
 				</motion.div>
 			</div>
 		</div>

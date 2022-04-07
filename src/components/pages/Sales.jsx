@@ -82,7 +82,7 @@ const Sales = () => {
 						<tr key={Math.random()} onClick={() => modal("VIEW", item)}>
 							<td>{item.billNumber}</td>
 							<td>{item.Station ? item.Station.stationName : item.Station}</td>
-							<td>{item.generatedBy ? item.generatedBy.name : ""}</td>
+							<td>{item.Manager ? item.Manager.fullName : ""}</td>
 							<td>{item.generatedBy ? item.generatedBy.name : ""}</td>
 							<td>{fDate(item.createdAt)}</td>
 							<td>{item.dispensor + " - " + item.side}</td>
@@ -95,7 +95,7 @@ const Sales = () => {
 					))
 				) : (
 					<tr>
-						<td className="text-center" colSpan={10}>
+						<td className="text-center" colSpan={11}>
 							<span className="badge badge-info">Record Not Found</span>
 						</td>
 					</tr>
@@ -116,14 +116,39 @@ const Sales = () => {
 		}
 	};
 
-	// DSMs
+	// DSMs, user, station from API
 	const [DSMArr, setDSMArr] = useState([]);
 	const [userArr, setUserArr] = useState([]);
 	const [stationArr, setStationArr] = useState([]);
 
-	const [selectedDSM, setSelectedDSM] = useState(null);
-	const [selectedUser, setSelectedUser] = useState(null);
-	const [selectedStation, setSelectedStation] = useState(null);
+	const [selectedDSM, setSelectedDSM] = useState("ALL");
+	const [selectedUser, setSelectedUser] = useState("ALL");
+	const [selectedStation, setSelectedStation] = useState("ALL");
+
+	// filter
+	// Station
+	const [filteredUser, setFilteredUser] = useState([]);
+	const [filteredDSM, setFilteredDSM] = useState([]);
+	useEffect(
+		(e) => {
+			if (selectedStation === "ALL") {
+				setFilteredUser(userArr);
+				setFilteredDSM(DSMArr);
+				setSelectedDSM("ALL");
+				setSelectedUser("ALL");
+			} else {
+				if (true) {
+					const arr = userArr.filter((arrElem) => arrElem.Station === selectedStation);
+					setFilteredUser(arr.length > 0 ? arr : []);
+				}
+				if (true) {
+					const arr = DSMArr.filter((arrElem) => arrElem.Station === selectedStation);
+					setFilteredDSM(arr.length > 0 ? arr : []);
+				}
+			}
+		},
+		[selectedStation]
+	);
 
 	// get all
 	const triggerGetAll = () => setRandom(Math.random());
@@ -135,6 +160,21 @@ const Sales = () => {
 	const [total, setTotal] = useState(0);
 	useEffect(
 		(e) => {
+			console.log(user);
+			let stationGetQuery = "",
+				userGetQuery = "",
+				dsmGetQuery = "";
+			if (user && user.profileType === "ADMIN") {
+				stationGetQuery = selectedStation && selectedStation !== "ALL" ? "&station=" + selectedStation : "";
+				userGetQuery = selectedUser && selectedUser !== "ALL" ? "&user=" + selectedUser : "";
+			} else {
+				stationGetQuery = "&station=" + user.Station;
+				userGetQuery = "&user=" + user._id;
+			}
+			if (selectedDSM && selectedDSM !== "ALL") {
+				dsmGetQuery = "&dsm=" + selectedDSM;
+			}
+
 			const getAllSale = async () => {
 				setDataArr(null);
 				contextDispatch({
@@ -142,7 +182,7 @@ const Sales = () => {
 					payload: true,
 				});
 				const response = await callAPI({
-					URL: "sales/all?page=" + currentPage + "&limit=" + limit + "&station=" + user.Station + "&user=" + user._id + (selectedDSM ? "&dsm=" + selectedDSM : ""),
+					URL: "sales/all?page=" + currentPage + "&limit=" + limit + stationGetQuery + userGetQuery + dsmGetQuery,
 					abort: true,
 				});
 				contextDispatch({
@@ -156,7 +196,7 @@ const Sales = () => {
 			};
 			getAllSale();
 		},
-		[currentPage, limit, random, contextDispatch, user, selectedDSM]
+		[currentPage, limit, random, contextDispatch, user, selectedDSM, selectedStation, selectedUser]
 	);
 
 	useEffect(() => {
@@ -167,6 +207,8 @@ const Sales = () => {
 			if (responseAPI.status === 200) {
 				setDSMArr(responseAPI.data.employee);
 				setUserArr(responseAPI.data.user);
+				setFilteredUser(responseAPI.data.user);
+				setFilteredDSM(responseAPI.data.employee);
 				setStationArr(responseAPI.data.station);
 			}
 		};
@@ -180,44 +222,56 @@ const Sales = () => {
 					<div className="card cardC">
 						<div className="card-body">
 							<div className="card-title cardC__head">
-								<InputGroup className="inputGroupC">
-									<InputGroup.Text id="basic-addon1" className="inputGroupC__label">
-										Station
-									</InputGroup.Text>
-									<Form.Select
-										className="form-control inputGroupC__input"
-										title="Station"
-										value={selectedStation}
-										onChange={(e) => {
-											setSelectedStation(e.target.value);
-											setCurrentPage(1);
-										}}
-									>
-										<option value={null}>All Station</option>
-										{stationArr.map((obj) => {
-											return <option value={obj._id}>{obj.stationName}</option>;
-										})}
-									</Form.Select>
-								</InputGroup>
-								<InputGroup className="inputGroupC">
-									<InputGroup.Text id="basic-addon1" className="inputGroupC__label">
-										Manager
-									</InputGroup.Text>
-									<Form.Select
-										className="form-control inputGroupC__input"
-										title="Manager"
-										value={selectedDSM}
-										onChange={(e) => {
-											setSelectedUser(e.target.value);
-											setCurrentPage(1);
-										}}
-									>
-										<option value={null}>All Manager</option>
-										{userArr.map((obj) => {
-											return <option value={obj._id}>{obj.fullName}</option>;
-										})}
-									</Form.Select>
-								</InputGroup>
+								{user.profileType === "ADMIN" && (
+									<>
+										<InputGroup className="inputGroupC">
+											<InputGroup.Text id="basic-addon1" className="inputGroupC__label">
+												Station
+											</InputGroup.Text>
+											<Form.Select
+												className="form-control inputGroupC__input"
+												title="Station"
+												value={selectedStation}
+												onChange={(e) => {
+													setSelectedStation(e.target.value);
+													setCurrentPage(1);
+												}}
+											>
+												<option value={"ALL"}>All Station</option>
+												{stationArr.map((obj) => {
+													return (
+														<option value={obj._id} key={obj._id}>
+															{obj.stationName}
+														</option>
+													);
+												})}
+											</Form.Select>
+										</InputGroup>
+										<InputGroup className="inputGroupC">
+											<InputGroup.Text id="basic-addon1" className="inputGroupC__label">
+												Manager
+											</InputGroup.Text>
+											<Form.Select
+												className="form-control inputGroupC__input"
+												title="Manager"
+												value={selectedUser}
+												onChange={(e) => {
+													setSelectedUser(e.target.value);
+													setCurrentPage(1);
+												}}
+											>
+												<option value={"ALL"}>All Manager</option>
+												{filteredUser.map((obj) => {
+													return (
+														<option value={obj._id} key={obj._id}>
+															{obj.fullName}
+														</option>
+													);
+												})}
+											</Form.Select>
+										</InputGroup>
+									</>
+								)}
 								<InputGroup className="inputGroupC">
 									<InputGroup.Text id="basic-addon1" className="inputGroupC__label">
 										DSM
@@ -231,9 +285,13 @@ const Sales = () => {
 											setCurrentPage(1);
 										}}
 									>
-										<option value={null}>All DSM</option>
-										{DSMArr.map((obj) => {
-											return <option value={obj._id}>{obj.name}</option>;
+										<option value={"ALL"}>All DSM</option>
+										{filteredDSM.map((obj) => {
+											return (
+												<option value={obj._id} key={obj._id}>
+													{obj.name}
+												</option>
+											);
 										})}
 									</Form.Select>
 								</InputGroup>
@@ -244,14 +302,14 @@ const Sales = () => {
 								<button type="button" data-toggle="tooltip" data-placement="top" title={"Refresh"} onClick={triggerGetAll} className="btn btnIconC mr-2 border">
 									<IoRefreshOutline />
 								</button>
-								<div className="inputGroupC mb-0 w-50 mr-2">
-									<select title={"Result limit"} onChange={(e) => setLimit(e.target.value)} defaultValue={limit} className="inputGroupC__input">
+								<InputGroup className="inputGroupC">
+									<Form.Select className="form-control inputGroupC__input" title="Station" onChange={(e) => setLimit(e.target.value)} defaultValue={limit}>
 										<option value="50">50</option>
 										<option value="100">100</option>
 										<option value="500">500</option>
 										<option value="1000">1000</option>
-									</select>
-								</div>
+									</Form.Select>
+								</InputGroup>
 								<Pagination className="mb-0" total={total} currentPage={currentPage} setCurrentPage={setCurrentPage} lastPage={lastPage} pageSize={limit} />
 							</div>
 							<Table bordered responsive hover>

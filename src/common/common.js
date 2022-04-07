@@ -1,6 +1,6 @@
 import { getUser } from "../Context/Reducer";
-export const backendbaseURL = "https://iglapi.herokuapp.com/Admin/";
-// export const backendbaseURL = "https://iglapistaging.herokuapp.com/admin/";
+// export const backendbaseURL = "https://iglapi.herokuapp.com/Admin/";
+export const backendbaseURL = "https://iglapistaging.herokuapp.com/admin/";
 // export const backendbaseURL = "http://localhost:3000/Admin/";
 
 let abortController = null;

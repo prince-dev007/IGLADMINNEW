@@ -46,21 +46,67 @@ export default function MyStation() {
 	// };
 
 	// submit
-	function submitForm() {}
-
+	async function submitForm(e) {
+		e.preventDefault();
+		setSubmitNoteTxt("");
+		window.$("#stationModal #modalSpinner").show();
+		const response = await callAPI({
+			URL: "stations/" + stationId,
+			method: stationId === "NEW" ? "POST" : "PUT",
+			body: {
+				stationName,
+				stationCode,
+				DSO,
+				address,
+				pincode,
+				TINNumber,
+				CNGRate,
+			},
+		});
+		window.$("#stationModal #modalSpinner").hide();
+		if (response.status === 200) {
+			setSubmitNoteClass("text-success");
+			setSubmitNoteTxt(stationId === "NEW" ? "Added" : "Updated");
+			setTimeout(() => {
+				window.$("#stationModal #closeBtn").click();
+				setRetrigger(Math.random());
+			}, 1000);
+		} else {
+			setSubmitNoteClass("text-danger");
+			setSubmitNoteTxt(response.message);
+		}
+	}
+	const [retrigger, setRetrigger] = useState("");
 	// get
-	// const [submitNoteClass, setSubmitNoteClass] = useState("");
-	// const [submitNoteTxt, setSubmitNoteTxt] = useState("");
+	const [submitNoteClass, setSubmitNoteClass] = useState("");
+	const [submitNoteTxt, setSubmitNoteTxt] = useState("");
 
-	// const [stationId, setStationId] = useState("");
+	const [stationId, setStationId] = useState(user.Station);
 	const [stationName, setStationName] = useState("");
+	const [stationCode, setStationCode] = useState("");
 	const [DSO, setDSO] = useState("");
 	const [address, setAddress] = useState("");
 	const [pincode, setPincode] = useState("");
 	const [TINNumber, setTINNumber] = useState("");
 	const [CNGRate, setCNGRate] = useState("");
 
+	const [timeOutState, setTimeOutState] = useState("");
+	useEffect(
+		(e) => {
+			if (timeOutState) {
+				clearTimeout(timeOutState);
+			}
+			setTimeOutState(
+				setTimeout((e) => {
+					setSubmitNoteTxt("");
+				}, 3000)
+			);
+		},
+		[submitNoteTxt]
+	);
+
 	useEffect(() => {
+		setStationId(user.Station);
 		async function getStation() {
 			const response = await callAPI({
 				URL: "stations/" + user.Station,
@@ -74,9 +120,10 @@ export default function MyStation() {
 			setPincode(data.pincode);
 			setTINNumber(data.TINNumber);
 			setCNGRate(data.CNGRate);
+			setStationCode(data.stationCode);
 		}
 		getStation();
-	}, [user]);
+	}, [user, retrigger]);
 
 	return (
 		<div className="page-wrapper">
@@ -84,7 +131,11 @@ export default function MyStation() {
 				<motion.div initial={Animation.variants.out} animate={Animation.variants.in} exit={Animation.variants.exit} transition={Animation.PageTransition} className="page-content">
 					<div className="card dataCard">
 						<div className="card-body">
-							<div className="card-title "></div>
+							<div className="card-title ">
+								<h4 className="my-4" style={{ fontWeight: "bold" }}>
+									{stationName}
+								</h4>
+							</div>
 							<div className="row">
 								<div className="col-md-12">
 									<div className="row">
@@ -93,17 +144,14 @@ export default function MyStation() {
 												<legend>Station Name </legend>
 												<input type="text" required placeholder="Station Name" value={stationName} onChange={(e) => setStationName(e.target.value)} className="formField" />
 											</fieldset>
+
 											<fieldset className="formBox">
 												<legend>DSO Name</legend>
 												<input type="text" value={DSO} placeholder="DSO name" onChange={(e) => setDSO(e.target.value)} className="formField" />
 											</fieldset>
 											<fieldset className="formBox">
-												<legend>Pincode </legend>
-												<input type="number" placeholder="Pincode of Station" value={pincode} onChange={(e) => setPincode(e.target.value)} className="formField" />
-											</fieldset>
-											<fieldset className="formBox">
-												<legend>TIN Number</legend>
-												<input type="text" placeholder="TIN Number of Station" value={TINNumber} onChange={(e) => setTINNumber(e.target.value)} className="formField" />
+												<legend>Station Code</legend>
+												<input type="text" placeholder="Station Code for Bill" value={stationCode} onChange={(e) => setStationCode(e.target.value)} className="formField" />
 											</fieldset>
 											<fieldset className="formBox">
 												<legend>CNG Rate</legend>
@@ -112,14 +160,22 @@ export default function MyStation() {
 										</div>
 										<div className="col-md-6">
 											<fieldset className="formBox">
+												<legend>TIN Number</legend>
+												<input type="text" placeholder="TIN Number of Station" value={TINNumber} onChange={(e) => setTINNumber(e.target.value)} className="formField" />
+											</fieldset>
+											<fieldset className="formBox">
+												<legend>Pincode </legend>
+												<input type="number" placeholder="Pincode of Station" value={pincode} onChange={(e) => setPincode(e.target.value)} className="formField" />
+											</fieldset>
+											<fieldset className="formBox">
 												<legend>Address</legend>
-												<textarea className="formField" style={{ height: "165px" }} onChange={(e) => setAddress(e.target.value)} value={address} placeholder="Address of Station"></textarea>
+												<textarea className="formField" style={{ height: "125px" }} onChange={(e) => setAddress(e.target.value)} value={address} placeholder="Address of Station"></textarea>
 											</fieldset>
 										</div>
-										<div className="col-md-12 d-none" style={{ display: "flex", alignItems: "center", justifyContent: "flex-end" }}>
+										<div className="col-md-12" style={{ display: "flex", alignItems: "center", justifyContent: "flex-end" }}>
 											<div className="submitNote">
-												<span id="submitNote" className={""}>
-													{/* {submitNoteTxt} */}
+												<span id="submitNote" className={submitNoteClass}>
+													{submitNoteTxt}
 												</span>
 											</div>
 											<div id="modalSpinner" style={{ transform: "scale(0.7)" }}>

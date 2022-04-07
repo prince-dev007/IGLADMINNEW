@@ -26,7 +26,6 @@ import Profile from "./components/pages/Profile";
 import Employee from "./components/pages/Employee";
 
 import { AppContext } from "./Context/Context";
-import Station_All from "./components/pages/Station_All";
 import { Redirect } from "react-router-dom";
 
 export default function App() {
@@ -53,8 +52,7 @@ export default function App() {
 					<ProtectedRoute path="/dashboard" exact component={Dashboard} />
 					<ProtectedRoute path="/sales" exact component={Sales} />
 					<ProtectedRoute path="/reports" exact component={Reports} />
-					<ProtectedRoute path="/station/all" exact component={Station_All} />
-					<ProtectedRoute path="/station/all1" exact component={Stations} />
+					<ProtectedRoute path="/station/all" exact component={Stations} />
 					<ProtectedRoute path="/station/me" exact component={MyStation} />
 					<ProtectedRoute path="/profile" exact component={Profile} />
 					<ProtectedRoute path="/manager" exact component={Manager} />
