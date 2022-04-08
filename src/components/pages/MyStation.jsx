@@ -102,7 +102,7 @@ export default function MyStation() {
 				}, 3000)
 			);
 		},
-		[submitNoteTxt]
+		[submitNoteTxt, timeOutState]
 	);
 
 	useEffect(() => {

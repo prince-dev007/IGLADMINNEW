@@ -5,8 +5,8 @@ import "../../assets/css/sale.pdf.css";
 // images
 
 // icons
-import { Form, FormControl, InputGroup, Table } from "react-bootstrap";
-import { IoRefreshOutline, IoSearchOutline } from "react-icons/io5";
+import { Form, InputGroup, Table } from "react-bootstrap";
+import { IoRefreshOutline } from "react-icons/io5";
 import { BiExport } from "react-icons/bi";
 
 // components
@@ -147,7 +147,7 @@ const Sales = () => {
 				}
 			}
 		},
-		[selectedStation]
+		[selectedStation, DSMArr, userArr]
 	);
 
 	// get all
@@ -213,7 +213,7 @@ const Sales = () => {
 			}
 		};
 		getAllDSM();
-	}, []);
+	}, [user]);
 
 	return (
 		<div className="page-wrapper sales-all">

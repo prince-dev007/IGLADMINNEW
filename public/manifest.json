@@ -2,7 +2,7 @@
     "short_name": "IGL",
     "name": "IGL Admin",
     "icons": [{
-        "src": "https://parksnparking.com/assets/img/brandLogo.png",
+        "src": "",
         "sizes": "129x116",
         "type": "image/x-icon"
     }],

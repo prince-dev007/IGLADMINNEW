@@ -204,7 +204,7 @@ const Stations = () => {
 				});
 			};
 		},
-		[currentPage, limit, random, searchStr]
+		[currentPage, limit, random, searchStr, contextDispatch]
 	);
 
 	return (

@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react";
-import DataTable from "../partials/DataTable";
 import { motion } from "framer-motion";
 // import QRCode from "react-qr-code";
 
 // icons
 import { IoRefreshOutline } from "react-icons/io5";
-import { RiDeleteBinLine, RiGasStationLine } from "react-icons/ri";
+import { RiDeleteBinLine } from "react-icons/ri";
 import { IoMdAdd } from "react-icons/io";
 // import {MdModeEdit} from 'react-icons/md';
 

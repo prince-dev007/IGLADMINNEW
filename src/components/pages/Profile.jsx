@@ -53,7 +53,7 @@ export default function Profile() {
 			setCNGRate(data.CNGRate);
 		}
 		getProfile();
-	}, []);
+	}, [user]);
 
 	return (
 		<div className="page-wrapper">
