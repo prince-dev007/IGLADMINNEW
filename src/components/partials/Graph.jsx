@@ -299,7 +299,7 @@ export const ColumnChart = () => {
 export const Donut = ({ ...props }) => {
 	const [series, setSeries] = useState([1, 2, 3, 4, 5]);
 	const [labels, setLabels] = useState(["Station1", "Station2", "Station3", "Station4", "Station5"]);
-	const [triggerRender, setTriggerRender] = useState(0);
+	// const [triggerRender, setTriggerRender] = useState(0);
 
 	useEffect(() => {
 		console.log(props);
@@ -312,9 +312,9 @@ export const Donut = ({ ...props }) => {
 		setLabels(labelArr);
 		setSeries(seriesArr);
 		if (props.donutData && props.donutData.length > 0) {
-			setTriggerRender(Math.random());
+			//setTriggerRender(Math.random());
 		}
-	}, []);
+	}, [props]);
 
 	const data = {
 		series: series,
