@@ -185,7 +185,8 @@ const Sales = () => {
 				endDateQry = "&endDate=" + selectedEndDate;
 			}
 
-			const subQuery = stationGetQuery ? stationGetQuery + userGetQuery + dsmGetQuery : "" + startDateQry + endDateQry;
+			let subQuery = stationGetQuery ? stationGetQuery + userGetQuery + dsmGetQuery : "";
+			subQuery += startDateQry + endDateQry;
 
 			const getAllSale = async () => {
 				setDataArr(null);
