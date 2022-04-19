@@ -80,15 +80,15 @@ const Dashboard = () => {
 			const allTimeRes = response.data.allTime;
 			const todayRes = response.data.today;
 			setAllTimeStat({
-				billCount: allTimeRes.billCount,
-				quantity: allTimeRes.billQuantity.toFixed(2),
-				amount: allTimeRes.billAmount.toFixed(2),
+				billCount: allTimeRes.billCount.toLocaleString(),
+				quantity: Number(allTimeRes.billQuantity.toFixed(2)).toLocaleString(),
+				amount: Number(allTimeRes.billAmount.toFixed(2)).toLocaleString(),
 			});
 
 			setTodayStat({
-				billCount: todayRes.billCount,
-				quantity: todayRes.billQuantity.toFixed(2),
-				amount: todayRes.billAmount.toFixed(2),
+				billCount: todayRes.billCount.toLocaleString(),
+				quantity: Number(todayRes.billQuantity.toFixed(2)).toLocaleString(),
+				amount: Number(todayRes.billAmount.toFixed(2)).toLocaleString(),
 			});
 
 			if (response.data?.graph?.pie?.allTime) {

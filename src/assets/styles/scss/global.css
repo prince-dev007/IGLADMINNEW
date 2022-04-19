@@ -33,12 +33,14 @@
 }
 
 .dashboard-summary-card__detail-card h5 {
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   font-weight: bold;
+  color: gray;
 }
 
 .dashboard-summary-card__detail-card p {
   font-size: 1.2rem;
+  font-weight: bold;
   margin: 0;
 }
 /*# sourceMappingURL=global.css.map */
