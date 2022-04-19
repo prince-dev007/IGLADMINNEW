@@ -2,7 +2,7 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  width: 20rem;
+  width: 18rem;
   margin-right: 0.5rem;
 }
 
@@ -11,12 +11,34 @@
 }
 
 .inputGroupC__input {
-  width: 12rem;
+  width: 10rem;
+}
+
+.inputGroupC--limit {
+  width: 10rem;
 }
 
 .cardC__head {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+}
+
+.dashboard-summary-card__title {
+  font-size: 1.5rem;
+}
+
+.dashboard-summary-card__detail-card {
+  margin: 0.5rem 0;
+}
+
+.dashboard-summary-card__detail-card h5 {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.dashboard-summary-card__detail-card p {
+  font-size: 1.2rem;
+  margin: 0;
 }
 /*# sourceMappingURL=global.css.map */

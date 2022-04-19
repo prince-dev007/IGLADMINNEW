@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { Card } from "react-bootstrap";
 // animation
 import { motion } from "framer-motion";
 import Animation from "../../common/Animation";
 // components
-import { Graph1, CardGraph1, CardGraph2, ColumnChart, Donut } from "../partials/Graph";
+import ApexChart from "react-apexcharts";
 import { callAPI } from "../../common/common";
 import { AppContext } from "../../Context/Context";
 
@@ -31,20 +31,40 @@ const Dashboard = () => {
 		};
 	}, [contextDispatch]);
 
-	const [totalAmount, setTotalAmount] = useState(0);
-	const [billCount, setBillCount] = useState(0);
-	const [totalQuantity, setTotalQuantity] = useState(0);
-	const [todayTotalAmt, setTodayTotalAmt] = useState(0);
+	const [allTimeStat, setAllTimeStat] = useState({
+		billCount: 0,
+		quantity: 0,
+		amount: 0,
+	});
+	const [todayStat, setTodayStat] = useState({
+		billCount: 0,
+		quantity: 0,
+		amount: 0,
+	});
 
 	// donut data
-	const [donutData, setDonutData] = useState([]);
+	const [allTimePie, setAllTimePie] = useState({});
+	const [todayPie, setTodayPie] = useState({});
 
 	useEffect(() => {
+		let stationRes = [];
+		// Station Data
+		const getAllStation = async () => {
+			const response = await callAPI({
+				URL: "stations/mini?fields=stationId,stationName",
+			});
+			if (response.status === 200) {
+				// setStationArr((val) => [...val, ...response.data]);
+				stationRes = response.data;
+			}
+		};
+		// dashboard summary
 		let queryStr = "";
 		if (user.profileType !== "ADMIN") {
 			queryStr = "?station=" + user.Station + "&user=" + user._id;
 		}
 		const initAPI = async () => {
+			await getAllStation();
 			contextDispatch({
 				type: "SET_ACTIVE_PAGE_SPINNER",
 				payload: true,
@@ -57,12 +77,47 @@ const Dashboard = () => {
 				payload: false,
 			});
 			if (response.status !== 200) return;
-			const data = response.data.counts;
-			setBillCount(data.billCount.toFixed(0));
-			setTotalAmount(data.totalAmount.toFixed(0));
-			setTotalQuantity(data.totalQuantity.toFixed(0));
-			setTodayTotalAmt(data.todayTotalAmt.toFixed(0));
-			setDonutData(response.data.stationGroup);
+			const allTimeRes = response.data.allTime;
+			const todayRes = response.data.today;
+			setAllTimeStat({
+				billCount: allTimeRes.billCount,
+				quantity: allTimeRes.billQuantity.toFixed(2),
+				amount: allTimeRes.billAmount.toFixed(2),
+			});
+
+			setTodayStat({
+				billCount: todayRes.billCount,
+				quantity: todayRes.billQuantity.toFixed(2),
+				amount: todayRes.billAmount.toFixed(2),
+			});
+
+			if (response.data?.graph?.pie?.allTime) {
+				const allTimePieRes = response.data.graph.pie.allTime;
+
+				const donutData = [];
+				allTimePieRes.map((elem) => {
+					const filteredStationArr = stationRes.filter((e) => elem._id === e._id);
+					if (filteredStationArr.length === 0) return;
+					elem.stationName = filteredStationArr[0].stationName;
+					donutData.push(elem);
+				});
+
+				setAllTimePie(allTimePieRes);
+			}
+
+			if (response.data?.graph?.pie?.today) {
+				const allTimePieRes = response.data.graph.pie.today;
+
+				const donutData = [];
+				allTimePieRes.map((elem) => {
+					const filteredStationArr = stationRes.filter((e) => elem._id === e._id);
+					if (filteredStationArr.length === 0) return;
+					elem.stationName = filteredStationArr[0].stationName;
+					donutData.push(elem);
+				});
+
+				setTodayPie(allTimePieRes);
+			}
 		};
 		initAPI();
 	}, [user, contextDispatch]);
@@ -71,69 +126,66 @@ const Dashboard = () => {
 		<div className="page-wrapper">
 			<div className="page-content-wrapper">
 				<motion.div initial={Animation.variants.out} animate={Animation.variants.in} exit={Animation.variants.exit} transition={Animation.PageTransition} className="page-content">
-					<div className="row ">
-						<div className="col-sm-12 col-md-3">
-							<div className="card " style={{ borderRadius: "15px" }}>
-								<Link style={{ textDecoration: "none" }} to="/sales">
-									<div className="card-body">
-										<div>
-											<CardGraph1 title={"Sales"} count={"Rs. " + totalAmount} />
+					<div className="row">
+						<div className="col-12">
+							<Card border="info" className="dashboard-summary-card">
+								<Card.Header className="dashboard-summary-card__title">
+									<b>All Time</b>
+								</Card.Header>
+								<Card.Body>
+									<div className="row">
+										<div className="col-sm-12 col-md-3 dashboard-summary-card__detail-card">
+											<h5>Amount</h5>
+											<p>{allTimeStat.amount}</p>
+										</div>
+										<div className="col-sm-12 col-md-3 dashboard-summary-card__detail-card">
+											<h5>Quantity</h5>
+											<p>{allTimeStat.quantity}</p>
+										</div>
+										<div className="col-sm-12 col-md-3 dashboard-summary-card__detail-card">
+											<h5>Bill Count</h5>
+											<p>{allTimeStat.billCount}</p>
 										</div>
 									</div>
-								</Link>
-							</div>
+								</Card.Body>
+							</Card>
 						</div>
-						<div className="col-sm-12 col-md-3">
-							<div className="card " style={{ borderRadius: "15px" }}>
-								<Link style={{ textDecoration: "none" }} to="/sales">
-									<div className="card-body">
-										<div>
-											<CardGraph2 title={"Today Sales"} count={"Rs. " + todayTotalAmt} />
+						<div className="col-12">
+							<Card border="success" className="dashboard-summary-card">
+								<Card.Header className="dashboard-summary-card__title">
+									<b>Today</b>
+								</Card.Header>
+								<Card.Body>
+									<div className="row">
+										<div className="col-sm-12 col-md-3 dashboard-summary-card__detail-card">
+											<h5>Amount</h5>
+											<p>{todayStat.amount}</p>
+										</div>
+										<div className="col-sm-12 col-md-3 dashboard-summary-card__detail-card">
+											<h5>Quantity</h5>
+											<p>{todayStat.quantity}</p>
+										</div>
+										<div className="col-sm-12 col-md-3 dashboard-summary-card__detail-card">
+											<h5>Bill Count</h5>
+											<p>{todayStat.billCount}</p>
 										</div>
 									</div>
-								</Link>
-							</div>
-						</div>
-						<div className="col-sm-12 col-md-3">
-							<div className="card " style={{ borderRadius: "15px" }}>
-								<Link style={{ textDecoration: "none" }} to="/sales">
-									<div className="card-body">
-										<div>
-											<CardGraph1 title={"Kgs"} count={totalQuantity} />
-										</div>
-									</div>
-								</Link>
-							</div>
-						</div>
-						<div className="col-sm-12 col-md-3">
-							<div className="card " style={{ borderRadius: "15px" }}>
-								<Link style={{ textDecoration: "none" }} to="/sales">
-									<div className="card-body">
-										<div>
-											<CardGraph2 title={"Bills"} count={billCount} />
-										</div>
-									</div>
-								</Link>
-							</div>
+								</Card.Body>
+							</Card>
 						</div>
 					</div>
 					<div className="row ">
-						<div className="col-md-12">
+						<div className="col-md-6">
 							<div className="card p-4" style={{ borderRadius: "15px", overflow: "hidden" }}>
-								<Graph1 />
+								<h4>All Time Data</h4>
+								<StationDonut donutData={allTimePie} />
 							</div>
 						</div>
 						<div className="col-md-6">
 							<div className="card p-4" style={{ borderRadius: "15px", overflow: "hidden" }}>
-								<ColumnChart />
+								<h4>Today Data</h4>
+								<StationDonut donutData={todayPie} />
 							</div>
-						</div>
-						<div className="col-md-6">
-							{donutData != null && donutData.length > 0 && (
-								<div className="card p-4" style={{ borderRadius: "15px", overflow: "hidden" }}>
-									<Donut donutData={donutData} />
-								</div>
-							)}
 						</div>
 					</div>
 				</motion.div>
@@ -142,3 +194,49 @@ const Dashboard = () => {
 	);
 };
 export default Dashboard;
+
+const StationDonut = (props) => {
+	const [series, setSeries] = useState([1]);
+	const [labels, setLabels] = useState(["Station"]);
+
+	useEffect(() => {
+		if (props.donutData && props.donutData.length > 0) {
+			const seriesArr = [];
+			const labelArr = [];
+			for (const obj of props.donutData) {
+				seriesArr.push(obj.count);
+				labelArr.push(obj.stationName);
+			}
+			setLabels(labelArr);
+			setSeries(seriesArr);
+		}
+	}, [props]);
+
+	const data = {
+		series: series,
+		options: {
+			chart: {
+				type: "donut",
+			},
+			labels: labels,
+			responsive: [
+				{
+					breakpoint: 480,
+					options: {
+						chart: {
+							width: 200,
+						},
+						legend: {
+							position: "bottom",
+						},
+					},
+				},
+			],
+		},
+	};
+	return (
+		<div>
+			<ApexChart options={data.options} series={data.series} labels={data.labels} type="donut" height="350" />
+		</div>
+	);
+};

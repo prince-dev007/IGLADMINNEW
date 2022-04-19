@@ -5,7 +5,7 @@ import "../../assets/css/sale.pdf.css";
 // images
 
 // icons
-import { Form, InputGroup, Table } from "react-bootstrap";
+import { Form, FormControl, InputGroup, Table } from "react-bootstrap";
 import { IoRefreshOutline } from "react-icons/io5";
 import { BiExport } from "react-icons/bi";
 
@@ -124,6 +124,8 @@ const Sales = () => {
 	const [selectedDSM, setSelectedDSM] = useState("ALL");
 	const [selectedUser, setSelectedUser] = useState("ALL");
 	const [selectedStation, setSelectedStation] = useState("ALL");
+	const [selectedStartDate, setSelectedStartDate] = useState("");
+	const [selectedEndDate, setSelectedEndDate] = useState("");
 
 	// filter
 	// Station
@@ -160,10 +162,11 @@ const Sales = () => {
 	const [total, setTotal] = useState(0);
 	useEffect(
 		(e) => {
-			console.log(user);
 			let stationGetQuery = "",
 				userGetQuery = "",
-				dsmGetQuery = "";
+				dsmGetQuery = "",
+				startDateQry = "",
+				endDateQry = "";
 			if (user && user.profileType === "ADMIN") {
 				stationGetQuery = selectedStation && selectedStation !== "ALL" ? "&station=" + selectedStation : "";
 				userGetQuery = selectedUser && selectedUser !== "ALL" ? "&user=" + selectedUser : "";
@@ -175,6 +178,15 @@ const Sales = () => {
 				dsmGetQuery = "&dsm=" + selectedDSM;
 			}
 
+			if (selectedStartDate) {
+				startDateQry = "&startDate=" + selectedStartDate;
+			}
+			if (selectedEndDate) {
+				endDateQry = "&endDate=" + selectedEndDate;
+			}
+
+			const subQuery = stationGetQuery ? stationGetQuery + userGetQuery + dsmGetQuery : "" + startDateQry + endDateQry;
+
 			const getAllSale = async () => {
 				setDataArr(null);
 				contextDispatch({
@@ -182,8 +194,8 @@ const Sales = () => {
 					payload: true,
 				});
 				const response = await callAPI({
-					URL: "sales/all?page=" + currentPage + "&limit=" + limit + stationGetQuery + userGetQuery + dsmGetQuery,
-					abort: true,
+					URL: "sales/all?page=" + currentPage + "&limit=" + limit + subQuery,
+					abort: false,
 				});
 				contextDispatch({
 					type: "SET_ACTIVE_PAGE_SPINNER",
@@ -196,7 +208,7 @@ const Sales = () => {
 			};
 			getAllSale();
 		},
-		[currentPage, limit, random, contextDispatch, user, selectedDSM, selectedStation, selectedUser]
+		[currentPage, limit, random, contextDispatch, user, selectedDSM, selectedStation, selectedUser, selectedStartDate, selectedEndDate]
 	);
 
 	useEffect(() => {
@@ -225,7 +237,7 @@ const Sales = () => {
 								{user.profileType === "ADMIN" && (
 									<>
 										<InputGroup className="inputGroupC">
-											<InputGroup.Text id="basic-addon1" className="inputGroupC__label">
+											<InputGroup.Text id="basic-addon1" title="Selected Station" className="inputGroupC__label">
 												Station
 											</InputGroup.Text>
 											<Form.Select
@@ -237,7 +249,7 @@ const Sales = () => {
 													setCurrentPage(1);
 												}}
 											>
-												<option value={"ALL"}>All Station</option>
+												<option value={"ALL"}>All</option>
 												{stationArr.map((obj) => {
 													return (
 														<option value={obj._id} key={obj._id}>
@@ -260,7 +272,7 @@ const Sales = () => {
 													setCurrentPage(1);
 												}}
 											>
-												<option value={"ALL"}>All Manager</option>
+												<option value={"ALL"}>All</option>
 												{filteredUser.map((obj) => {
 													return (
 														<option value={obj._id} key={obj._id}>
@@ -285,7 +297,7 @@ const Sales = () => {
 											setCurrentPage(1);
 										}}
 									>
-										<option value={"ALL"}>All DSM</option>
+										<option value={"ALL"}>All</option>
 										{filteredDSM.map((obj) => {
 											return (
 												<option value={obj._id} key={obj._id}>
@@ -302,7 +314,10 @@ const Sales = () => {
 								<button type="button" data-toggle="tooltip" data-placement="top" title={"Refresh"} onClick={triggerGetAll} className="btn btnIconC mr-2 border">
 									<IoRefreshOutline />
 								</button>
-								<InputGroup className="inputGroupC">
+								<InputGroup className="inputGroupC inputGroupC--limit">
+									<InputGroup.Text id="basic-addon1" title="Selected Station" className="inputGroupC__label">
+										Limit
+									</InputGroup.Text>
 									<Form.Select className="form-control inputGroupC__input" title="Station" onChange={(e) => setLimit(e.target.value)} defaultValue={limit}>
 										<option value="50">50</option>
 										<option value="100">100</option>
@@ -311,6 +326,20 @@ const Sales = () => {
 									</Form.Select>
 								</InputGroup>
 								<Pagination className="mb-0" total={total} currentPage={currentPage} setCurrentPage={setCurrentPage} lastPage={lastPage} pageSize={limit} />
+							</div>
+							<div className="card-title cardC__head">
+								<InputGroup className="inputGroupC">
+									<InputGroup.Text id="basic-addon1" className="inputGroupC__label">
+										StartDate
+									</InputGroup.Text>
+									<FormControl placeholder="StartDate" onChange={(e) => setSelectedStartDate(e.target.value)} type="date" />
+								</InputGroup>
+								<InputGroup className="inputGroupC">
+									<InputGroup.Text id="basic-addon1" className="inputGroupC__label">
+										EndDate
+									</InputGroup.Text>
+									<FormControl placeholder="EndDate" onChange={(e) => setSelectedEndDate(e.target.value)} type="date" />
+								</InputGroup>
 							</div>
 							<Table bordered responsive hover>
 								<thead>
