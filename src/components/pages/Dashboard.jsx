@@ -174,20 +174,22 @@ const Dashboard = () => {
 							</Card>
 						</div>
 					</div>
-					<div className="row ">
-						<div className="col-md-6">
-							<div className="card p-4" style={{ borderRadius: "15px", overflow: "hidden" }}>
-								<h4>All Time Data</h4>
-								<StationDonut donutData={allTimePie} />
+					{user.profileType === "ADMIN" && (
+						<div className="row ">
+							<div className="col-md-6">
+								<div className="card p-4" style={{ borderRadius: "15px", overflow: "hidden" }}>
+									<h4>All Time Data</h4>
+									<StationDonut donutData={allTimePie} />
+								</div>
+							</div>
+							<div className="col-md-6">
+								<div className="card p-4" style={{ borderRadius: "15px", overflow: "hidden" }}>
+									<h4>Today Data</h4>
+									<StationDonut donutData={todayPie} />
+								</div>
 							</div>
 						</div>
-						<div className="col-md-6">
-							<div className="card p-4" style={{ borderRadius: "15px", overflow: "hidden" }}>
-								<h4>Today Data</h4>
-								<StationDonut donutData={todayPie} />
-							</div>
-						</div>
-					</div>
+					)}
 				</motion.div>
 			</div>
 		</div>
