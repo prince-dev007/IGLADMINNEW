@@ -1,4 +1,5 @@
 export const reducer = (state, action) => {
+	console.log("Context", action);
 	switch (action.type) {
 		case "REINIT_STATE": {
 			const prevState = handleStorage("GET", null);

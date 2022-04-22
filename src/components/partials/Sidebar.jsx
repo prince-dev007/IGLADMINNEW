@@ -103,8 +103,8 @@ const Sidebar = ({ currentPath }) => {
 													<div className="menu-title">Stations</div>
 												</Link>
 											</li>
-											<li className={currentPath === "/manager" ? activeClassName : ""} onClick={navToggleSm}>
-												<Link to={"/manager"}>
+											<li className={currentPath === "/user/all" ? activeClassName : ""} onClick={navToggleSm}>
+												<Link to={"/user/all"}>
 													<div className="parent-icon icon-color-3">
 														<RiAdminLine />
 													</div>

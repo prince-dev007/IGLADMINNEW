@@ -19,9 +19,21 @@ const Navbar = () => {
 	const [isOnline, setIsOnline] = useState(false);
 	useEffect(() => {
 		const init = () => {
-			setInterval(() => {
-				navigator.onLine ? setIsOnline(true) : setIsOnline(false);
-			}, 500);
+			window.addEventListener("online", (e) => {
+				setIsOnline(true);
+				contextDispatch({
+					type: "SET_ACTIVE_PAGE_SPINNER",
+					payload: false,
+				});
+			});
+			window.addEventListener("offline", (e) => {
+				setIsOnline(false);
+				contextDispatch({
+					type: "SET_ACTIVE_PAGE_SPINNER",
+					payload: true,
+				});
+			});
+			navigator.onLine ? setIsOnline(true) : setIsOnline(false);
 		};
 		init();
 	}, []);
@@ -69,7 +81,7 @@ const Navbar = () => {
 									</div>
 									<div style={{ position: "relative", cursor: "pointer" }} className="userAvatar">
 										<RiAdminLine style={{ zIndex: 3 }} />
-										<div className="spinner-border" id="pageSpinner" style={{ borderWidth: "1.5px", display: isOnline || isActivePageSpinner ? " none" : " block" }} role="status">
+										<div className="spinner-border" id="pageSpinner" style={{ borderWidth: "1.5px", display: !isActivePageSpinner ? " none" : " block" }} role="status">
 											<span className="sr-only">Loading...</span>
 										</div>
 									</div>

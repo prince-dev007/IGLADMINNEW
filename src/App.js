@@ -5,9 +5,9 @@ import { AnimatePresence } from "framer-motion";
 
 // styles
 import "./App.css";
-import "./assets/css/app.css";
-import "./assets/css/bootstrap.min.css";
-import "./assets/css/custom.css";
+import "./assets/styles/css/app.css";
+import "./assets/styles/css/bootstrap.min.css";
+import "./assets/styles/css/custom.css";
 import "./assets/styles/scss/global.css";
 
 // components
@@ -55,7 +55,7 @@ export default function App() {
 					<ProtectedRoute path="/station/all" exact component={Stations} />
 					<ProtectedRoute path="/station/me" exact component={MyStation} />
 					<ProtectedRoute path="/profile" exact component={Profile} />
-					<ProtectedRoute path="/manager" exact component={Manager} />
+					<ProtectedRoute path="/user/all" exact component={Manager} />
 					<ProtectedRoute path="/employee" exact component={Employee} />
 					<ProtectedRoute path="/qr" exact component={QR} />
 					<Redirect to={{ pathname: "/" }} />

@@ -174,19 +174,25 @@ export default function Employee() {
 		(e) => {
 			const stationGet = user.profileType === "ADMIN" ? selectedStation : user.Station;
 			const getAllEmployee = async () => {
+				contextDispatch({
+					type: "SET_ACTIVE_PAGE_SPINNER",
+					payload: true,
+				});
 				setDataArr(null);
 				const response = await callAPI({
 					URL: `employee/all?page=${currentPage}&limit=${limit}&search=${searchStr}&station=${stationGet}`,
 					abort: true,
 				});
+
 				if (response.status !== 200 && response.status !== 404) return;
+				contextDispatch({
+					type: "SET_ACTIVE_PAGE_SPINNER",
+					payload: false,
+				});
 				setTotal(response.total);
 				setDataArr(response.status === 200 ? response.data : []);
 			};
 			getAllEmployee();
-			return () => {
-				window.$("#pageSpinner").show();
-			};
 		},
 		[currentPage, limit, random, searchStr, selectedStation, user]
 	);

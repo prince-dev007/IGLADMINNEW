@@ -64,19 +64,20 @@ const Dashboard = () => {
 			queryStr = "?station=" + user.Station + "&user=" + user._id;
 		}
 		const initAPI = async () => {
-			await getAllStation();
 			contextDispatch({
 				type: "SET_ACTIVE_PAGE_SPINNER",
 				payload: true,
 			});
+			await getAllStation();
 			const response = await callAPI({
 				URL: "dashboard/summary" + queryStr,
 			});
+
+			if (response.status !== 200) return;
 			contextDispatch({
 				type: "SET_ACTIVE_PAGE_SPINNER",
 				payload: false,
 			});
-			if (response.status !== 200) return;
 			const allTimeRes = response.data.allTime;
 			const todayRes = response.data.today;
 			setAllTimeStat({
@@ -198,8 +199,8 @@ const Dashboard = () => {
 export default Dashboard;
 
 const StationDonut = (props) => {
-	const [series, setSeries] = useState([1]);
-	const [labels, setLabels] = useState(["Station"]);
+	const [series, setSeries] = useState([10, 20, 30, 40, 50, 6, 40, 50, 6]);
+	const [labels, setLabels] = useState(["Station", "Station", "Station", "Station", "Station", "Station", "Station", "Station", "Station"]);
 
 	useEffect(() => {
 		if (props.donutData && props.donutData.length > 0) {

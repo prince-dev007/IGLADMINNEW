@@ -174,22 +174,27 @@ export default function Manager() {
 	useEffect(
 		(e) => {
 			const stationGet = user.profileType === "ADMIN" ? selectedStation : user.Station;
-			const getAllStation = async () => {
+			const getAllUser = async () => {
+				contextDispatch({
+					type: "SET_ACTIVE_PAGE_SPINNER",
+					payload: true,
+				});
 				setDataArr(null);
 				const response = await callAPI({
 					URL: "user/all?page=" + currentPage + "&limit=" + limit + "&search=" + searchStr + "&station=" + stationGet,
 					abort: true,
 				});
+				contextDispatch({
+					type: "SET_ACTIVE_PAGE_SPINNER",
+					payload: false,
+				});
 				if (response.status !== 200 && response.status !== 404) return;
 				setTotal(response.total);
 				setDataArr(response.status === 200 ? response.data : []);
 			};
-			getAllStation();
-			return () => {
-				window.$("#pageSpinner").show();
-			};
+			getAllUser();
 		},
-		[currentPage, limit, random, searchStr, selectedStation, user]
+		[currentPage, limit, random, searchStr, selectedStation, user, contextDispatch]
 	);
 
 	// all station
