@@ -33,7 +33,7 @@ const Navbar = () => {
 					payload: true,
 				});
 			});
-			navigator.onLine ? setIsOnline(true) : setIsOnline(false);
+			setIsOnline(navigator.onLine);
 		};
 		init();
 	}, []);
