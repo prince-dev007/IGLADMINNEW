@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import { motion } from "framer-motion";
 // styles
-import "../../assets/css/Sidebar.css";
+import "../../assets/styles/css/Sidebar.css";
 // icons
 import { RiAdminLine } from "react-icons/ri";
 import { IoMenuOutline } from "react-icons/io5";

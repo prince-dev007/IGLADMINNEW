@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import ReactHTMLTableToExcel from "react-html-table-to-excel";
 
-import "../../assets/css/sale.pdf.css";
+import "../../assets/styles/css/sale.pdf.css";
 // images
 
 // icons

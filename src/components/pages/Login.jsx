@@ -3,7 +3,7 @@ import { Redirect } from "react-router-dom";
 // animation
 import { motion } from "framer-motion";
 // styles
-import "../../assets/css/Login.css";
+import "../../assets/styles/css/Login.css";
 // images
 import img_brandLogo from "../../assets/images/custom/brandLogo.png";
 // auth

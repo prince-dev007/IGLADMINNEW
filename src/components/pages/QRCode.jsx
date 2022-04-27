@@ -4,7 +4,7 @@ import QRCode from "react-qr-code";
 import { motion } from "framer-motion";
 import Animation from "../../common/Animation";
 
-import "../../assets/css/print.css";
+import "../../assets/styles/css/print.css";
 // icons
 
 const QR = () => {
