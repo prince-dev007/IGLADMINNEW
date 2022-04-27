@@ -78,18 +78,31 @@ const Dashboard = () => {
 				type: "SET_ACTIVE_PAGE_SPINNER",
 				payload: false,
 			});
-			const allTimeRes = response.data.allTime;
-			const todayRes = response.data.today;
+			let allTimeRes = response.data.allTime;
+			allTimeRes = {
+				billCount: Number(allTimeRes?.billCount?.toFixed(0)).toLocaleString(),
+				quantity: Number(allTimeRes?.billQuantity?.toFixed(2)).toLocaleString(),
+				amount: Number(allTimeRes?.billAmount?.toFixed(2)).toLocaleString(),
+			};
+
 			setAllTimeStat({
-				billCount: allTimeRes.billCount.toLocaleString(),
-				quantity: Number(allTimeRes.billQuantity.toFixed(2)).toLocaleString(),
-				amount: Number(allTimeRes.billAmount.toFixed(2)).toLocaleString(),
+				billCount: allTimeRes.billCount ? allTimeRes.billCount : 0,
+				quantity: allTimeRes.quantity ? allTimeRes.quantity : 0,
+				amount: allTimeRes.amount ? allTimeRes.amount : 0,
 			});
+			let todayRes = response.data.today;
+			todayRes = {
+				billCount: Number(todayRes?.billCount?.toFixed(0)).toLocaleString(),
+				quantity: Number(todayRes?.billQuantity?.toFixed(2)).toLocaleString(),
+				amount: Number(todayRes?.billAmount?.toFixed(2)).toLocaleString(),
+			};
+
+			console.log(todayRes, allTimeRes);
 
 			setTodayStat({
-				billCount: todayRes.billCount.toLocaleString(),
-				quantity: Number(todayRes.billQuantity.toFixed(2)).toLocaleString(),
-				amount: Number(todayRes.billAmount.toFixed(2)).toLocaleString(),
+				billCount: todayRes.billCount ? todayRes.billCount : 0,
+				quantity: todayRes.quantity ? todayRes.quantity : 0,
+				amount: todayRes.amount ? todayRes.amount : 0,
 			});
 
 			if (response.data?.graph?.pie?.allTime) {
