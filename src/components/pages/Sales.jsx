@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import ReactHTMLTableToExcel from "react-html-table-to-excel";
+// import ReactHTMLTableToExcel from "react-html-table-to-excel";
 
 import "../../assets/styles/css/sale.pdf.css";
 // images
@@ -426,10 +426,10 @@ const Sales = () => {
 								<div className="modal-body">
 									<div className="row">
 										<div className="col-12">
-											<ReactHTMLTableToExcel className="btn btn-sm btn-info m-2 border" table="dataTable" filename="Sales" sheet="Sales" buttonText="Export as XLS" />
-											<button className="btn btn-info btn-sm m-2" onClick={(e) => exportData("PDF")}>
+											{/* <ReactHTMLTableToExcel className="btn btn-sm btn-info m-2 border" table="dataTable" filename="Sales" sheet="Sales" buttonText="Export as XLS" /> */}
+											{/* <button className="btn btn-info btn-sm m-2" onClick={(e) => exportData("PDF")}>
 												Export as PDF
-											</button>
+											</button> */}
 										</div>
 									</div>
 								</div>
