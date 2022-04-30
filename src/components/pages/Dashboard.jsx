@@ -78,31 +78,19 @@ const Dashboard = () => {
 				type: "SET_ACTIVE_PAGE_SPINNER",
 				payload: false,
 			});
-			let allTimeRes = response.data.allTime;
-			allTimeRes = {
-				billCount: Number(allTimeRes?.billCount?.toFixed(0)).toLocaleString(),
-				quantity: Number(allTimeRes?.billQuantity?.toFixed(2)).toLocaleString(),
-				amount: Number(allTimeRes?.billAmount?.toFixed(2)).toLocaleString(),
-			};
+			const allTimeRes = response.data.allTime;
 
 			setAllTimeStat({
-				billCount: allTimeRes.billCount ? allTimeRes.billCount : 0,
-				quantity: allTimeRes.quantity ? allTimeRes.quantity : 0,
-				amount: allTimeRes.amount ? allTimeRes.amount : 0,
+				billCount: allTimeRes.billCount ? Number(allTimeRes.billCount.toFixed(0)).toLocaleString() : 0,
+				quantity: allTimeRes.billQuantity ? Number(allTimeRes.billQuantity.toFixed(2)).toLocaleString() : 0,
+				amount: allTimeRes.billAmount ? Number(allTimeRes.billAmount.toFixed(2)).toLocaleString() : 0,
 			});
-			let todayRes = response.data.today;
-			todayRes = {
-				billCount: Number(todayRes?.billCount?.toFixed(0)).toLocaleString(),
-				quantity: Number(todayRes?.billQuantity?.toFixed(2)).toLocaleString(),
-				amount: Number(todayRes?.billAmount?.toFixed(2)).toLocaleString(),
-			};
-
-			console.log(todayRes, allTimeRes);
+			const todayRes = response.data.today;
 
 			setTodayStat({
-				billCount: todayRes.billCount ? todayRes.billCount : 0,
-				quantity: todayRes.quantity ? todayRes.quantity : 0,
-				amount: todayRes.amount ? todayRes.amount : 0,
+				billCount: todayRes.billCount ? Number(todayRes.billCount.toFixed(0)).toLocaleString() : 0,
+				quantity: todayRes.billQuantity ? Number(todayRes.billQuantity.toFixed(2)).toLocaleString() : 0,
+				amount: todayRes.billAmount ? Number(todayRes.billAmount.toFixed(2)).toLocaleString() : 0,
 			});
 
 			if (response.data?.graph?.pie?.allTime) {
@@ -111,9 +99,10 @@ const Dashboard = () => {
 				const donutData = [];
 				allTimePieRes.map((elem) => {
 					const filteredStationArr = stationRes.filter((e) => elem._id === e._id);
-					if (filteredStationArr.length === 0) return;
+					if (filteredStationArr.length === 0) return null;
 					elem.stationName = filteredStationArr[0].stationName;
 					donutData.push(elem);
+					return null;
 				});
 
 				setAllTimePie(allTimePieRes);
@@ -125,9 +114,10 @@ const Dashboard = () => {
 				const donutData = [];
 				allTimePieRes.map((elem) => {
 					const filteredStationArr = stationRes.filter((e) => elem._id === e._id);
-					if (filteredStationArr.length === 0) return;
+					if (filteredStationArr.length === 0) return null;
 					elem.stationName = filteredStationArr[0].stationName;
 					donutData.push(elem);
+					return null;
 				});
 
 				setTodayPie(allTimePieRes);
