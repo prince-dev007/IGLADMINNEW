@@ -140,6 +140,14 @@ const Sidebar = ({ currentPath }) => {
 											<div className="menu-title">My Profile</div>
 										</Link>
 									</li>
+									<li className={currentPath === "/helpdesk" ? activeClassName : ""} onClick={navToggleSm}>
+										<Link to={"/helpdesk"}>
+											<div className="parent-icon icon-color-3">
+												<MdDashboard />
+											</div>
+											<div className="menu-title">Helpdesk</div>
+										</Link>
+									</li>
 								</ul>
 							</div>
 						</div>

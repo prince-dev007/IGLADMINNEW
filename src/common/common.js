@@ -3,6 +3,7 @@ import { getUser } from "../Context/Reducer";
 // export const backendbaseURL = "https://iglapistaging.herokuapp.com/admin/";
 // export const backendbaseURL = "http://localhost:3000/Admin/";
 export const backendbaseURL = "http://43.204.104.42:3000/admin/";
+// export const backendbaseURL = "http://192.168.0.220:3000/admin/";
 
 let abortController = null;
 export const callAPI = async({ URL = "", method = "GET", body = "", bodyType = "raw", abort = false }) => {

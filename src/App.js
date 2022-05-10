@@ -24,6 +24,7 @@ import Manager from "./components/pages/Manager";
 import MyStation from "./components/pages/MyStation";
 import Profile from "./components/pages/Profile";
 import Employee from "./components/pages/Employee";
+import Helpdesk from "./components/pages/Helpdesk";
 
 import { AppContext } from "./Context/Context";
 import { Redirect } from "react-router-dom";
@@ -58,6 +59,7 @@ export default function App() {
 					<ProtectedRoute path="/user/all" exact component={Manager} />
 					<ProtectedRoute path="/employee" exact component={Employee} />
 					<ProtectedRoute path="/qr" exact component={QR} />
+					<ProtectedRoute path="/helpdesk" exact component={Helpdesk} />
 					<Redirect to={{ pathname: "/" }} />
 				</Switch>
 			</AnimatePresence>
