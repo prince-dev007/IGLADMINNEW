@@ -192,10 +192,12 @@ const Helpdesk = () => {
 			setProblemDesc(action === "EDIT" && data.caseDesc ? data.caseDesc : "");
 			setProblemSubType(action === "EDIT" && data.subType ? data.subType : "");
 			setCaseId(action === "EDIT" && data._id ? data._id : action);
-			if(data.image === "" || data.image === null || !data.image){
-				data.image = NoImg;
+			if(!data || data.image === "" || !data.image){
+				setCaseImg(NoImg);
+			} else {
+				setCaseImg(action === "EDIT" && data.image ? data.image : "")
 			}
-			setCaseImg(action === "EDIT" && data.image ? data.image : "")
+			
 			if (user.profileType != "ADMIN")
 				window.$("#tktSubmitBtn").hide();
 			if (action === "NEW") {
