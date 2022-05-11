@@ -177,6 +177,29 @@ const Dashboard = () => {
 								</Card.Body>
 							</Card>
 						</div>
+						<div className="col-12">
+							<Card border="success" className="dashboard-summary-card">
+								<Card.Header className="dashboard-summary-card__title">
+									<b>Case</b>
+								</Card.Header>
+								<Card.Body>
+									<div className="row">
+										<div className="col-sm-12 col-md-3 dashboard-summary-card__detail-card">
+											<h5>Opened</h5>
+											<p></p>
+										</div>
+										<div className="col-sm-12 col-md-3 dashboard-summary-card__detail-card">
+											<h5>Resolved</h5>
+											<p></p>
+										</div>
+										<div className="col-sm-12 col-md-3 dashboard-summary-card__detail-card">
+											<h5>Closed</h5>
+											<p></p>
+										</div>
+									</div>
+								</Card.Body>
+							</Card>
+						</div>
 					</div>
 					{user.profileType === "ADMIN" && (
 						<div className="row ">

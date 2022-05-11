@@ -17,6 +17,9 @@ import { callAPI } from "../../common/common";
 // Context
 import { AppContext } from "../../Context/Context";
 
+// import image
+import NoImg from "../../assets/images/image-not.png";
+
 const Helpdesk = () => {
 	const { user, contextDispatch } = useContext(AppContext);
 
@@ -58,16 +61,18 @@ const Helpdesk = () => {
 
 	// get Status Badge
 	const getBadge = (status) => {
-		if(status === "Open"){
+		if (status === "Open") {
 			return <span className="badge badge-danger">Open</span>
-		}else if(status === "In Progress"){
-			<span className="badge badge-warning">In Progress</span>
-		}else if(status === "Resolved"){
-			<span className="badge badge-primary">Resolved</span>
-		}else if(status === "Close"){
-			<span className="badge badge-success">Close</span>
-		}else{
-			<span className="badge badge-info">No Status</span>
+		} else if (status === "In Progress") {
+			return <span className="badge badge-warning">In Progress</span>
+		} else if (status === "Resolved") {
+			return <span className="badge badge-primary">Resolved</span>
+		} else if (status === "On Hold") {
+			return <span className="badge badge-default">On Hold</span>
+		} else if (status === "Close") {
+			return <span className="badge badge-success">Close</span>
+		} else {
+			return <span className="badge badge-info">No Status</span>
 		}
 	};
 
@@ -99,6 +104,8 @@ const Helpdesk = () => {
 		);
 	};
 
+	// render Image
+
 	const [userProfile, setUserProfile] = useState({});
 
 	useEffect(() => {
@@ -127,8 +134,14 @@ const Helpdesk = () => {
 		e.preventDefault();
 		setSubmitNoteTxt("");
 		window.$("#caseModal #modalSpinner").show();
+		// const data = new FormData(window.$('#helpdeskForm')[0]);
+		// console.log(data, "Helpdesk Form Data");
+		console.log('submitting...')
+		// for(var pair of data.entries()) {
+		// 	console.log(pair[0]+ ', '+ pair[1]);
+		//  }
 		const response = await callAPI({
-			URL: "Case/" + caseId,
+			URL: "case/" + caseId,
 			method: caseId === "NEW" ? "POST" : "PUT",
 			body: {
 				Station: user.Station,
@@ -137,10 +150,14 @@ const Helpdesk = () => {
 				subType: problemSubType,
 				status,
 				caseDesc: problemDesc,
+				image: caseImage,
 			},
+			// body : data,
+			bodyType: "FORM_DATA",
 		});
 		window.$("#caseModal #modalSpinner").hide();
 		if (response.status === 200) {
+			window.$('#helpdeskForm').trigger('reset');
 			setSubmitNoteClass("text-success");
 			setSubmitNoteTxt(caseId === "NEW" ? "Added" : "Updated");
 			setTimeout(() => {
@@ -160,9 +177,11 @@ const Helpdesk = () => {
 	const [managerName, setManagerName] = useState("");
 	const [problemType, setProblemType] = useState("");
 	const [problemSubType, setProblemSubType] = useState("");
+	const [caseImage, setImage] = useState("");
 	const [status, setStatus] = useState("Open");
 	const [problemDesc, setProblemDesc] = useState("");
 	const [caseId, setCaseId] = useState("NEW");
+	const [caseImg, setCaseImg] = useState("");
 	const modal = (action = null, data = null) => {
 		if (action === "NEW" || action === "EDIT") {
 			window.$("#caseModal #modalSpinner").hide();
@@ -173,11 +192,16 @@ const Helpdesk = () => {
 			setProblemDesc(action === "EDIT" && data.caseDesc ? data.caseDesc : "");
 			setProblemSubType(action === "EDIT" && data.subType ? data.subType : "");
 			setCaseId(action === "EDIT" && data._id ? data._id : action);
-			window.$(".btn-primary").hide();
+			if(data.image === "" || data.image === null || !data.image){
+				data.image = NoImg;
+			}
+			setCaseImg(action === "EDIT" && data.image ? data.image : "")
+			if (user.profileType != "ADMIN")
+				window.$("#tktSubmitBtn").hide();
 			if (action === "NEW") {
 				setStationName(userProfile.Station.stationName ? userProfile.Station.stationName : "");
 				setManagerName(userProfile.fullName ? userProfile.fullName : "");
-				window.$(".btn-primary").show();
+				window.$("#tktSubmitBtn").show();
 			}
 		} else if (action === "DELETE") {
 			window.$("#deleteModal").modal("show");
@@ -205,7 +229,8 @@ const Helpdesk = () => {
 				"Dispencer Reading Issue",
 				"Vehicle Registration Number reading issue",
 				"Battery Drain Issue",
-				"Network Issue"
+				"Network Issue",
+				"Others"
 			]
 
 		},
@@ -213,30 +238,20 @@ const Helpdesk = () => {
 			type: "Software Issue",
 			subTypes: [
 				"Manager Login Issue",
-				"Price not Changed"
+				"Price not Changed",
+				"Others"
 			]
 		}
 	]
 
-	/** Type variable to store different array for different dropdown */
-	// let type = null;
-
-	/** This will be used to create set of options that user will see */
-	// let options = null;
-
-	/** Setting Type variable according to dropdown */
-	// if (selected === "Machine Issue") {
-	// 	type = machineProblem;
-	// } else if (selected === "Software Issue") {
-	// 	type = softwareProblem;
-	// }
-
-	/** If "Type" is null or undefined then options will be null,
-	 * otherwise it will create a options iterable based on our array
-	 */
-	// if (type) {
-	// 	options = type.map((el) => <option value={el}>{el}</option>);
-	// }
+	// Case Status
+	const caseStatus = [
+		"Open",
+		"In Progress",
+		"On Hold",
+		"Resolved",
+		"Closed"
+	]
 
 	// get all
 	const [searchStr, setSearchStr] = useState("");
@@ -254,8 +269,16 @@ const Helpdesk = () => {
 					type: "SET_ACTIVE_PAGE_SPINNER",
 					payload: true,
 				});
+				let stationCode = "";
+				if (user.profileType === "ADMIN") {
+					console.log("Admin Profile");
+					stationCode = "";
+				} else {
+					console.log("Manager Profile");
+					stationCode = "&station=" + user.Station;
+				}
 				const response = await callAPI({
-					URL: "case/all?page=" + currentPage + "&limit=" + limit + "&search=" + searchStr + "&station=" + user.Station,
+					URL: "case/all?page=" + currentPage + "&limit=" + limit + "&search=" + searchStr + stationCode,
 					abort: false,
 				});
 				contextDispatch({
@@ -295,9 +318,7 @@ const Helpdesk = () => {
 									</div>
 								</div>
 
-								<button type="button" onClick={() => modal("NEW")} title={"New Station"} className="btn btnIconC border mr-2">
-									<IoMdAdd />
-								</button>
+
 								<button type="button" onClick={triggerGetAll} title={"Refresh"} className="btn btnIconC border mr-2">
 									<IoRefreshOutline />
 								</button>
@@ -309,6 +330,9 @@ const Helpdesk = () => {
 										<option value="1000">1000</option>
 									</Form.Select>
 								</InputGroup>
+								<button type="button" onClick={() => modal("NEW")} title={"New Station"} className="btn btn-primary border mr-2">
+									Raise Ticket
+								</button>
 								<Pagination className="mb-0" total={total} currentPage={currentPage} setCurrentPage={setCurrentPage} pageSize={limit} />
 							</div>
 							<Table bordered responsive hover>
@@ -329,48 +353,108 @@ const Helpdesk = () => {
 					</div>
 					{/* modal */}
 					<div className="modal fade" id="caseModal">
-						<div className="modal-dialog modal-md modal-dialog-centered">
+						<div className="modal-dialog modal-xl modal-dialog-centered">
 							<div className="modal-content">
 								<div className="modal-header mb-3 mt-3 ">
-									<h5 className="modal-title">Raise Ticket for Help</h5>
+									<h5 className="modal-title">Raise Ticket</h5>
 									<button type="button" className="close" data-dismiss="modal" aria-label="Close">
 										<span aria-hidden="true">×</span>
 									</button>
 								</div>
-								<form onSubmit={submitForm}>
+								<form onSubmit={submitForm} enctype="multipart/form-data" id="helpdeskForm">
 									<div className="modal-body">
 										<div className="row">
-											<div className="col-md-12">
+											<div className="col-md-6">
 												<fieldset className="formBox">
 													<legend>Station Name </legend>
-													<input type="text" required placeholder="Station Name" value={stationName} onChange={(e) => setStationName(e.target.value)} readonly className="formField" />
+													<input type="text" required placeholder="Station Name" value={stationName} onChange={(e) => setStationName(e.target.value)} readOnly="true" className="formField" />
 												</fieldset>
 												<fieldset className="formBox">
 													<legend>Manager Name</legend>
-													<input type="text" required placeholder="Manager Name" value={managerName} onChange={(e) => setManagerName(e.target.value)} readonly className="formField" />
+													<input type="text" required placeholder="Manager Name" value={managerName} onChange={(e) => setManagerName(e.target.value)} readOnly="true" className="formField" />
 												</fieldset>
 												<fieldset className="formBox">
 													<legend>Problem Type</legend>
-													<select required className="formField" value={problemType} onChange={filterProblemType}>
-														<option value="">-- Select --</option>
-														{issues.map((el) =>
-															<option value={el.type}>{el.type}</option>
-														)}
-													</select>
+													{
+														user.profileType === "ADMIN" ?
+															<>
+																<input type="text" value={problemType} onChange={(e) => setProblemType(e.target.value)} readOnly="true" className="formField" />
+															</>
+															:
+															<>
+																<select required className="formField" value={problemType} onChange={filterProblemType}>
+																	<option value="">-- Select --</option>
+																	{issues.map((el) =>
+																		<option value={el.type}>{el.type}</option>
+																	)}
+																</select>
+															</>
+													}
 												</fieldset>
 												<fieldset className="formBox">
 													<legend>Problem Sub Type</legend>
-													<select required className="formField" value={problemSubType} onChange={(e) => setProblemSubType(e.target.value)}>
-														<option value="">-- Select --</option>
-														{subTypeArray.map((el) =>
-															<option value={el}>{el}</option>
-														)}
-													</select>
+													{
+														user.profileType === "ADMIN" ?
+															<>
+																<input type="text" value={problemSubType} onChange={(e) => setProblemSubType(e.target.value)} readOnly="true" className="formField" />
+															</>
+															:
+															<>
+																<select required className="formField" value={problemSubType} onChange={(e) => setProblemSubType(e.target.value)}>
+																	<option value="">-- Select --</option>
+																	{subTypeArray.map((el) =>
+																		<option value={el}>{el}</option>
+																	)}
+																</select>
+															</>
+													}
 												</fieldset>
 												<fieldset className="formBox">
 													<legend>Problem Decsription</legend>
-													<textarea className="formField" style={{ height: "165px" }} onChange={(e) => setProblemDesc(e.target.value)} value={problemDesc} placeholder="Write Problem Description"></textarea>
+													{
+														user.profileType === "ADMIN" ?
+															<>
+																<textarea className="formField" style={{ height: "auto" }} onChange={(e) => setProblemDesc(e.target.value)} value={problemDesc} readOnly="true" placeholder="Write Problem Description"></textarea>
+															</>
+															:
+															<>
+																<textarea className="formField" style={{ height: "165px" }} onChange={(e) => setProblemDesc(e.target.value)} value={problemDesc} placeholder="Write Problem Description"></textarea>
+															</>
+													}
 												</fieldset>
+												<fieldset>
+													{
+														user.profileType === "ADMIN" ?
+															<>
+																
+															</>
+															:
+															<>
+																<legend>Choose Image</legend>
+																<input type="file" onChange={(e) => setImage(e.target.files[0])} className="formField" />
+															</>
+													}
+												</fieldset>
+												{user.profileType === "ADMIN" ?
+													<>
+														<fieldset className="formBox">
+															<legend>Case Status</legend>
+															<select required className="formField">
+																<option value="">-- Select --</option>
+																{caseStatus.map((el) =>
+																	<option value={el}>{el}</option>
+																)}
+															</select>
+														</fieldset>
+														<fieldset className="formBox">
+															<legend>Resolution Decsription</legend>
+															<textarea className="formField" style={{ height: "165px" }} placeholder="Write Problem Status"></textarea>
+														</fieldset>
+													</>
+													: <></>}
+											</div>
+											<div className="col-md-6">
+												<img src={caseImg} alt=""  className="img-fluid" />
 											</div>
 										</div>
 									</div>
@@ -385,7 +469,7 @@ const Helpdesk = () => {
 												<span className="sr-only">Loading...</span>
 											</div>
 										</div>
-										<button type="submit" className="btn btn-primary">
+										<button type="submit" className="btn btn-primary" id="tktSubmitBtn">
 											Submit
 										</button>
 										<button type="button" id="closeBtn" className="btn btn-secondary" data-dismiss="modal">

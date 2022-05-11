@@ -2,11 +2,15 @@ import { getUser } from "../Context/Reducer";
 // export const backendbaseURL = "https://iglapi.herokuapp.com/Admin/";
 // export const backendbaseURL = "https://iglapistaging.herokuapp.com/admin/";
 // export const backendbaseURL = "http://localhost:3000/Admin/";
+
+// IGL API
 export const backendbaseURL = "http://43.204.104.42:3000/admin/";
+
+// Local API
 // export const backendbaseURL = "http://192.168.0.220:3000/admin/";
 
 let abortController = null;
-export const callAPI = async({ URL = "", method = "GET", body = "", bodyType = "raw", abort = false }) => {
+export const callAPI = async({ URL = "", method = "GET", body = "", bodyType = "RAW", abort = false }) => {
     try {
         // checking internet connection
         if (!navigator.onLine) {
@@ -26,11 +30,24 @@ export const callAPI = async({ URL = "", method = "GET", body = "", bodyType = "
 
         // adding body
         if (body) {
-            options.body = bodyType === "raw" ? JSON.stringify(body) : body;
-            if (bodyType === "raw")
+            if (bodyType === "RAW"){
                 options.headers = {
                     "Content-Type": "application/json",
-                };
+                }
+                options.body = JSON.stringify(body);
+            } else if(bodyType === 'FORM_DATA') {
+                // options.headers = {'Content-Type': 'multipart/form-data'};
+                const formDataObj = new FormData();
+                for(const key in body) {
+                    formDataObj.append(key,body[key]);
+                }
+
+                for(var pair of formDataObj.entries()) {
+                    console.log(pair[0]+ ', '+ pair[1]);
+                }
+
+                options.body = formDataObj;
+            }
         }
 
         // adding auth token
