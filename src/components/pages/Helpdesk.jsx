@@ -3,9 +3,10 @@ import { motion } from "framer-motion";
 
 import { Form, InputGroup, Table } from "react-bootstrap";
 // icons
-import { IoRefreshOutline } from "react-icons/io5";
+import { IoRefreshOutline, IoHandRightOutline } from "react-icons/io5";
 import { RiGasStationLine, RiDeleteBinLine } from "react-icons/ri";
 import { IoMdAdd } from "react-icons/io";
+import { FaFistRaised } from "react-icons/fa";
 
 // components
 import Pagination from "../partials/Pagination";
@@ -13,6 +14,9 @@ import Animation from "../../common/Animation";
 
 // utils
 import { callAPI } from "../../common/common";
+
+// Date 
+import dateGenerator from "../../common/date";
 
 // Context
 import { AppContext } from "../../Context/Context";
@@ -68,9 +72,9 @@ const Helpdesk = () => {
 		} else if (status === "Resolved") {
 			return <span className="badge badge-primary">Resolved</span>
 		} else if (status === "On Hold") {
-			return <span className="badge badge-default">On Hold</span>
-		} else if (status === "Close") {
-			return <span className="badge badge-success">Close</span>
+			return <span className="badge badge-secondary">On Hold</span>
+		} else if (status === "Closed") {
+			return <span className="badge badge-success">Closed</span>
 		} else {
 			return <span className="badge badge-info">No Status</span>
 		}
@@ -86,7 +90,7 @@ const Helpdesk = () => {
 					dataArr.map((item) =>
 					(
 						<tr key={Math.random()}>
-							<td onClick={() => modal("EDIT", item)}>{item.Station.stationName}</td>
+							<td onClick={() => modal("EDIT", item)}>{item.Station ? item.Station.stationName : <span className="badge badge-default">No Station</span>}</td>
 							<td onClick={() => modal("EDIT", item)}>{item.Manager.fullName}</td>
 							<td onClick={() => modal("EDIT", item)}>{item.type}</td>
 							<td onClick={() => modal("EDIT", item)}>{item.subType}</td>
@@ -140,34 +144,56 @@ const Helpdesk = () => {
 		// for(var pair of data.entries()) {
 		// 	console.log(pair[0]+ ', '+ pair[1]);
 		//  }
+		console.log(dateGenerator.dateTime());
+		const reqBody = {
+			title: "",
+			type: problemType,
+			subType: problemSubType,
+			status,
+			caseDesc: problemDesc,
+			image: caseImage,
+		}
+
+		if (user.profileType === "ADMIN") {
+			reqBody.resolutionDesc = caseResolve;
+			reqBody.resolutionTime = dateGenerator.dateTime();
+		} else if (user.profileType === "MANAGER") {
+			reqBody.Station = user.Station;
+			reqBody.Manager = user._id;
+		}
+
 		const response = await callAPI({
 			URL: "case/" + caseId,
 			method: caseId === "NEW" ? "POST" : "PUT",
-			body: {
-				Station: user.Station,
-				Manager: user._id,
-				type: problemType,
-				subType: problemSubType,
-				status,
-				caseDesc: problemDesc,
-				image: caseImage,
-			},
+			body: reqBody,
 			// body : data,
 			bodyType: "FORM_DATA",
 		});
 		window.$("#caseModal #modalSpinner").hide();
 		if (response.status === 200) {
-			window.$('#helpdeskForm').trigger('reset');
 			setSubmitNoteClass("text-success");
 			setSubmitNoteTxt(caseId === "NEW" ? "Added" : "Updated");
 			setTimeout(() => {
 				window.$("#caseModal #closeBtn").click();
+				setSubmitNoteTxt("");
+				setSubmitNoteClass("");
+				window.$('#helpdeskForm').trigger('reset');
 				triggerGetAll();
 			}, 1000);
 		} else {
 			setSubmitNoteClass("text-danger");
 			setSubmitNoteTxt(response.message);
 		}
+	};
+
+	const imageHandle = (e) => {
+		const reader = new FileReader();
+		reader.onload = () => {
+			if (reader.readyState === 2) {
+				this.setState({ setCaseImg: reader.result })
+			}
+		}
+		reader.readAsDataURL(e.target.files[0])
 	};
 
 	// modal
@@ -182,39 +208,53 @@ const Helpdesk = () => {
 	const [problemDesc, setProblemDesc] = useState("");
 	const [caseId, setCaseId] = useState("NEW");
 	const [caseImg, setCaseImg] = useState("");
+	const [caseResolve, setResolution] = useState("");
+	// const ii= window.$('input');
+	// // console.log(ii, "Image Data");
+	// ii.forEach(element=>{
+	// 	console.log(element.id);
+	// });
 	const modal = (action = null, data = null) => {
 		if (action === "NEW" || action === "EDIT") {
 			window.$("#caseModal #modalSpinner").hide();
 			window.$("#caseModal").modal("show");
-			setStationName(action === "EDIT" && data.Station.stationName ? data.Station.stationName : "");
-			setManagerName(action === "EDIT" && data.Manager.fullName ? data.Manager.fullName : "");
-			setProblemType(action === "EDIT" && data.type ? data.type : "");
+			setStationName(action === "EDIT" && data.Station ? data.Station.stationName : "");
+			setManagerName(action === "EDIT" && data.Manager.fullName ? data.Manager.fullName : userProfile.fullName);
+			filterProblemType(action === "EDIT" && data.type ? data.type : "");
 			setProblemDesc(action === "EDIT" && data.caseDesc ? data.caseDesc : "");
 			setProblemSubType(action === "EDIT" && data.subType ? data.subType : "");
+			setStatus(action === "EDIT" && data.status ? data.status : "");
 			setCaseId(action === "EDIT" && data._id ? data._id : action);
-			if(!data || data.image === "" || !data.image){
+			if (!data || data.image === "" || !data.image) {
 				setCaseImg(NoImg);
 			} else {
-				setCaseImg(action === "EDIT" && data.image ? data.image : "")
+				setCaseImg(action === "EDIT" && data.image ? data.image : "");
 			}
-			
+
 			if (user.profileType != "ADMIN")
 				window.$("#tktSubmitBtn").hide();
-			if (action === "NEW") {
-				setStationName(userProfile.Station.stationName ? userProfile.Station.stationName : "");
-				setManagerName(userProfile.fullName ? userProfile.fullName : "");
-				window.$("#tktSubmitBtn").show();
-			}
+
+			// if (action === "NEW") {
+			// 	if(user.profileType != "ADMIN"){
+			// 		setStationName(userProfile.Station.stationName ? userProfile.Station.stationName : "");
+			// 	}else{
+			// 		setManagerName(userProfile.fullName ? userProfile.fullName : "");
+			// 		window.$("#tktSubmitBtn").show();
+			// 	}
+			// }
 		} else if (action === "DELETE") {
 			window.$("#deleteModal").modal("show");
 		}
 	};
 
 	// get Problem Sub Type according to Problem Type
-	const filterProblemType = (event) => {
-		const issueType = event.target.value;
-		setProblemType(issueType)
-		const filteredSubType = issues.filter(el => el.type === issueType);
+	const filterProblemType = (val) => {
+		setProblemType(val)
+		const filteredSubType = issues.filter(el => el.type === val);
+		if (filteredSubType.length === 0) {
+			setSubTypeArray([])
+			return;
+		}
 		console.log(filteredSubType)
 		setSubTypeArray(filteredSubType[0].subTypes);
 	};
@@ -332,8 +372,8 @@ const Helpdesk = () => {
 										<option value="1000">1000</option>
 									</Form.Select>
 								</InputGroup>
-								<button type="button" onClick={() => modal("NEW")} title={"New Station"} className="btn btn-primary border mr-2">
-									Raise Ticket
+								<button type="button" onClick={() => modal("NEW")} title={"Raise Problem"} className="btn btn-primary border mr-2">
+									<IoHandRightOutline />
 								</button>
 								<Pagination className="mb-0" total={total} currentPage={currentPage} setCurrentPage={setCurrentPage} pageSize={limit} />
 							</div>
@@ -384,7 +424,7 @@ const Helpdesk = () => {
 															</>
 															:
 															<>
-																<select required className="formField" value={problemType} onChange={filterProblemType}>
+																<select required className="formField" value={problemType} onChange={e => filterProblemType(e.target.value)}>
 																	<option value="">-- Select --</option>
 																	{issues.map((el) =>
 																		<option value={el.type}>{el.type}</option>
@@ -403,7 +443,6 @@ const Helpdesk = () => {
 															:
 															<>
 																<select required className="formField" value={problemSubType} onChange={(e) => setProblemSubType(e.target.value)}>
-																	<option value="">-- Select --</option>
 																	{subTypeArray.map((el) =>
 																		<option value={el}>{el}</option>
 																	)}
@@ -428,35 +467,36 @@ const Helpdesk = () => {
 													{
 														user.profileType === "ADMIN" ?
 															<>
-																
+
 															</>
 															:
 															<>
 																<legend>Choose Image</legend>
-																<input type="file" onChange={(e) => setImage(e.target.files[0])} className="formField" />
+																<input type="file" onChange={(e) => setImage(e.target.files[0])} className="formField" accept="image/*" />
 															</>
 													}
 												</fieldset>
-												{user.profileType === "ADMIN" ?
-													<>
-														<fieldset className="formBox">
-															<legend>Case Status</legend>
-															<select required className="formField">
-																<option value="">-- Select --</option>
-																{caseStatus.map((el) =>
-																	<option value={el}>{el}</option>
-																)}
-															</select>
-														</fieldset>
-														<fieldset className="formBox">
-															<legend>Resolution Decsription</legend>
-															<textarea className="formField" style={{ height: "165px" }} placeholder="Write Problem Status"></textarea>
-														</fieldset>
-													</>
-													: <></>}
+												{
+													user.profileType === "ADMIN" ?
+														<>
+															<fieldset className="formBox">
+																<legend>Case Status</legend>
+																<select required className="formField" value={status} onChange={(e) => setStatus(e.target.value)}>
+																	{caseStatus.map((el) =>
+																		<option value={el}>{el}</option>
+																	)}
+																</select>
+															</fieldset>
+															<fieldset className="formBox">
+																<legend>Resolution Decsription</legend>
+																<textarea className="formField" style={{ height: "165px" }} value={caseResolve} onChange={(e) => setResolution(e.target.value)} id="resolveDesc" placeholder="Write Problem Status"></textarea>
+															</fieldset>
+														</>
+														: <></>
+												}
 											</div>
 											<div className="col-md-6">
-												<img src={caseImg} alt=""  className="img-fluid" />
+												<img src={caseImg} alt="" className="img-fluid" />
 											</div>
 										</div>
 									</div>
@@ -471,9 +511,27 @@ const Helpdesk = () => {
 												<span className="sr-only">Loading...</span>
 											</div>
 										</div>
-										<button type="submit" className="btn btn-primary" id="tktSubmitBtn">
-											Submit
-										</button>
+										{
+											user.profileType === "ADMIN" ?
+												<>
+													<button type="submit" className="btn btn-primary">
+														Submit
+													</button>
+												</>
+												:
+												<>
+													{
+														caseId === "NEW" ?
+															<>
+																<button type="submit" className="btn btn-primary">
+																	Submit
+																</button>
+															</> : <>
+
+															</>
+													}
+												</>
+										}
 										<button type="button" id="closeBtn" className="btn btn-secondary" data-dismiss="modal">
 											Close
 										</button>

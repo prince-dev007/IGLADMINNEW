@@ -1,4 +1,4 @@
-module.exports = {
+const dateGenerator = {
 	dateTime: fTimestamp, // mysql timestamp
 	fDateTIme: fDate, //with month name in words
 	currentTimestamp: timeStamp, //with just numbers only
@@ -68,3 +68,5 @@ function dateObj(dateTime = new Date()) {
 		miliSecs: miliSecs,
 	};
 }
+
+export default dateGenerator;
