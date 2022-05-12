@@ -66,6 +66,7 @@ export default function Employee() {
 							</td>
 							<td onClick={() => modal("EDIT", item)}>{item.email}</td>
 							<td onClick={() => modal("EDIT", item)}>{item.Station ? item.Station.stationName : "Not Assigned"}</td>
+							{user.profileType === 'ADMIN' && <td onClick={() => modal("EDIT", item)}>{item.fingerprint1}</td> }
 							<td>
 								<button className="btn btn-sm border btnDanger m-1 " onClick={() => modal("DELETE", item)}>
 									<RiDeleteBinLine />
@@ -281,6 +282,7 @@ export default function Employee() {
 										<th>Employee</th>
 										<th>Email</th>
 										<th>Station</th>
+										{user.profileType === 'ADMIN' && <th>Fingerprint1</th>}
 										<th>Action</th>
 									</tr>
 								</thead>
