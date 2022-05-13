@@ -1,46 +1,78 @@
 .inputGroupC {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
   width: 18rem;
   margin-right: 0.5rem;
 }
-
 .inputGroupC__label {
   border-radius: 0.25rem 0 0 0.25rem;
 }
-
 .inputGroupC__input {
   width: 10rem;
 }
-
 .inputGroupC--limit {
   width: 10rem;
 }
 
 .cardC__head {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
 }
 
 .dashboard-summary-card__title {
   font-size: 1.5rem;
 }
-
 .dashboard-summary-card__detail-card {
   margin: 0.5rem 0;
 }
-
 .dashboard-summary-card__detail-card h5 {
   font-size: 1.4rem;
   font-weight: bold;
   color: gray;
 }
-
 .dashboard-summary-card__detail-card p {
   font-size: 1.2rem;
   font-weight: bold;
   margin: 0;
 }
-/*# sourceMappingURL=global.css.map */
+
+.ticket-btn {
+  position: fixed;
+  bottom: 40px;
+  right: 50px;
+  font-weight: bold;
+  background-color: #673AB7;
+  border: none;
+  color: #fff;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22) !important;
+  -webkit-animation: float 1s linear infinite;
+          animation: float 1s linear infinite;
+  transition: 0.3s all;
+}
+.ticket-btn:hover {
+  color: #fff;
+  -webkit-animation-play-state: paused;
+          animation-play-state: paused;
+  transform: scale(1.4);
+  box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22) !important;
+}
+@-webkit-keyframes float {
+  0% {
+    right: 60px;
+  }
+  50% {
+    right: 50px;
+  }
+  100% {
+    right: 60px;
+  }
+}
+@keyframes float {
+  0% {
+    right: 60px;
+  }
+  50% {
+    right: 50px;
+  }
+  100% {
+    right: 60px;
+  }
+}/*# sourceMappingURL=global.css.map */

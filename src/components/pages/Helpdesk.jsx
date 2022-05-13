@@ -4,9 +4,10 @@ import { motion } from "framer-motion";
 import { Form, InputGroup, Table } from "react-bootstrap";
 // icons
 import { IoRefreshOutline, IoHandRightOutline } from "react-icons/io5";
+import { FcFeedback } from "react-icons/fc";
 import { RiGasStationLine, RiDeleteBinLine } from "react-icons/ri";
 import { IoMdAdd } from "react-icons/io";
-import { FaFistRaised } from "react-icons/fa";
+import { FaFistRaised, FaPlusCircle } from "react-icons/fa";
 
 // components
 import Pagination from "../partials/Pagination";
@@ -157,9 +158,10 @@ const Helpdesk = () => {
 		if (user.profileType === "ADMIN") {
 			reqBody.resolutionDesc = caseResolve;
 			reqBody.resolutionTime = dateGenerator.dateTime();
-		} else if (user.profileType === "MANAGER") {
-			reqBody.Station = user.Station;
-			reqBody.Manager = user._id;
+		}
+		if (caseId === "NEW") {
+			reqBody.Station = stationId;
+			reqBody.Manager = userId;
 		}
 
 		const response = await callAPI({
@@ -197,6 +199,8 @@ const Helpdesk = () => {
 	};
 
 	// modal
+	const [stationId, setStationId] = useState("");
+	const [userId, setUserId] = useState("");
 	const [submitNoteClass, setSubmitNoteClass] = useState("");
 	const [submitNoteTxt, setSubmitNoteTxt] = useState("");
 	const [stationName, setStationName] = useState("");
@@ -204,7 +208,7 @@ const Helpdesk = () => {
 	const [problemType, setProblemType] = useState("");
 	const [problemSubType, setProblemSubType] = useState("");
 	const [caseImage, setImage] = useState("");
-	const [status, setStatus] = useState("Open");
+	const [status, setStatus] = useState("");
 	const [problemDesc, setProblemDesc] = useState("");
 	const [caseId, setCaseId] = useState("NEW");
 	const [caseImg, setCaseImg] = useState("");
@@ -218,18 +222,25 @@ const Helpdesk = () => {
 		if (action === "NEW" || action === "EDIT") {
 			window.$("#caseModal #modalSpinner").hide();
 			window.$("#caseModal").modal("show");
-			setStationName(action === "EDIT" && data.Station ? data.Station.stationName : "");
+			setStationName(action === "EDIT" && data.Station ? data.Station.stationName : user.Station.stationName);
 			setManagerName(action === "EDIT" && data.Manager.fullName ? data.Manager.fullName : userProfile.fullName);
 			filterProblemType(action === "EDIT" && data.type ? data.type : "");
 			setProblemDesc(action === "EDIT" && data.caseDesc ? data.caseDesc : "");
 			setProblemSubType(action === "EDIT" && data.subType ? data.subType : "");
-			setStatus(action === "EDIT" && data.status ? data.status : "");
+			setStatus(action === "EDIT" && data.status ? data.status : "Open");
 			setCaseId(action === "EDIT" && data._id ? data._id : action);
+			setResolution(action === "EDIT" && data.resolutionDesc ? data.resolutionDesc : "");
+			setStationId(action === "EDIT" && data.Station._id ?  data.Station._id : (user.profileType !== "ADMIN" ? user.Station : ""));
+			setUserId(action === "EDIT" && data.Manager._id ?  data.Manager._id : (user.profileType !== "ADMIN" ? user._id : ""));
 			if (!data || data.image === "" || !data.image) {
 				setCaseImg(NoImg);
 			} else {
 				setCaseImg(action === "EDIT" && data.image ? data.image : "");
 			}
+			// if(action === "NEW" && user.profileType !== "ADMIN") {
+			// 	setStationId(user.Station);
+			// 	setUserId(user._id);
+			// }
 
 			if (user.profileType != "ADMIN")
 				window.$("#tktSubmitBtn").hide();
@@ -259,6 +270,18 @@ const Helpdesk = () => {
 		setSubTypeArray(filteredSubType[0].subTypes);
 	};
 
+	const filterStationId = (val) => {
+		setStationId(val);
+		const filterManager = userArr.filter(el => el.Station === val);
+		if(filterManager.length === 0) {
+			setFilterManagerArr([]);
+			return;
+		}
+		console.log(filterManager);
+		setFilterManagerArr(filterManager);
+	}
+
+	const [filterManagerArr, setFilterManagerArr] = useState([]);
 
 	const [subTypeArray, setSubTypeArray] = useState([]);
 
@@ -270,7 +293,7 @@ const Helpdesk = () => {
 				"Biometric Issue",
 				"Dispencer Reading Issue",
 				"Vehicle Registration Number reading issue",
-				"Battery Drain Issue",
+				"Battery Issue",
 				"Network Issue",
 				"Others"
 			]
@@ -342,6 +365,38 @@ const Helpdesk = () => {
 		[currentPage, limit, random, searchStr, contextDispatch]
 	);
 
+	// all station
+	// getting stations for dropdown
+	const [stationArr, setStationArr] = useState([]);
+
+	const [userArr, setUserArr] = useState([]);
+
+
+	// console.log(userArr, "Profile Array");
+
+	useEffect(() => {
+		// stations
+		const getAllStation = async () => {
+			let response = await callAPI({
+				URL: "stations/mini?fields=stationId,stationName",
+			});
+			if (response.status === 200) {
+				setStationArr(response.data);
+				console.log(response.data, "Stations");
+			}
+
+			response = await callAPI({
+				URL: "user/mini",
+				abort: true,
+			});
+			if (response.status === 200) {
+				setUserArr(response.data);
+				console.log(response.data, "Users Profile");
+			}
+		};
+		getAllStation();
+	}, []);
+
 	return (
 		<div className="page-wrapper">
 			<div className="page-content-wrapper">
@@ -372,8 +427,8 @@ const Helpdesk = () => {
 										<option value="1000">1000</option>
 									</Form.Select>
 								</InputGroup>
-								<button type="button" onClick={() => modal("NEW")} title={"Raise Problem"} className="btn btn-primary border mr-2">
-									<IoHandRightOutline />
+								<button type="button" onClick={() => modal("NEW")} title={"Raise Problem"} className="btn mr-2 ticket-btn">
+									Create Ticket <FaPlusCircle />
 								</button>
 								<Pagination className="mb-0" total={total} currentPage={currentPage} setCurrentPage={setCurrentPage} pageSize={limit} />
 							</div>
@@ -408,17 +463,34 @@ const Helpdesk = () => {
 										<div className="row">
 											<div className="col-md-6">
 												<fieldset className="formBox">
-													<legend>Station Name </legend>
-													<input type="text" required placeholder="Station Name" value={stationName} onChange={(e) => setStationName(e.target.value)} readOnly="true" className="formField" />
+												<legend>Station</legend>
+												<select required className="formField" value={stationId} disabled={user.profileType !== "ADMIN" ? true : (caseId !== "NEW" ? true : "") } onChange={e => filterStationId(e.target.value)}>
+													<option value="">Select Station</option>
+													{stationArr.map((obj) => {
+														return (
+															<option value={obj._id} key={obj._id}>
+																{obj.stationName}
+															</option>
+														);
+													})}
+												</select>
 												</fieldset>
 												<fieldset className="formBox">
-													<legend>Manager Name</legend>
-													<input type="text" required placeholder="Manager Name" value={managerName} onChange={(e) => setManagerName(e.target.value)} readOnly="true" className="formField" />
+												<legend>Manager</legend>
+												<select required className="formField" value={userId} disabled={user.profileType !== "ADMIN" ? true : (caseId !== "NEW" ? true : "")} onChange={e => setUserId(e.target.value)}>
+													{filterManagerArr.map((obj) => {
+														return (
+															<option value={obj._id} key={obj._id}>
+																{obj.fullName}
+															</option>
+														);
+													})}
+												</select>
 												</fieldset>
 												<fieldset className="formBox">
 													<legend>Problem Type</legend>
 													{
-														user.profileType === "ADMIN" ?
+														caseId !== "NEW" ?
 															<>
 																<input type="text" value={problemType} onChange={(e) => setProblemType(e.target.value)} readOnly="true" className="formField" />
 															</>
@@ -436,7 +508,7 @@ const Helpdesk = () => {
 												<fieldset className="formBox">
 													<legend>Problem Sub Type</legend>
 													{
-														user.profileType === "ADMIN" ?
+														caseId != "NEW" ?
 															<>
 																<input type="text" value={problemSubType} onChange={(e) => setProblemSubType(e.target.value)} readOnly="true" className="formField" />
 															</>
@@ -459,26 +531,14 @@ const Helpdesk = () => {
 															</>
 															:
 															<>
-																<textarea className="formField" style={{ height: "165px" }} onChange={(e) => setProblemDesc(e.target.value)} value={problemDesc} placeholder="Write Problem Description"></textarea>
-															</>
-													}
-												</fieldset>
-												<fieldset>
-													{
-														user.profileType === "ADMIN" ?
-															<>
-
-															</>
-															:
-															<>
-																<legend>Choose Image</legend>
-																<input type="file" onChange={(e) => setImage(e.target.files[0])} className="formField" accept="image/*" />
+																<textarea className="formField" style={{ height: "auto" }} onChange={(e) => setProblemDesc(e.target.value)} value={problemDesc} placeholder="Write Problem Description"></textarea>
 															</>
 													}
 												</fieldset>
 												{
 													user.profileType === "ADMIN" ?
 														<>
+
 															<fieldset className="formBox">
 																<legend>Case Status</legend>
 																<select required className="formField" value={status} onChange={(e) => setStatus(e.target.value)}>
@@ -491,11 +551,68 @@ const Helpdesk = () => {
 																<legend>Resolution Decsription</legend>
 																<textarea className="formField" style={{ height: "165px" }} value={caseResolve} onChange={(e) => setResolution(e.target.value)} id="resolveDesc" placeholder="Write Problem Status"></textarea>
 															</fieldset>
+
 														</>
-														: <></>
+														:
+														<>
+															{
+																caseId === "NEW" ?
+																	<>
+
+																	</>
+																	:
+																	<>
+																		<fieldset className="formBox">
+																			<legend>Case Status</legend>
+																			<input type="text" className="formField" value={status} readOnly="true" />
+																			{/* <select required className="formField" value={status} onChange={(e) => setStatus(e.target.value)} readOnly="true"	>
+																				{caseStatus.map((el) =>
+																					<option value={el}>{el}</option>
+																				)}
+																			</select> */}
+																		</fieldset>
+																		<fieldset className="formBox">
+																			<legend>Resolution Decsription</legend>
+																			<textarea className="formField" style={{ height: "165px" }} value={caseResolve} onChange={(e) => setResolution(e.target.value)} readOnly="true" id="resolveDesc" placeholder="Write Problem Status"></textarea>
+																		</fieldset>
+																	</>
+															}
+														</>
 												}
 											</div>
 											<div className="col-md-6">
+												<fieldset>
+													{
+														user.profileType === "ADMIN" ?
+															<>
+																{
+																	caseId === "NEW" ?
+																		<>
+																			<legend>Choose Image</legend>
+																			<input type="file" onChange={(e) => setImage(e.target.files[0])} className="formField" accept="image/*" />
+																		</>
+																		:
+																		<>
+
+																		</>
+																}
+															</>
+															:
+															<>
+																{
+																	caseId === "NEW" ?
+																		<>
+																			<legend>Choose Image</legend>
+																			<input type="file" onChange={(e) => setImage(e.target.files[0])} className="formField" accept="image/*" />
+																		</>
+																		:
+																		<>
+
+																		</>
+																}
+															</>
+													}
+												</fieldset>
 												<img src={caseImg} alt="" className="img-fluid" />
 											</div>
 										</div>
