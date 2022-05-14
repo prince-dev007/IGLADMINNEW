@@ -30,7 +30,7 @@ function fTimestamp(dateTime = new Date()) {
 function fDate(date = new Date()) {
 	var monthArr = ["index0", "Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"];
 	const dateObject = dateObj(date);
-	dateObject.month = monthArr[dateObject.month];
+	dateObject.month = monthArr[Number(dateObject.month)];
 	var newDate = dateObject.day + " " + dateObject.month + " " + dateObject.year + " " + dateObject.hours + ":" + dateObject.mins + ":" + dateObject.secs;
 	return newDate;
 }
@@ -46,6 +46,7 @@ function dateObj(dateTime = new Date()) {
 	const year = defaultDateTime.getFullYear();
 	let month = defaultDateTime.getMonth() + 1;
 	month = month / 10 < 1 ? "0" + month : month;
+	console.log(month)
 	const weekDay = defaultDateTime.getDay();
 	let day = defaultDateTime.getDate();
 	day = day / 10 < 1 ? "0" + day : day;

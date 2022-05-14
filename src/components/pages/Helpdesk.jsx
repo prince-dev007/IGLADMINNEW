@@ -213,6 +213,9 @@ const Helpdesk = () => {
 	const [caseId, setCaseId] = useState("NEW");
 	const [caseImg, setCaseImg] = useState("");
 	const [caseResolve, setResolution] = useState("");
+	const [resolveTime , setResolveDate] = useState("");
+	const [createDate, setCreatedDate] = useState("");
+
 	// const ii= window.$('input');
 	// // console.log(ii, "Image Data");
 	// ii.forEach(element=>{
@@ -223,15 +226,21 @@ const Helpdesk = () => {
 			window.$("#caseModal #modalSpinner").hide();
 			window.$("#caseModal").modal("show");
 			setStationName(action === "EDIT" && data.Station ? data.Station.stationName : user.Station.stationName);
-			setManagerName(action === "EDIT" && data.Manager.fullName ? data.Manager.fullName : userProfile.fullName);
+			//setManagerName(action === "EDIT" && data.Manager.fullName ? data.Manager.fullName : userProfile.fullName);
 			filterProblemType(action === "EDIT" && data.type ? data.type : "");
 			setProblemDesc(action === "EDIT" && data.caseDesc ? data.caseDesc : "");
 			setProblemSubType(action === "EDIT" && data.subType ? data.subType : "");
 			setStatus(action === "EDIT" && data.status ? data.status : "Open");
 			setCaseId(action === "EDIT" && data._id ? data._id : action);
 			setResolution(action === "EDIT" && data.resolutionDesc ? data.resolutionDesc : "");
-			setStationId(action === "EDIT" && data.Station._id ?  data.Station._id : (user.profileType !== "ADMIN" ? user.Station : ""));
+			setStationId(action === "EDIT" && data.Station ?  data.Station._id : (user.profileType !== "ADMIN" ? user.Station : ""));
+			if(action === 'EDIT') {
+				filterStationId(data.Station !== null ? data.Station._id : '')
+			}
 			setUserId(action === "EDIT" && data.Manager._id ?  data.Manager._id : (user.profileType !== "ADMIN" ? user._id : ""));
+			setResolveDate(action === "EDIT" && data.resolutionTime ? dateGenerator.fDateTIme(data.resolutionTime) : "Not Resolved Yet");
+			setCreatedDate(action === "EDIT" && data.createdAt ? dateGenerator.fDateTIme(data.createdAt) : "No created Date");
+			
 			if (!data || data.image === "" || !data.image) {
 				setCaseImg(NoImg);
 			} else {
@@ -439,7 +448,7 @@ const Helpdesk = () => {
 										<th>Manager Name</th>
 										<th>Problem Type</th>
 										<th>Problem Sub Type</th>
-										<th>Case Status</th>
+										<th>Ticket Status</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -453,7 +462,9 @@ const Helpdesk = () => {
 						<div className="modal-dialog modal-xl modal-dialog-centered">
 							<div className="modal-content">
 								<div className="modal-header mb-3 mt-3 ">
-									<h5 className="modal-title">Raise Ticket</h5>
+									<h5 className="modal-title">{caseId === "NEW" ? "Raise Ticket" : "Ticket Detail"}
+									&nbsp; {getBadge(status)}
+									</h5>
 									<button type="button" className="close" data-dismiss="modal" aria-label="Close">
 										<span aria-hidden="true">×</span>
 									</button>
@@ -527,11 +538,11 @@ const Helpdesk = () => {
 													{
 														user.profileType === "ADMIN" ?
 															<>
-																<textarea className="formField" style={{ height: "auto" }} onChange={(e) => setProblemDesc(e.target.value)} value={problemDesc} readOnly="true" placeholder="Write Problem Description"></textarea>
+																<textarea className="formField" style={{ height: "auto" }} onChange={(e) => setProblemDesc(e.target.value)} value={problemDesc} readOnly={caseId !== "NEW" } placeholder="Write Problem Description"></textarea>
 															</>
 															:
 															<>
-																<textarea className="formField" style={{ height: "auto" }} onChange={(e) => setProblemDesc(e.target.value)} value={problemDesc} placeholder="Write Problem Description"></textarea>
+																<textarea className="formField" style={{ height: "auto" }} onChange={(e) => setProblemDesc(e.target.value)} value={problemDesc} readOnly={caseId !== "NEW" } placeholder="Write Problem Description"></textarea>
 															</>
 													}
 												</fieldset>
@@ -579,6 +590,19 @@ const Helpdesk = () => {
 															}
 														</>
 												}
+												<fieldset>
+												<div className="row">
+													<div className="col-md-6">
+													<label><b>Created Ticket Time</b></label>
+													<p> { caseId !== "NEW" ? createDate : Date() } </p>
+													</div>
+
+													<div className="col-md-6">
+													<label><b>Ticket Resolution Time</b></label>
+													<p> { caseId !== "NEW" ? resolveTime : "No Resolve Time" } </p>
+													</div>
+												</div>
+												</fieldset>
 											</div>
 											<div className="col-md-6">
 												<fieldset>
