@@ -8,6 +8,7 @@
     color: #fff;
     box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22) !important;
     animation: float 1s linear infinite;
+    transform: scale(1.2);
     transition: 0.3s all;
     &:hover{
         color: #fff;
