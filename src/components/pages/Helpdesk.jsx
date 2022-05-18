@@ -105,7 +105,7 @@ const Helpdesk = () => {
 								&nbsp;&nbsp; 
 									{
 										user.profileType === "ADMIN" ? 
-										item.jiraTicket ? <a href={item.jiraTicket} target="_blank" title="Open Jira of this Ticket">Go to <FaJira/></a> : "" : ""
+										item.jiraTicket ? <a href={item.jiraTicket} target="_blank" title="Open Jira of this Ticket" onClick={(e) => e.stopPropagation()}>Go to <FaJira/></a> : "" : ""
 									}
 							</td>
 						</tr>
