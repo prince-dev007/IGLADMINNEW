@@ -45,7 +45,7 @@ export default function Profile() {
 			if (response.status !== 200) return;
 
 			const data = response.data;
-			setStationName(data.Station.stationName);
+			setStationName(data.Station ? data.Station.stationName : "");
 			setDSO(data.DSO);
 			setAddress(data.address);
 			setPincode(data.pincode);

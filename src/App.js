@@ -25,6 +25,7 @@ import MyStation from "./components/pages/MyStation";
 import Profile from "./components/pages/Profile";
 import Employee from "./components/pages/Employee";
 import Helpdesk from "./components/pages/Helpdesk";
+import Pricebook from "./components/pages/Pricebook";
 
 import { AppContext } from "./Context/Context";
 import { Redirect } from "react-router-dom";
@@ -60,6 +61,7 @@ export default function App() {
 					<ProtectedRoute path="/employee" exact component={Employee} />
 					<ProtectedRoute path="/qr" exact component={QR} />
 					<ProtectedRoute path="/helpdesk" exact component={Helpdesk} />
+					<ProtectedRoute path="/pricebook" exact component={Pricebook} />
 					<Redirect to={{ pathname: "/" }} />
 				</Switch>
 			</AnimatePresence>

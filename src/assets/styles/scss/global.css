@@ -42,6 +42,7 @@
   background-color: #673AB7;
   border: none;
   color: #fff;
+  z-index: 99;
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22) !important;
   -webkit-animation: float 1s linear infinite;
           animation: float 1s linear infinite;
