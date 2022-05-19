@@ -79,7 +79,7 @@ const Helpdesk = () => {
 			return <span className="badge badge-secondary">On Hold</span>
 		} else if (status === "IN_INSPECTION") {
 			return <span className="badge badge-info">In Inspection</span>
-		}else if (status === "RE_OPEN") {
+		} else if (status === "RE_OPEN") {
 			return <span className="badge badge-primary">Re Open</span>
 		} else {
 			return <span className="badge badge-info">No Status</span>
@@ -102,11 +102,11 @@ const Helpdesk = () => {
 							<td onClick={() => modal("EDIT", item)}>{item.subType}</td>
 							<td onClick={() => modal("EDIT", item)}>
 								{getBadge(item.status)}
-								&nbsp;&nbsp; 
-									{
-										user.profileType === "ADMIN" ? 
-										item.jiraTicket ? <a href={item.jiraTicket} target="_blank" title="Open Jira of this Ticket" onClick={(e) => e.stopPropagation()}>Go to <FaJira/></a> : "" : ""
-									}
+								&nbsp;&nbsp;
+								{
+									user.profileType === "ADMIN" ?
+										item.jiraTicket ? <a href={item.jiraTicket} target="_blank" title="Open Jira of this Ticket" onClick={(e) => e.stopPropagation()}>Go to <FaJira /></a> : "" : ""
+								}
 							</td>
 						</tr>
 					))
@@ -176,7 +176,7 @@ const Helpdesk = () => {
 	};
 
 
-	
+
 	// modal
 	const [stationId, setStationId] = useState("");
 	const [userId, setUserId] = useState("");
@@ -192,7 +192,7 @@ const Helpdesk = () => {
 	const [caseId, setCaseId] = useState("NEW");
 	const [caseImg, setCaseImg] = useState("");
 	const [caseResolve, setResolution] = useState("");
-	const [resolveTime , setResolveDate] = useState("");
+	const [resolveTime, setResolveDate] = useState("");
 	const [createDate, setCreatedDate] = useState("");
 
 
@@ -209,17 +209,17 @@ const Helpdesk = () => {
 			setStatus(action === "EDIT" && data.status ? data.status : "OPEN");
 			setCaseId(action === "EDIT" && data._id ? data._id : action);
 			setResolution(action === "EDIT" && data.resolutionDesc ? data.resolutionDesc : "");
-			setStationId(action === "EDIT" && data.Station ?  data.Station._id : (user.profileType !== "ADMIN" ? user.Station : ""));
-			if(action === 'EDIT') {
+			setStationId(action === "EDIT" && data.Station ? data.Station._id : (user.profileType !== "ADMIN" ? user.Station : ""));
+			if (action === 'EDIT') {
 				filterStationId(data.Station !== null ? data.Station._id : '')
 			}
-			else if(action === "NEW" && user.profileType !== "ADMIN"){
+			else if (action === "NEW" && user.profileType !== "ADMIN") {
 				filterStationId(user.Station);
 			}
-			setUserId(action === "EDIT" && data.Manager._id ?  data.Manager._id : (user.profileType !== "ADMIN" ? user._id : ""));
+			setUserId(action === "EDIT" && data.Manager._id ? data.Manager._id : (user.profileType !== "ADMIN" ? user._id : ""));
 			setResolveDate(action === "EDIT" && data.resolutionTime ? dateGenerator.fDateTIme(data.resolutionTime) : "Not Resolved Yet");
 			setCreatedDate(action === "EDIT" && data.createdAt ? dateGenerator.fDateTIme(data.createdAt) : "No created Date");
-			
+
 			if (!data || data.image === "" || !data.image) {
 				setCaseImg(NoImg);
 			} else {
@@ -227,10 +227,11 @@ const Helpdesk = () => {
 			}
 			if (user.profileType !== "ADMIN")
 				window.$("#tktSubmitBtn").hide();
-		} 
+			
+		}
 		else if (action === "DELETE") {
 			window.$("#deleteModal").modal("show");
-		}else if (action === "HIDE"){
+		} else if (action === "HIDE") {
 			window.$("#caseModal").modal("hide");
 		}
 	};
@@ -250,7 +251,7 @@ const Helpdesk = () => {
 	const filterStationId = (val) => {
 		setStationId(val);
 		const filterManager = userArr.filter(el => el.Station === val);
-		if(filterManager.length === 0) {
+		if (filterManager.length === 0) {
 			setFilterManagerArr([]);
 			return;
 		}
@@ -289,34 +290,34 @@ const Helpdesk = () => {
 	// Case Status
 	const caseStatus = [
 		{
-			label : "Open",
-			key : "OPEN",
-			badge : "danger",
+			label: "Open",
+			key: "OPEN",
+			badge: "danger",
 		},
 		{
-			label : "In Progress",
-			key : "IN_PROGRESS",
-			badge : "warning",
+			label: "In Progress",
+			key: "IN_PROGRESS",
+			badge: "warning",
 		},
 		{
-			label : "On Hold",
-			key : "ON_HOLD",
-			badge : "secondary",
+			label: "On Hold",
+			key: "ON_HOLD",
+			badge: "secondary",
 		},
 		{
-			label : "In Inspection",
-			key : "IN_INSPECTION",
-			badge : "info",
+			label: "In Inspection",
+			key: "IN_INSPECTION",
+			badge: "info",
 		},
 		{
-			label : "Resolved",
-			key : "RESOLVED",
-			badge : "success",
+			label: "Resolved",
+			key: "RESOLVED",
+			badge: "success",
 		},
 		{
-			label : "Re Open",
-			key : "RE_OPEN",
-			badge : "primary",
+			label: "Re Open",
+			key: "RE_OPEN",
+			badge: "primary",
 		},
 	]
 
@@ -456,7 +457,7 @@ const Helpdesk = () => {
 							<div className="modal-content">
 								<div className="modal-header mb-3 mt-3 ">
 									<h5 className="modal-title">{caseId === "NEW" ? "Raise Ticket" : "Ticket Detail"}
-									&nbsp; {getBadge(status)}
+										&nbsp; {getBadge(status)}
 									</h5>
 									<button type="button" className="close" data-dismiss="modal" aria-label="Close">
 										<span aria-hidden="true">×</span>
@@ -467,29 +468,29 @@ const Helpdesk = () => {
 										<div className="row">
 											<div className="col-md-6">
 												<fieldset className="formBox">
-												<legend>Station</legend>
-												<select required className="formField" value={stationId} disabled={user.profileType !== "ADMIN" ? true : (caseId !== "NEW" ? true : "") } onChange={e => filterStationId(e.target.value)}>
-													<option value="">Select Station</option>
-													{stationArr.map((obj) => {
-														return (
-															<option value={obj._id} key={obj._id}>
-																{obj.stationName}
-															</option>
-														);
-													})}
-												</select>
+													<legend>Station</legend>
+													<select required className="formField" value={stationId} disabled={user.profileType !== "ADMIN" ? true : (caseId !== "NEW" ? true : "")} onChange={e => filterStationId(e.target.value)}>
+														<option value="">Select Station</option>
+														{stationArr.map((obj) => {
+															return (
+																<option value={obj._id} key={obj._id}>
+																	{obj.stationName}
+																</option>
+															);
+														})}
+													</select>
 												</fieldset>
 												<fieldset className="formBox">
-												<legend>Manager</legend>
-												<select required className="formField" value={userId} disabled={user.profileType !== "ADMIN" ? true : (caseId !== "NEW" ? true : "")} onChange={e => setUserId(e.target.value)}>
-													{filterManagerArr.map((obj) => {
-														return (
-															<option value={obj._id} key={obj._id}>
-																{obj.fullName}
-															</option>
-														);
-													})}
-												</select>
+													<legend>Manager</legend>
+													<select required className="formField" value={userId} disabled={user.profileType !== "ADMIN" ? true : (caseId !== "NEW" ? true : "")} onChange={e => setUserId(e.target.value)}>
+														{filterManagerArr.map((obj) => {
+															return (
+																<option value={obj._id} key={obj._id}>
+																	{obj.fullName}
+																</option>
+															);
+														})}
+													</select>
 												</fieldset>
 												<fieldset className="formBox">
 													<legend>Problem Type</legend>
@@ -531,41 +532,70 @@ const Helpdesk = () => {
 													{
 														user.profileType === "ADMIN" ?
 															<>
-																<textarea className="formField" style={{ height: "auto" }} onChange={(e) => setProblemDesc(e.target.value)} value={problemDesc} readOnly={caseId !== "NEW" } placeholder="Write Problem Description"></textarea>
+																<textarea className="formField" style={{ height: "auto" }} onChange={(e) => setProblemDesc(e.target.value)} value={problemDesc} readOnly={caseId !== "NEW"} placeholder="Write Problem Description"></textarea>
 															</>
 															:
 															<>
-																<textarea className="formField" style={{ height: "auto" }} onChange={(e) => setProblemDesc(e.target.value)} value={problemDesc} readOnly={caseId !== "NEW" } placeholder="Write Problem Description"></textarea>
+																<textarea className="formField" style={{ height: "auto" }} onChange={(e) => setProblemDesc(e.target.value)} value={problemDesc} readOnly={caseId !== "NEW"} placeholder="Write Problem Description"></textarea>
 															</>
 													}
 												</fieldset>
-												
-												
-												<fieldset className="formBox">
-													<legend>Case Status</legend>
-													<select required className="formField" value={status} disabled={user.profileType !== "ADMIN"} onChange={(e) => setStatus(e.target.value)}>
-														{caseStatus.map((el) =>
-															<option value={el.key}>{el.label}</option>
-														)}
-													</select>
-												</fieldset>
-												<fieldset className="formBox">
-													<legend>Resolution Decsription</legend>
-													<textarea className="formField" style={{ height: "auto" }} disabled={user.profileType !== "ADMIN"} value={caseResolve} onChange={(e) => setResolution(e.target.value)} id="resolveDesc" placeholder="Write Problem Status"></textarea>
-												</fieldset>
-														
-												<fieldset>
-												<div className="row">
-													<div className="col-md-6">
-													<label><b>Created At</b></label>
-													<p> { caseId !== "NEW" ? createDate : "" } </p>
-													</div>
 
-													<div className="col-md-6">
-													<label><b>Resolved At</b></label>
-													<p> { caseId !== "NEW" ? resolveTime : "Not resolved yet" } </p>
+												{
+													user.profileType !== "ADMIN" ?
+														<>
+															{
+																caseId !== "NEW" ?
+																	<>
+																		<fieldset className="formBox">
+																			<legend>Case Status</legend>
+																			<select required className="formField" value={status} disabled="true" onChange={(e) => setStatus(e.target.value)}>
+																				{caseStatus.map((el) =>
+																					<option value={el.key}>{el.label}</option>
+																				)}
+																			</select>
+																		</fieldset>
+																		<fieldset className="formBox" id="resolveDescSection">
+																			<legend>Resolution Decsription</legend>
+																			<textarea className="formField" style={{ height: "auto" }} disabled="true" value={caseResolve} onChange={(e) => setResolution(e.target.value)} id="resolveDesc" placeholder="Write Problem Status"></textarea>
+																		</fieldset>
+																	</>
+																	:
+																	<>
+
+																	</>
+															}
+														</>
+														:
+														<>
+															<fieldset className="formBox">
+																<legend>Case Status</legend>
+																<select required className="formField" value={status} onChange={(e) => setStatus(e.target.value)}>
+																	{caseStatus.map((el) =>
+																		<option value={el.key}>{el.label}</option>
+																	)}
+																</select>
+															</fieldset>
+															<fieldset className="formBox" id="resolveDescSection">
+																<legend>Resolution Decsription</legend>
+																<textarea className="formField" style={{ height: "auto" }} value={caseResolve} onChange={(e) => setResolution(e.target.value)} id="resolveDesc" placeholder="Write Problem Status"></textarea>
+															</fieldset>
+														</>
+												}
+
+
+												<fieldset>
+													<div className="row">
+														<div className="col-md-6">
+															<label><b>Created At</b></label>
+															<p> {caseId !== "NEW" ? createDate : ""} </p>
+														</div>
+
+														<div className="col-md-6">
+															<label><b>Resolved At</b></label>
+															<p> {caseId !== "NEW" ? resolveTime : ""} </p>
+														</div>
 													</div>
-												</div>
 												</fieldset>
 											</div>
 											<div className="col-md-6">

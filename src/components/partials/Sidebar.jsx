@@ -10,6 +10,8 @@ import { IoMenuOutline } from "react-icons/io5";
 import { MdDashboard } from "react-icons/md";
 import { GoGraph } from "react-icons/go";
 // import { FcStatistics } from "react-icons/fc";
+import { FaUserFriends, FaRupeeSign } from "react-icons/fa";
+import { CgProfile } from "react-icons/cg";
 import { RiGasStationLine, RiAdminLine } from "react-icons/ri";
 import { AppContext } from "../../Context/Context";
 
@@ -126,16 +128,16 @@ const Sidebar = ({ currentPath }) => {
 									)}
 									<li className={currentPath === "/employee" ? activeClassName : ""} onClick={navToggleSm}>
 										<Link to={"/employee"}>
-											<div className="parent-icon icon-color-2">
-												<MdDashboard />
+											<div className="parent-icon icon-color-3">
+												<FaUserFriends />
 											</div>
 											<div className="menu-title">Employees</div>
 										</Link>
 									</li>
 									<li className={currentPath === "/profile" ? activeClassName : ""} onClick={navToggleSm}>
 										<Link to={"/profile"}>
-											<div className="parent-icon icon-color-2">
-												<MdDashboard />
+											<div className="parent-icon icon-color-3">
+												<CgProfile />
 											</div>
 											<div className="menu-title">My Profile</div>
 										</Link>
@@ -151,7 +153,7 @@ const Sidebar = ({ currentPath }) => {
 									<li className={currentPath === "/pricebook" ? activeClassName : ""} onClick={navToggleSm}>
 										<Link to={"/pricebook"}>
 											<div className="parent-icon icon-color-3">
-												<MdDashboard />
+												<FaRupeeSign />
 											</div>
 											<div className="menu-title">Price Book</div>
 										</Link>
