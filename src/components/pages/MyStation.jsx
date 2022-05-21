@@ -76,11 +76,13 @@ export default function MyStation() {
 			setSubmitNoteTxt(response.message);
 		}
 	}
+
 	const [retrigger, setRetrigger] = useState("");
 	// get
 	const [submitNoteClass, setSubmitNoteClass] = useState("");
 	const [submitNoteTxt, setSubmitNoteTxt] = useState("");
 
+	// Station Data
 	const [stationId, setStationId] = useState(user.Station);
 	const [stationName, setStationName] = useState("");
 	const [stationCode, setStationCode] = useState("");
@@ -90,23 +92,7 @@ export default function MyStation() {
 	const [TINNumber, setTINNumber] = useState("");
 	const [CNGRate, setCNGRate] = useState("");
 
-	const [timeOutState, setTimeOutState] = useState("");
-	useEffect(
-		(e) => {
-			if (timeOutState) {
-				clearTimeout(timeOutState);
-			}
-			setTimeOutState(
-				setTimeout((e) => {
-					setSubmitNoteTxt("");
-				}, 3000)
-			);
-		},
-		[submitNoteTxt, timeOutState]
-	);
-
 	useEffect(() => {
-		setStationId(user.Station);
 		async function getStation() {
 			const response = await callAPI({
 				URL: "stations/" + user.Station,

@@ -150,14 +150,14 @@ const Sidebar = ({ currentPath }) => {
 											<div className="menu-title">Helpdesk</div>
 										</Link>
 									</li>
-									<li className={currentPath === "/pricebook" ? activeClassName : ""} onClick={navToggleSm}>
+									{/* <li className={currentPath === "/pricebook" ? activeClassName : ""} onClick={navToggleSm}>
 										<Link to={"/pricebook"}>
 											<div className="parent-icon icon-color-3">
 												<FaRupeeSign />
 											</div>
 											<div className="menu-title">Price Book</div>
 										</Link>
-									</li>
+									</li> */}
 								</ul>
 							</div>
 						</div>

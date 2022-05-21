@@ -96,6 +96,7 @@ const Helpdesk = () => {
 					dataArr.map((item) =>
 					(
 						<tr key={Math.random()}>
+							<td onClick={() => modal("EDIT", item)}>{item._id}</td>
 							<td onClick={() => modal("EDIT", item)}>{item.Station ? item.Station.stationName : <span className="badge badge-default">No Station</span>}</td>
 							<td onClick={() => modal("EDIT", item)}>{item.Manager.fullName}</td>
 							<td onClick={() => modal("EDIT", item)}>{item.type}</td>
@@ -198,6 +199,7 @@ const Helpdesk = () => {
 
 	const modal = (action = null, data = null) => {
 		// console.log(user,"Modal Show User");
+		console.log(caseImage, "Image URL");
 		if (action === "NEW" || action === "EDIT") {
 			window.$("#caseModal #modalSpinner").hide();
 			window.$("#caseModal").modal("show");
@@ -431,13 +433,14 @@ const Helpdesk = () => {
 									</Form.Select>
 								</InputGroup>
 								<button type="button" onClick={() => modal("NEW")} title={"Raise Problem"} className="btn mr-2 ticket-btn">
-									Create Ticket <FaPlusCircle />
+									<span id="btn-txt">Create Ticket</span> <FaPlusCircle />
 								</button>
 								<Pagination className="mb-0" total={total} currentPage={currentPage} setCurrentPage={setCurrentPage} pageSize={limit} />
 							</div>
 							<Table bordered responsive hover>
 								<thead>
 									<tr>
+										<th>Ticket ID</th>
 										<th>Station Name</th>
 										<th>Manager Name</th>
 										<th>Problem Type</th>
@@ -520,6 +523,7 @@ const Helpdesk = () => {
 															:
 															<>
 																<select required className="formField" value={problemSubType} onChange={(e) => setProblemSubType(e.target.value)}>
+																<option value="">-- Select --</option>
 																	{subTypeArray.map((el) =>
 																		<option value={el}>{el}</option>
 																	)}

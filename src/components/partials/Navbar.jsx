@@ -92,10 +92,6 @@ const Navbar = () => {
 									<i className="bx bx-user"></i>
 									<span>Profile</span>
 								</Link>
-								<Link className="dropdown-item" to="/settings" onClick={() => setIsHidden(!isHidden)}>
-									<i className="bx bx-cog"></i>
-									<span>Settings</span>
-								</Link>
 								<Link className="dropdown-item" to="/dashboard" onClick={() => setIsHidden(!isHidden)}>
 									<i className="bx bx-tachometer"></i>
 									<span>Dashboard</span>
