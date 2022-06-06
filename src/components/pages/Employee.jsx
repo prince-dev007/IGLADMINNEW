@@ -280,7 +280,7 @@ export default function Employee() {
 								<thead>
 									<tr>
 										<th>Employee</th>
-										<th>Email</th>
+										<th>Mobile</th>
 										<th>Station</th>
 										{user.profileType === 'ADMIN' && <th>Fingerprint1</th>}
 										<th>Action</th>

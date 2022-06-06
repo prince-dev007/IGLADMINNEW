@@ -56,6 +56,16 @@
   transform: scale(1.4);
   box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22) !important;
 }
+@media only screen and (max-width: 768px) {
+  .ticket-btn {
+    font-size: 10px;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .ticket-btn #btn-txt {
+    display: none;
+  }
+}
 @-webkit-keyframes float {
   0% {
     right: 60px;

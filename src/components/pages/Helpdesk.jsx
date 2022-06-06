@@ -23,7 +23,7 @@ import dateGenerator from "../../common/date";
 import { AppContext } from "../../Context/Context";
 
 // import image
-import NoImg from "../../assets/images/image-not.png";
+import NoImg from "../../assets/images/noimage.png";
 import Manager from "./Manager";
 
 const Helpdesk = () => {
@@ -140,7 +140,6 @@ const Helpdesk = () => {
 			subType: problemSubType,
 			status,
 			caseDesc: problemDesc,
-			image: caseImage,
 		}
 
 		if (user.profileType === "ADMIN") {
@@ -150,6 +149,7 @@ const Helpdesk = () => {
 		if (caseId === "NEW") {
 			reqBody.Station = stationId;
 			reqBody.Manager = userId;
+			reqBody.image = caseImage;
 		}
 
 		const response = await callAPI({
@@ -416,7 +416,7 @@ const Helpdesk = () => {
 												<RiGasStationLine />
 											</span>
 										</div>
-										<input type="text" className="form-control" title={"Search"} onChange={(e) => setSearchStr(e.target.value)} placeholder="Search here" />
+										<input type="text" className="form-control" title={"Search"} onChange={(e) => setSearchStr(e.target.value)} value={searchStr} placeholder="Search here" />
 									</div>
 								</div>
 
@@ -440,7 +440,7 @@ const Helpdesk = () => {
 							<Table bordered responsive hover>
 								<thead>
 									<tr>
-										<th>Ticket ID</th>
+										<th>Case ID</th>
 										<th>Station Name</th>
 										<th>Manager Name</th>
 										<th>Problem Type</th>
@@ -591,12 +591,12 @@ const Helpdesk = () => {
 												<fieldset>
 													<div className="row">
 														<div className="col-md-6">
-															<label><b>Created At</b></label>
+															<label><b>Created</b></label>
 															<p> {caseId !== "NEW" ? createDate : ""} </p>
 														</div>
 
 														<div className="col-md-6">
-															<label><b>Resolved At</b></label>
+															<label><b>Resolved</b></label>
 															<p> {caseId !== "NEW" ? resolveTime : ""} </p>
 														</div>
 													</div>
@@ -635,7 +635,12 @@ const Helpdesk = () => {
 															</>
 													}
 												</fieldset>
-												<img src={caseImg} alt="" className="img-fluid" />
+												{
+													caseId === "NEW" ? 
+													<></>
+													:
+													<><img src={caseImg} alt="" className="img-fluid" /></>
+												}
 											</div>
 										</div>
 									</div>
