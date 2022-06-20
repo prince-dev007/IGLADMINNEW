@@ -10,7 +10,7 @@ import { IoMenuOutline } from "react-icons/io5";
 import { MdDashboard } from "react-icons/md";
 import { GoGraph } from "react-icons/go";
 // import { FcStatistics } from "react-icons/fc";
-import { FaUserFriends, FaRupeeSign } from "react-icons/fa";
+import { FaUserFriends, FaRupeeSign, FaFax } from "react-icons/fa";
 import { CgProfile } from "react-icons/cg";
 import { RiGasStationLine, RiAdminLine } from "react-icons/ri";
 import { AppContext } from "../../Context/Context";
@@ -148,6 +148,14 @@ const Sidebar = ({ currentPath }) => {
 												<MdDashboard />
 											</div>
 											<div className="menu-title">Helpdesk</div>
+										</Link>
+									</li>
+									<li className={currentPath === "/machine" ? activeClassName : ""} onClick={navToggleSm}>
+										<Link to={"/machine"}>
+											<div className="parent-icon icon-color-3">
+												<FaFax />
+											</div>
+											<div className="menu-title">Machine</div>
 										</Link>
 									</li>
 									{/* <li className={currentPath === "/pricebook" ? activeClassName : ""} onClick={navToggleSm}>
