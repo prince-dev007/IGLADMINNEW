@@ -95,8 +95,10 @@ const Helpdesk = () => {
 				{dataArr.length > 0 ? (
 					dataArr.map((item) =>
 					(
+
 						<tr key={Math.random()}>
 							<td onClick={() => modal("EDIT", item)}>{item._id}</td>
+							<td onClick={() => modal("EDIT", item)}>{item.jiraTicket ? <b>{item.jiraTicket.slice(51,58)}</b>: <span className="badge badge-default">No JIRA Assigned</span>}</td>
 							<td onClick={() => modal("EDIT", item)}>{item.Station ? item.Station.stationName : <span className="badge badge-default">No Station</span>}</td>
 							<td onClick={() => modal("EDIT", item)}>{item.Manager.fullName}</td>
 							<td onClick={() => modal("EDIT", item)}>{item.type}</td>
@@ -109,6 +111,16 @@ const Helpdesk = () => {
 										item.jiraTicket ? <a href={item.jiraTicket} target="_blank" title="Open Jira of this Ticket" onClick={(e) => e.stopPropagation()}>Go to <FaJira /></a> : "" : ""
 								}
 							</td>
+							{
+									user.profileType === "ADMIN" ?
+								<td>
+									
+										<button className="btn btn-sm border btnDanger m-1 " onClick={() => modal("DELETE", item)}>
+											<RiDeleteBinLine />
+										</button> 
+								</td>
+								: ""
+							}
 						</tr>
 					))
 				) : (
@@ -176,6 +188,29 @@ const Helpdesk = () => {
 		}
 	};
 
+
+	// Delete Cases/Tickets
+	const deleteHandler = async (e) => {
+		e.preventDefault();
+		setSubmitNoteTxt("");
+		window.$("#deleteModal #modalSpinner").show();
+		const response = await callAPI({
+			URL: "case/" + caseId,
+			method: "DELETE",
+		});
+		window.$("#deleteModal #modalSpinner").hide();
+		if (response.status === 200) {
+			setSubmitNoteClass("text-success");
+			setSubmitNoteTxt("Deleted");
+			setTimeout(() => {
+				window.$("#deleteModal").modal('hide');
+				triggerGetAll();
+			}, 1000);
+		} else {
+			setSubmitNoteClass("text-danger");
+			setSubmitNoteTxt("Something went wrong !");
+		}
+	};
 
 
 	// modal
@@ -441,11 +476,15 @@ const Helpdesk = () => {
 								<thead>
 									<tr>
 										<th>Case ID</th>
+										<th>Ticket ID (JIRA)</th>
 										<th>Station Name</th>
 										<th>Manager Name</th>
 										<th>Problem Type</th>
 										<th>Problem Sub Type</th>
 										<th>Ticket Status</th>
+										{
+											user.profileType === "ADMIN" ? <th>Action</th> : ""
+										}
 									</tr>
 								</thead>
 								<tbody>
@@ -691,7 +730,8 @@ const Helpdesk = () => {
 								<div className="modal-body">
 									<p style={{ fontSize: "16px" }}>Are you sure to delete this Station record ?</p>
 									<p style={{ fontSize: "16px" }}>
-										Selected Station : <strong>{stationName}</strong>
+										<b>Problem Type</b>  : {problemType} - {problemSubType} <br />
+										<b>Description</b>  : {problemDesc}
 									</p>
 								</div>
 								<div className="modal-footer mt-3">
@@ -703,7 +743,7 @@ const Helpdesk = () => {
 											<span className="sr-only">Loading...</span>
 										</div>
 									</div>
-									<button type="button" className="btn btn-danger" onClick="">
+									<button type="button" className="btn btn-danger" onClick={deleteHandler}>
 										Confirm Delete
 									</button>
 									<button type="button" className="btn btn-secondary" id="closeBtn" data-dismiss="modal">
