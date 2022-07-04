@@ -4,13 +4,13 @@ import { getUser } from "../Context/Reducer";
 // export const backendbaseURL = "http://localhost:3000/Admin/";
 
 // IGL API
-// export const backendbaseURL = "http://43.204.104.42:3000/admin/";
+export const backendbaseURL = "http://43.204.104.42:3000/admin/";
 
 // Local API
 // export const backendbaseURL = "http://192.168.68.77:3000/admin/";
 
 // Local ShivamVish API
-export const backendbaseURL = "http://127.0.0.1:4000/admin/";
+// export const backendbaseURL = "http://127.0.0.1:4000/admin/";
 
 let abortController = null;
 export const callAPI = async({ URL = "", method = "GET", body = "", bodyType = "RAW", abort = false }) => {
