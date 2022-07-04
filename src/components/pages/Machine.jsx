@@ -65,11 +65,15 @@ export default function Machine() {
 							<td onClick={() => modal("EDIT", item)} style={{ fontWeight: "bold" }}>
 								{item.MachineId}
 							</td>
-							<td>
-								<button className="btn btn-sm border btnDanger m-1 " onClick={() => modal("DELETE", item)}>
-									<RiDeleteBinLine />
-								</button>
-							</td>
+							{
+								user.profileType === "ADMIN" ? 
+								<td>
+									<button className="btn btn-sm border btnDanger m-1 " onClick={() => modal("DELETE", item)}>
+										<RiDeleteBinLine />
+									</button>
+								</td>
+							: ""
+							}
 						</tr>
 					))
 				) : (
@@ -135,10 +139,11 @@ export default function Machine() {
 		}
 	};
 
-	// delete station
+	// delete Machine
 	const deleteHandler = async (e) => {
 		e.preventDefault();
 		setSubmitNoteTxt("");
+		console.log("machine/"+machineId, "machine Id");
 		window.$("#deleteModal #modalSpinner").show();
 		const response = await callAPI({
 			URL: "machine/" + machineId,
@@ -278,7 +283,10 @@ export default function Machine() {
 									<tr>
 										<th>Station Name</th>
 										<th>Machine Code</th>
-										<th>Action</th>
+										{
+											user.profileType === "ADMIN" ?
+											<th>Action</th> : ""
+										}
 									</tr>
 								</thead>
 								<tbody>{renderTable()}</tbody>

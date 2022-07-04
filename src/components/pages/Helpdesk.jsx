@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import { motion } from "framer-motion";
 
-import { Form, InputGroup, Table } from "react-bootstrap";
+import { Form, InputGroup, Table, Button, Modal } from "react-bootstrap";
 // icons
 import { IoRefreshOutline, IoHandRightOutline } from "react-icons/io5";
 import { FcFeedback } from "react-icons/fc";
@@ -97,7 +97,6 @@ const Helpdesk = () => {
 					(
 
 						<tr key={Math.random()}>
-							<td onClick={() => modal("EDIT", item)}>{item._id}</td>
 							<td onClick={() => modal("EDIT", item)}>{item.jiraTicket ? <b>{item.jiraTicket.slice(51,58)}</b>: <span className="badge badge-default">No JIRA Assigned</span>}</td>
 							<td onClick={() => modal("EDIT", item)}>{item.Station ? item.Station.stationName : <span className="badge badge-default">No Station</span>}</td>
 							<td onClick={() => modal("EDIT", item)}>{item.Manager.fullName}</td>
@@ -194,16 +193,18 @@ const Helpdesk = () => {
 		e.preventDefault();
 		setSubmitNoteTxt("");
 		window.$("#deleteModal #modalSpinner").show();
+		console.log("case/"+caseId, "Case Id");
 		const response = await callAPI({
 			URL: "case/" + caseId,
 			method: "DELETE",
 		});
 		window.$("#deleteModal #modalSpinner").hide();
+		console.log(response, "Delete Response");
 		if (response.status === 200) {
 			setSubmitNoteClass("text-success");
 			setSubmitNoteTxt("Deleted");
 			setTimeout(() => {
-				window.$("#deleteModal").modal('hide');
+				hideDeleteModal();
 				triggerGetAll();
 			}, 1000);
 		} else {
@@ -267,7 +268,16 @@ const Helpdesk = () => {
 			
 		}
 		else if (action === "DELETE") {
-			window.$("#deleteModal").modal("show");
+			setStationName(action === "DELETE" && data.Station ? data.Station.stationName : user.Station.stationName);
+			//setManagerName(action === "DELETE" && data.Manager.fullName ? data.Manager.fullName : userProfile.fullName);
+			filterProblemType(action === "DELETE" && data.type ? data.type : "");
+			setProblemDesc(action === "DELETE" && data.caseDesc ? data.caseDesc : "");
+			setProblemSubType(action === "DELETE" && data.subType ? data.subType : "");
+			setStatus(action === "DELETE" && data.status ? data.status : "OPEN");
+			setCaseId(action === "DELETE" && data._id ? data._id : action);
+			setResolution(action === "DELETE" && data.resolutionDesc ? data.resolutionDesc : "");
+			setStationId(action === "DELETE" && data.Station ? data.Station._id : (user.profileType !== "ADMIN" ? user.Station : ""));
+			showDeleteModal();
 		} else if (action === "HIDE") {
 			window.$("#caseModal").modal("hide");
 		}
@@ -437,6 +447,11 @@ const Helpdesk = () => {
 		getAllStation();
 	}, []);
 
+	const [deleteModalShow, setDeleteModalShow] = useState(false);
+
+	const hideDeleteModal = () => setDeleteModalShow(false);
+	const showDeleteModal = () => setDeleteModalShow(true);
+
 	return (
 		<div className="page-wrapper">
 			<div className="page-content-wrapper">
@@ -475,8 +490,7 @@ const Helpdesk = () => {
 							<Table bordered responsive hover>
 								<thead>
 									<tr>
-										<th>Case ID</th>
-										<th>Ticket ID (JIRA)</th>
+										<th>Ticket ID</th>
 										<th>Station Name</th>
 										<th>Manager Name</th>
 										<th>Problem Type</th>
@@ -718,41 +732,37 @@ const Helpdesk = () => {
 					</div>
 
 					{/*  delete modal */}
-					<div className="modal fade" id="deleteModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-						<div className="modal-dialog modal-dialog-centered">
-							<div className="modal-content">
-								<div className="modal-header">
-									<h5 className="modal-title">Confirm Delete</h5>
-									<button type="button" className="close" data-dismiss="modal" aria-label="Close">
-										<span aria-hidden="true">&times;</span>
-									</button>
-								</div>
-								<div className="modal-body">
-									<p style={{ fontSize: "16px" }}>Are you sure to delete this Station record ?</p>
-									<p style={{ fontSize: "16px" }}>
-										<b>Problem Type</b>  : {problemType} - {problemSubType} <br />
-										<b>Description</b>  : {problemDesc}
-									</p>
-								</div>
-								<div className="modal-footer mt-3">
-									<div className="submitNote">
-										<span className={submitNoteClass}>{submitNoteTxt}</span>
-									</div>
-									<div id="modalSpinner" style={{ transform: "scale(0.7)" }}>
-										<div className="spinner-border text-success" role="status">
-											<span className="sr-only">Loading...</span>
-										</div>
-									</div>
-									<button type="button" className="btn btn-danger" onClick={deleteHandler}>
-										Confirm Delete
-									</button>
-									<button type="button" className="btn btn-secondary" id="closeBtn" data-dismiss="modal">
-										Close
-									</button>
+					<Modal show={deleteModalShow} centered onHide={hideDeleteModal}>
+						<Modal.Header>
+							<Modal.Title>Confirm Delete</Modal.Title>
+							<button type="button" className="close" onClick={hideDeleteModal}>
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</Modal.Header>
+						<Modal.Body>
+							<p style={{ fontSize: "16px" }}>Are you sure to delete this Machine record ?</p>
+							<p style={{ fontSize: "16px" }}>
+							<strong>Problem Type</strong> : {problemType} - {problemSubType} <br />
+							<strong>Description</strong> : {problemDesc}
+							</p>
+						</Modal.Body>
+						<Modal.Footer>
+							<div className="submitNote">
+								<span className={submitNoteClass}>{submitNoteTxt}</span>
+							</div>
+							<div id="modalSpinner" style={{ transform: "scale(0.7)" }}>
+								<div className="spinner-border text-success" role="status">
+									<span className="sr-only">Loading...</span>
 								</div>
 							</div>
-						</div>
-					</div>
+							<Button variant="danger" onClick={deleteHandler}>
+								Confirm Delete
+							</Button>
+							<Button variant="secondary" onClick={hideDeleteModal}>
+								Close
+							</Button>
+						</Modal.Footer>
+					</Modal>
 				</motion.div>
 			</div>
 		</div>
