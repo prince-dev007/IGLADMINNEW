@@ -10,7 +10,7 @@ import { IoMenuOutline } from "react-icons/io5";
 import { MdDashboard } from "react-icons/md";
 import { GoGraph } from "react-icons/go";
 // import { FcStatistics } from "react-icons/fc";
-import { FaUserFriends, FaRupeeSign, FaFax } from "react-icons/fa";
+import { FaUserFriends, FaFax } from "react-icons/fa";
 import { CgProfile } from "react-icons/cg";
 import { RiGasStationLine, RiAdminLine } from "react-icons/ri";
 import { AppContext } from "../../Context/Context";

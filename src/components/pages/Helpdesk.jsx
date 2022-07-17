@@ -107,7 +107,7 @@ const Helpdesk = () => {
 								&nbsp;&nbsp;
 								{
 									user.profileType === "ADMIN" ?
-										item.jiraTicket ? <a href={item.jiraTicket} target="_blank" title="Open Jira of this Ticket" onClick={(e) => e.stopPropagation()}>Go to <FaJira /></a> : "" : ""
+										item.jiraTicket ? <a href={item.jiraTicket} target="_blank" title="Open Jira of this Ticket" onClick={(e) => e.stopPropagation()}><b>{item.jiraTicket.slice(51,58)}</b></a> : "" : ""
 								}
 							</td>
 							{
@@ -155,7 +155,10 @@ const Helpdesk = () => {
 
 		if (user.profileType === "ADMIN") {
 			reqBody.resolutionDesc = caseResolve;
-			reqBody.resolutionTime = dateGenerator.dateTime();
+			if(reqBody.status === "RESOLVED")
+			{
+				reqBody.resolutionTime = dateGenerator.dateTime();
+			}
 		}
 		if (caseId === "NEW") {
 			reqBody.Station = stationId;
