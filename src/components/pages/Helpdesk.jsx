@@ -230,12 +230,17 @@ const Helpdesk = () => {
 	const [status, setStatus] = useState("");
 	const [problemDesc, setProblemDesc] = useState("");
 	const [caseId, setCaseId] = useState("NEW");
-	const [caseImg, setCaseImg] = useState("");
+	// const [caseImg, setCaseImg] = useState("");
 	const [caseResolve, setResolution] = useState("");
 	const [resolveTime, setResolveDate] = useState("");
 	const [createDate, setCreatedDate] = useState("");
 	const [machineCode, setMachineCode] = useState("");
 
+	function setFile(e){
+		console.log(e.target.files);
+		setImage(e.target.files[0]);
+        setImage(URL.createObjectURL(e.target.files[0]));
+	}
 
 	const modal = (action = null, data = null) => {
 		// console.log(user,"Modal Show User");
@@ -263,9 +268,9 @@ const Helpdesk = () => {
 			setCreatedDate(action === "EDIT" && data.createdAt ? dateGenerator.fDateTIme(data.createdAt) : "No created Date");
 
 			if (!data || data.image === "" || !data.image) {
-				setCaseImg(NoImg);
+				setImage(NoImg);
 			} else {
-				setCaseImg(action === "EDIT" && data.image ? data.image : "");
+				setImage(action === "EDIT" && data.image ? data.image : "");
 			}
 			if (user.profileType !== "ADMIN")
 				window.$("#tktSubmitBtn").hide();
@@ -600,15 +605,16 @@ const Helpdesk = () => {
 													problemType === "Machine Issue" ?
 														<>
 															<fieldset className="formBox">
-																<legend>Machine Code</legend>
-																<select required className="formField" value={machineCode} onChange={e => setMachineCode(e.target.value)}>
+																<legend>Serial No</legend>
+																<input type="text" value={machineCode} onChange={(e) => setMachineCode(e.target.value)} className="formField" />
+																{/* <select required className="formField" value={machineCode} onChange={e => setMachineCode(e.target.value)}>
 																	<option value="">-- Select --</option>
 																	{
 																		machineArr.map((el) =>
 																			<option value={el.MachineId}>{el.MachineId}</option>
 																		)
 																	}
-																</select>
+																</select> */}
 															</fieldset>
 														</>
 														:
@@ -712,7 +718,7 @@ const Helpdesk = () => {
 																	caseId === "NEW" ?
 																		<>
 																			<legend>Choose Image</legend>
-																			<input type="file" onChange={(e) => setImage(e.target.files[0])} className="formField" accept="image/*" />
+																			<input type="file" onChange={setFile} className="formField" accept="image/*" />
 																		</>
 																		:
 																		<>
@@ -726,7 +732,7 @@ const Helpdesk = () => {
 																	caseId === "NEW" ?
 																		<>
 																			<legend>Choose Image</legend>
-																			<input type="file" onChange={(e) => setImage(e.target.files[0])} className="formField" accept="image/*" />
+																			<input type="file" onChange={setFile} className="formField" accept="image/*" />
 																		</>
 																		:
 																		<>
@@ -736,12 +742,7 @@ const Helpdesk = () => {
 															</>
 													}
 												</fieldset>
-												{
-													caseId === "NEW" ?
-														<></>
-														:
-														<><img src={caseImg} alt="" className="img-fluid" /></>
-												}
+												<img src={caseImage} alt="" className="img-fluid" />
 											</div>
 										</div>
 									</div>
