@@ -167,6 +167,7 @@ export default function Machine() {
 
 	// get all machine
 	const [searchStr, setSearchStr] = useState("");
+	console.log(searchStr, "Search String");
 	const triggerGetAll = () => setRandom(Math.random());
 	const [random, setRandom] = useState(0);
 	const [dataArr, setDataArr] = useState(null);
@@ -175,7 +176,10 @@ export default function Machine() {
 	const [total, setTotal] = useState(0);
 	useEffect(
 		(e) => {
-			const stationGet = user.profileType === "ADMIN" ? "" : user.Station;
+			let stationGet = user.profileType === "ADMIN" ? "" : user.Station;
+			if(selectedStation !== null){
+				stationGet = selectedStation;
+			}
 			const getAllMachine = async () => {
 				contextDispatch({
 					type: "SET_ACTIVE_PAGE_SPINNER",
@@ -186,7 +190,6 @@ export default function Machine() {
 					URL: `machine/all?page=${currentPage}&limit=${limit}&search=${searchStr}&station=${stationGet}`,
 					abort: true,
 				});
-
 				if (response.status !== 200 && response.status !== 404) return;
 				contextDispatch({
 					type: "SET_ACTIVE_PAGE_SPINNER",
@@ -245,7 +248,7 @@ export default function Machine() {
 												setCurrentPage(1);
 											}}
 										>
-											<option value={"null"}>All Station</option>
+											<option value="">All Station</option>
 											{stationArr.map((obj) => {
 												return (
 													<option value={obj._id} key={obj._id}>
@@ -262,9 +265,16 @@ export default function Machine() {
 									</div>
 									<input type="text" className="form-control" title={"Search"} onChange={(e) => setSearchStr(e.target.value)} value={searchStr} placeholder="Search here" />
 								</div>
-								<button type="button" onClick={() => modal("NEW")} title={"New Machine"} className="btn btnIconC border mr-2">
+								{
+									user.profileType === "ADMIN" ? 
+									<>
+									<button type="button" onClick={() => modal("NEW")} title={"New Machine"} className="btn btnIconC border mr-2">
 									<IoMdAdd />
-								</button>
+									</button>
+									</>
+									:
+									""
+								}
 								<button type="button" onClick={triggerGetAll} title={"Refresh"} className="btn btnIconC border mr-2">
 									<IoRefreshOutline />
 								</button>
@@ -342,9 +352,16 @@ export default function Machine() {
 												<span className="sr-only">Loading...</span>
 											</div>
 										</div>
-										<button type="submit" className="btn btn-primary" onClick={submitForm}>
+										{
+											user.profileType === "ADMIN" ?
+											<>
+											<button type="submit" className="btn btn-primary" onClick={submitForm}>
 											Submit
-										</button>
+												</button>
+											</>
+											:
+											""
+										}
 										<button type="button" id="closeBtn" className="btn btn-secondary" data-dismiss="modal">
 											Close
 										</button>

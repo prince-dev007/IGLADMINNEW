@@ -234,6 +234,7 @@ const Helpdesk = () => {
 	const [caseResolve, setResolution] = useState("");
 	const [resolveTime, setResolveDate] = useState("");
 	const [createDate, setCreatedDate] = useState("");
+	const [machineCode, setMachineCode] = useState("");
 
 
 	const modal = (action = null, data = null) => {
@@ -569,6 +570,17 @@ const Helpdesk = () => {
 															</>
 													}
 												</fieldset>
+												{
+													issues.map((el) =>
+														el.type === "Machine Issue" ?
+														console.log("text") : console.log("text2")
+														// <>
+														
+														// <input type="text" value={machineCode} onChange={(e) => setMachineCode(e.target.value)} className="formField" />
+														// </>
+														// :""
+													)
+												}
 												<fieldset className="formBox">
 													<legend>Problem Sub Type</legend>
 													{
