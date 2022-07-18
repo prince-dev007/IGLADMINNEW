@@ -97,7 +97,7 @@ const Helpdesk = () => {
 					(
 
 						<tr key={Math.random()}>
-							<td onClick={() => modal("EDIT", item)}>{item.jiraTicket ? <b>{item.jiraTicket.slice(51,58)}</b>: <span className="badge badge-default">No JIRA Assigned</span>}</td>
+							<td onClick={() => modal("EDIT", item)}>{item.jiraTicket ? <b>{item.jiraTicket.slice(51, 58)}</b> : <span className="badge badge-default">No JIRA Assigned</span>}</td>
 							<td onClick={() => modal("EDIT", item)}>{item.Station ? item.Station.stationName : <span className="badge badge-default">No Station</span>}</td>
 							<td onClick={() => modal("EDIT", item)}>{item.Manager.fullName}</td>
 							<td onClick={() => modal("EDIT", item)}>{item.type}</td>
@@ -107,18 +107,18 @@ const Helpdesk = () => {
 								&nbsp;&nbsp;
 								{
 									user.profileType === "ADMIN" ?
-										item.jiraTicket ? <a href={item.jiraTicket} target="_blank" title="Open Jira of this Ticket" onClick={(e) => e.stopPropagation()}><b>{item.jiraTicket.slice(51,58)}</b></a> : "" : ""
+										item.jiraTicket ? <a href={item.jiraTicket} target="_blank" title="Open Jira of this Ticket" onClick={(e) => e.stopPropagation()}><b>{item.jiraTicket.slice(51, 58)}</b></a> : "" : ""
 								}
 							</td>
 							{
-									user.profileType === "ADMIN" ?
-								<td>
-									
+								user.profileType === "ADMIN" ?
+									<td>
+
 										<button className="btn btn-sm border btnDanger m-1 " onClick={() => modal("DELETE", item)}>
 											<RiDeleteBinLine />
-										</button> 
-								</td>
-								: ""
+										</button>
+									</td>
+									: ""
 							}
 						</tr>
 					))
@@ -151,12 +151,12 @@ const Helpdesk = () => {
 			subType: problemSubType,
 			status,
 			caseDesc: problemDesc,
+			machineCode
 		}
 
 		if (user.profileType === "ADMIN") {
 			reqBody.resolutionDesc = caseResolve;
-			if(reqBody.status === "RESOLVED")
-			{
+			if (reqBody.status === "RESOLVED") {
 				reqBody.resolutionTime = dateGenerator.dateTime();
 			}
 		}
@@ -196,7 +196,7 @@ const Helpdesk = () => {
 		e.preventDefault();
 		setSubmitNoteTxt("");
 		window.$("#deleteModal #modalSpinner").show();
-		console.log("case/"+caseId, "Case Id");
+		console.log("case/" + caseId, "Case Id");
 		const response = await callAPI({
 			URL: "case/" + caseId,
 			method: "DELETE",
@@ -269,7 +269,7 @@ const Helpdesk = () => {
 			}
 			if (user.profileType !== "ADMIN")
 				window.$("#tktSubmitBtn").hide();
-			
+
 		}
 		else if (action === "DELETE") {
 			setStationName(action === "DELETE" && data.Station ? data.Station.stationName : user.Station.stationName);
@@ -301,6 +301,7 @@ const Helpdesk = () => {
 
 	const filterStationId = (val) => {
 		setStationId(val);
+		getMachines(val);
 		const filterManager = userArr.filter(el => el.Station === val);
 		if (filterManager.length === 0) {
 			setFilterManagerArr([]);
@@ -424,6 +425,31 @@ const Helpdesk = () => {
 	const [stationArr, setStationArr] = useState([]);
 
 	const [userArr, setUserArr] = useState([]);
+
+	//useEffect(() => {
+	const getMachines = (passedStation) => {
+		let stationCode = "";
+		if (user.profileType === "ADMIN") {
+			stationCode = passedStation;
+		} else {
+			stationCode = user.Station;
+		}
+		const getAllMachine = async () => {
+			let response = await callAPI({
+				URL: `machine/all?page=${currentPage}&limit=${limit}&search=${searchStr}&station=${stationCode}`,
+				abort: false,
+			});
+			if (response.status === 200) {
+				setMachineArr(response.data);
+
+			}
+			console.log(response, "Machines");
+		};
+		getAllMachine();
+	}
+	//}, []);
+
+	const [machineArr, setMachineArr] = useState([]);
 
 
 	// console.log(userArr, "Profile Array");
@@ -571,27 +597,34 @@ const Helpdesk = () => {
 													}
 												</fieldset>
 												{
-													issues.map((el) =>
-														el.type === "Machine Issue" ?
-														console.log("text") : console.log("text2")
-														// <>
-														
-														// <input type="text" value={machineCode} onChange={(e) => setMachineCode(e.target.value)} className="formField" />
-														// </>
-														// :""
-													)
+													problemType === "Machine Issue" ?
+														<>
+															<fieldset className="formBox">
+																<legend>Machine Code</legend>
+																<select required className="formField" value={machineCode} onChange={e => setMachineCode(e.target.value)}>
+																	<option value="">-- Select --</option>
+																	{
+																		machineArr.map((el) =>
+																			<option value={el.MachineId}>{el.MachineId}</option>
+																		)
+																	}
+																</select>
+															</fieldset>
+														</>
+														:
+														""
 												}
 												<fieldset className="formBox">
 													<legend>Problem Sub Type</legend>
 													{
-														caseId != "NEW" ?
+														caseId !== "NEW" ?
 															<>
 																<input type="text" value={problemSubType} onChange={(e) => setProblemSubType(e.target.value)} readOnly="true" className="formField" />
 															</>
 															:
 															<>
 																<select required className="formField" value={problemSubType} onChange={(e) => setProblemSubType(e.target.value)}>
-																<option value="">-- Select --</option>
+																	<option value="">-- Select --</option>
 																	{subTypeArray.map((el) =>
 																		<option value={el}>{el}</option>
 																	)}
@@ -704,10 +737,10 @@ const Helpdesk = () => {
 													}
 												</fieldset>
 												{
-													caseId === "NEW" ? 
-													<></>
-													:
-													<><img src={caseImg} alt="" className="img-fluid" /></>
+													caseId === "NEW" ?
+														<></>
+														:
+														<><img src={caseImg} alt="" className="img-fluid" /></>
 												}
 											</div>
 										</div>
@@ -757,8 +790,8 @@ const Helpdesk = () => {
 						<Modal.Body>
 							<p style={{ fontSize: "16px" }}>Are you sure to delete this Machine record ?</p>
 							<p style={{ fontSize: "16px" }}>
-							<strong>Problem Type</strong> : {problemType} - {problemSubType} <br />
-							<strong>Description</strong> : {problemDesc}
+								<strong>Problem Type</strong> : {problemType} - {problemSubType} <br />
+								<strong>Description</strong> : {problemDesc}
 							</p>
 						</Modal.Body>
 						<Modal.Footer>

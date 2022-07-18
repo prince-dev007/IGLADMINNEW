@@ -61,8 +61,8 @@ export default function Machine() {
 				{dataArr.length > 0 ? (
 					dataArr.map((item) => (
 						<tr key={Math.random()}>
-							<td onClick={() => modal("EDIT", item)}>{item.Station ? item.Station.stationName : "Not Assigned"}</td>
-							<td onClick={() => modal("EDIT", item)} style={{ fontWeight: "bold" }}>
+							<td onClick={ () => user.profileType === "ADMIN" ? modal("EDIT", item) : "" }>{item.Station ? item.Station.stationName : "Not Assigned"}</td>
+							<td onClick={ () => user.profileType === "ADMIN" ? modal("EDIT", item) : "" } style={{ fontWeight: "bold" }}>
 								{item.MachineId}
 							</td>
 							{
@@ -263,7 +263,7 @@ export default function Machine() {
 									<div className="input-group-prepend">
 										<span className="input-group-text">Search</span>
 									</div>
-									<input type="text" className="form-control" title={"Search"} onChange={(e) => setSearchStr(e.target.value)} value={searchStr} placeholder="Search here" />
+									<input type="text" className="form-control" title={"Search"} onChange={(e) => setSearchStr(e.target.value)} value={searchStr} placeholder="Search-Machine ID" />
 								</div>
 								{
 									user.profileType === "ADMIN" ? 
